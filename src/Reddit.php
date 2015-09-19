@@ -8,10 +8,10 @@ class Reddit {
     const OAUTH_URL = 'https://oauth.reddit.com/';
 
     /**
-     * @param $username     The username of the user you wish to control.
-     * @param $password     The password of the user you wish to control.
-     * @param $clientId     Your application's client ID.
-     * @param $clientSecret Your application's client secret.
+     * @param $username     string $username The username of the user you wish to control.
+     * @param $password     string $username The password of the user you wish to control.
+     * @param $clientId     string $username Your application's client ID.
+     * @param $clientSecret string $username Your application's client secret.
      */
     public function __construct($username, $password, $clientId, $clientSecret) {
 
