@@ -39,7 +39,7 @@ class Reddit {
         }
 
         // Perform the request
-        $response = $this->client->{$method}($url, array(
+        $response = $this->client->{$method}(Reddit::OAUTH_URL . $url, array(
             'headers' => [
                 'Authorization' => $this->token_type . ' ' . $this->access_token
             ]
@@ -47,7 +47,7 @@ class Reddit {
     }
 
     private function requestRedditToken() {
-        $response = $this->client->post('', array(
+        $response = $this->client->post(Reddit::ACCESS_TOKEN_URL, array(
             'query' => [
                 [
                     'client_id' => $this->clientId,
