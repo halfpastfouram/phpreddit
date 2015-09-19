@@ -1,4 +1,5 @@
 <?php
+namespace LukeNZ\Reddit;
 
 class Reddit {
 

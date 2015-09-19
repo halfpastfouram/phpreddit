@@ -15,6 +15,6 @@
     "guzzlehttp/guzzle": "~6.0"
   },
   "autoload": {
-    "psr-4": {"Reddit\\": "src/"}
+    "psr-4": {"LukeNZ\\Reddit\\": "src/"}
   }
 }
