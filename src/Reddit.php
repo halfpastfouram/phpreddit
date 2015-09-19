@@ -1,6 +1,8 @@
 <?php
 namespace LukeNZ\Reddit;
 
+use GuzzleHttp\Client;
+
 class Reddit {
 
     protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType;
@@ -16,7 +18,7 @@ class Reddit {
      */
     public function __construct($username, $password, $clientId, $clientSecret) {
 
-        $this->client = new GuzzleHttp\Client();
+        $this->client = new Client();
 
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
