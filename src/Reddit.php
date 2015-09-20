@@ -2,10 +2,14 @@
 namespace LukeNZ\Reddit;
 
 use GuzzleHttp\Client;
+use LukeNZ\Reddit\Exceptions\SubredditContextException;
+use LukeNZ\Reddit\Exceptions\UserContextException;
 
 class Reddit {
 
     protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent, $callback;
+
+    protected $subredditContext, $userContext;
 
     const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
     const OAUTH_URL = 'https://oauth.reddit.com/';
@@ -62,10 +66,63 @@ class Reddit {
             $permalink  = substr($permalink, stripos($permalink, 'reddit.com/') + strlen('reddit.com/'));
         }
 
-        $response = $this->httpRequest(HttpMethod::GET, $permalink . '.json');
+        $response = $this->httpRequest(HttpMethod::GET, "{$permalink}.json");
 
         // Strip off the listings and return the comment only.
         return json_decode($response->getBody())[1]->data->children[0];
+    }
+
+    /**
+     * Sets the user context for future method calls.
+     *
+     * @param   $user   The user to set the context for.
+     * @return  self
+     */
+    public function user($user) {
+        $user = $this->stripPrefixes($user);
+        $this->userContext = $user;
+
+        return this;
+    }
+
+    /**
+     * Sets the subreddit context for future method calls.
+     *
+     * @param   $subreddit  The subreddit to set the context for.
+     * @return  self
+     */
+    public function subreddit($subreddit) {
+        $subreddit = $this->stripPrefixes($subreddit);
+        $this->subredditContext = $subreddit;
+
+        return this;
+    }
+
+    /**
+     * Returns a list of Wiki pages from the current subreddit context.
+     *
+     * @throws SubredditContextException
+     */
+    public function wikiPages() {
+        if (isset($this->subredditContext)) {
+            $response = $this->httpRequest(HttpMethod::GET, "{$this->subredditContext}/wiki/pages");
+        } else {
+            throw new SubredditContextException();
+        }
+    }
+
+    /**
+     * Returns a Wiki page from the current subreddit context.
+     *
+     * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
+     * @throws      SubredditContextException
+     */
+    public function wikiPage($wikiPageName) {
+        if (isset($this->subredditContext)) {
+            $response = $this->httpRequest(HttpMethod::GET, "{$this->subredditContext}/wiki/page/{$wikiPageName}");
+        } else {
+            throw new SubredditContextException();
+        }
     }
 
     public function raw($method, $url) {
@@ -82,6 +139,22 @@ class Reddit {
      */
     public function setUserAgent($userAgentString) {
         $this->userAgent = $userAgentString;
+    }
+
+    /**
+     * @internal
+     *
+     * If a passed thing string contains a prefix remove it for use in Reddit's API.
+     *
+     * Accepts and cleans both subreddits ("/r/" and "r/") and users ("/u/" and "u/"). If the prefix is not present,
+     * the string remains untouched.
+     *
+     * @param   string  $thing  The thing to cleanse.
+     * @return  string          The cleansed string.
+     */
+    private function stripPrefixes($thing) {
+        $prefixes = array("r/", "/r/", "u/", "/u/");
+        return str_replace($prefixes, "", $thing);
     }
 
     /**
