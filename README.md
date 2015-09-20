@@ -1,3 +1,8 @@
-# A barely functional Reddit API wrapper for PHP
+# A semi-functional Reddit API wrapper for PHP
 
-Use at own risk.
+Created because nothing else out there worked. Current working API end points:
+
+* me (/api/v1/me)
+* getComment (/$permalink.json)
+
+Used in upcoming project.
