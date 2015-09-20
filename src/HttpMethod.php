@@ -2,7 +2,6 @@
 
 namespace LukeNZ\Reddit;
 
-
 abstract class HttpMethod {
 
     const GET = 'get';
