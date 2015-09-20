@@ -62,6 +62,14 @@ class Reddit {
         $this->userAgent = $userAgentString;
     }
 
+    /**
+     * Fetches the headers that should be included in all OAuth calls to Reddit.
+     *
+     * By default, includes just the authorization header. If the user agent is set (recommended), this
+     * is included too.
+     *
+     * @return  array The headers to include in an HTTP request to Reddit
+     */
     private function getHeaders() {
         $headers = [
             'Authorization' => "{$this->tokenType} {$this->accessToken}"
@@ -75,6 +83,8 @@ class Reddit {
     }
 
     /**
+     * Makes an OAuth request to Reddit's servers.
+     *
      * @param   HttpMethod  $method The method that the Reddit API expects to be used.
      * @param   string      $url    URL to send to.
      */
@@ -92,7 +102,7 @@ class Reddit {
     /**
      * Request A Reddit Token
      *
-     * If the client does not have a current valid OAuth2 token, fetch one here.
+     * If the client does not have a current valid OAuth2 token, fetch one here. Set it as a cookie.
      */
     private function requestRedditToken() {
         $response = $this->client->post(Reddit::ACCESS_TOKEN_URL, array(
@@ -118,6 +128,7 @@ class Reddit {
         $this->tokenType = $body->token_type;
         $this->accessToken = $body->access_token;
 
+        // Set the cookie to expire in 60 minutes.
         setcookie('reddit_token', $this->tokenType . ':' . $this->accessToken, 60 * 60 + time());
     }
 }
