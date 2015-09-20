@@ -18,6 +18,11 @@ class Reddit {
      */
     public function __construct($username, $password, $clientId, $clientSecret) {
 
+        $this->username = $username;
+        $this->password = $password;
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+
         $this->client = new Client();
 
         if (!isset($_COOKIE['reddit_token'])) {
@@ -33,6 +38,10 @@ class Reddit {
 
     }
 
+    /**
+     * @param $method   string  $method The method that the Reddit API expects to be used.
+     * @param $url      string  $url    URL to send to.
+     */
     private function httpRequest($method, $url) {
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
@@ -46,6 +55,11 @@ class Reddit {
         ));
     }
 
+    /**
+     * Request A Reddit Token
+     *
+     * If the client does not have a current valid OAuth2 token, fetch one here.
+     */
     private function requestRedditToken() {
         $response = $this->client->post(Reddit::ACCESS_TOKEN_URL, array(
             'query' => [
