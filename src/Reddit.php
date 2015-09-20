@@ -75,8 +75,8 @@ class Reddit {
             'auth' => [$this->clientId, $this->clientSecret],
             'form_params' => [
                 'grant_type' => 'password',
-                'username' => $this->$username,
-                'password' => $this->$password
+                'username' => $this->username,
+                'password' => $this->password
             ]
         ));
 
