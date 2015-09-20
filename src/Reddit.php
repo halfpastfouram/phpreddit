@@ -5,7 +5,7 @@ use GuzzleHttp\Client;
 
 class Reddit {
 
-    protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent;
+    protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent, $callback;
 
     const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
     const OAUTH_URL = 'https://oauth.reddit.com/';
@@ -27,6 +27,8 @@ class Reddit {
 
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
+        } else {
+            // Get cookie params
         }
     }
 
@@ -34,8 +36,14 @@ class Reddit {
         return $this->httpRequest('GET', 'api/v1/me');
     }
 
-    public function getComment() {
-        return $this;
+    public function getComment($permalink) {
+
+        // Strip off the domain if it exists
+        if (stripos($permalink, 'reddit.com/') !== false) {
+            $permalink  = substr($permalink, stripos($permalink, 'reddit.com/') + strlen('reddit.com/'));
+        }
+
+        $response = $this->httpRequest('GET', Reddit::OAUTH_URL . $permalink . '.json');
     }
 
     public function raw($method, $url) {
