@@ -33,7 +33,7 @@ class Reddit {
     }
 
     public function me() {
-        return $this->httpRequest('GET', 'api/v1/me');
+        return $this->httpRequest(HttpMethod::GET, 'api/v1/me');
     }
 
     public function getComment($permalink) {
@@ -43,7 +43,7 @@ class Reddit {
             $permalink  = substr($permalink, stripos($permalink, 'reddit.com/') + strlen('reddit.com/'));
         }
 
-        $response = $this->httpRequest('GET', Reddit::OAUTH_URL . $permalink . '.json');
+        $response = $this->httpRequest(HttpMethod::GET, Reddit::OAUTH_URL . $permalink . '.json');
     }
 
     public function raw($method, $url) {
@@ -75,10 +75,10 @@ class Reddit {
     }
 
     /**
-     * @param   string  $method The method that the Reddit API expects to be used.
-     * @param   string  $url    URL to send to.
+     * @param   HttpMethod  $method The method that the Reddit API expects to be used.
+     * @param   string      $url    URL to send to.
      */
-    private function httpRequest($method, $url) {
+    private function httpRequest(HttpMethod $method, $url) {
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
         }
