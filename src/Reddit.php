@@ -5,16 +5,16 @@ use GuzzleHttp\Client;
 
 class Reddit {
 
-    protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType;
+    protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent;
 
     const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
     const OAUTH_URL = 'https://oauth.reddit.com/';
 
     /**
-     * @param $username     string $username The username of the user you wish to control.
-     * @param $password     string $username The password of the user you wish to control.
-     * @param $clientId     string $username Your application's client ID.
-     * @param $clientSecret string $username Your application's client secret.
+     * @param   string    $username       The username of the user you wish to control.
+     * @param   string    $password       The password of the user you wish to control.
+     * @param   string    $clientId       Your application's client ID.
+     * @param   string    $clientSecret   Your application's client secret.
      */
     public function __construct($username, $password, $clientId, $clientSecret) {
 
@@ -34,24 +34,50 @@ class Reddit {
         return $this->httpRequest('GET', 'api/v1/me');
     }
 
+    public function getComment() {
+        return $this;
+    }
+
     public function raw($method, $url) {
 
     }
 
     /**
-     * @param $method   string  $method The method that the Reddit API expects to be used.
-     * @param $url      string  $url    URL to send to.
+     * Sets the user agent string for the Reddit client instance.
+     *
+     * Not required, but recommended by Reddit's API guidelines to prevent ratelimiting. Unique and
+     * descriptive names encouraged. Spoofing browsers and bots disallowed.
+     *
+     * @param   string  $userAgentString    The user agent string to assign.
+     */
+    public function setUserAgent($userAgentString) {
+        $this->userAgent = $userAgentString;
+    }
+
+    private function getHeaders() {
+        $headers = [
+            'Authorization' => $this->token_type . ' ' . $this->access_token
+        ];
+
+        if (isset($this->userAgent)) {
+            $headers['User-Agent'] = $this->userAgent;
+        }
+
+        return $headers;
+    }
+
+    /**
+     * @param   string  $method The method that the Reddit API expects to be used.
+     * @param   string  $url    URL to send to.
      */
     private function httpRequest($method, $url) {
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
         }
 
-        // Perform the request
-        $response = $this->client->{$method}(Reddit::OAUTH_URL . $url, array(
-            'headers' => [
-                'Authorization' => $this->token_type . ' ' . $this->access_token
-            ]
+        // Perform the request and return the response
+        return $this->client->{$method}(Reddit::OAUTH_URL . $url, array(
+            'headers' => $this->getHeaders()
         ));
     }
 
