@@ -72,7 +72,7 @@ class Reddit {
                     'scope' => 'save,modposts,identity,edit,flair,history,modconfig,modflair,modlog,modposts,modwiki,mysubreddits,privatemessages,read,report,submit,subscribe,vote,wikiedit,wikiread'
                 ]
             ],
-            'auth' => [$this->$clientId, $this->clientSecret],
+            'auth' => [$this->clientId, $this->clientSecret],
             'form_params' => [
                 'grant_type' => 'password',
                 'username' => $this->$username,
