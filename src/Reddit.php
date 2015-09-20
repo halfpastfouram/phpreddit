@@ -40,6 +40,15 @@ class Reddit {
         return $this->httpRequest(HttpMethod::GET, 'api/v1/me');
     }
 
+    /**
+     * For a given Reddit permalink, returns the JSON comment.
+     *
+     * The permalink can either contain 'reddit.com' as a string or not, if it is present, it will be stripped off.
+     * This does not return the post associated with the comment.
+     *
+     * @param   string  $permalink  The permalink URL to the comment.
+     * @return  mixed               The comment that was asked for in JSON format.
+     */
     public function getComment($permalink) {
 
         // Strip off the domain if it exists
@@ -48,6 +57,9 @@ class Reddit {
         }
 
         $response = $this->httpRequest(HttpMethod::GET, $permalink . '.json');
+
+        // Strip off the listings and return the comment only.
+        return json_decode($response->getBody())[1]->data->children[0];
     }
 
     public function raw($method, $url) {
