@@ -85,10 +85,10 @@ class Reddit {
     /**
      * Makes an OAuth request to Reddit's servers.
      *
-     * @param   HttpMethod  $method The method that the Reddit API expects to be used.
-     * @param   string      $url    URL to send to.
+     * @param   string  $method The method that the Reddit API expects to be used.
+     * @param   string  $url    URL to send to.
      */
-    private function httpRequest(HttpMethod $method, $url) {
+    private function httpRequest($method, $url) {
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
         }
