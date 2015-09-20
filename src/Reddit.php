@@ -29,6 +29,10 @@ class Reddit {
             $this->requestRedditToken();
         } else {
             // Get cookie params
+            $cookie = $_COOKIE['reddit_token'];
+
+            $this->tokenType = explode(':', $cookie)[0];
+            $this->accessToken = explode(':', $cookie)[1];
         }
     }
 
