@@ -36,8 +36,14 @@ class Reddit {
         }
     }
 
+    /**
+     * Fetches the user currently logged and returns their data.
+     *
+     * @return mixed    The user currently logged in.
+     */
     public function me() {
-        return $this->httpRequest(HttpMethod::GET, 'api/v1/me');
+        $response = $this->httpRequest(HttpMethod::GET, 'api/v1/me');
+        return json_decode($response);
     }
 
     /**
@@ -79,6 +85,8 @@ class Reddit {
     }
 
     /**
+     * @internal
+     *
      * Fetches the headers that should be included in all OAuth calls to Reddit.
      *
      * By default, includes just the authorization header. If the user agent is set (recommended), this
@@ -99,6 +107,8 @@ class Reddit {
     }
 
     /**
+     * @internal
+     *
      * Makes an OAuth request to Reddit's servers.
      *
      * @param   string  $method The method that the Reddit API expects to be used.
@@ -116,6 +126,8 @@ class Reddit {
     }
 
     /**
+     * @internal
+     *
      * Request A Reddit Token
      *
      * If the client does not have a current valid OAuth2 token, fetch one here. Set it as a cookie.
