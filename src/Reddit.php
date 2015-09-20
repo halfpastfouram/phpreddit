@@ -43,7 +43,7 @@ class Reddit {
             $permalink  = substr($permalink, stripos($permalink, 'reddit.com/') + strlen('reddit.com/'));
         }
 
-        $response = $this->httpRequest(HttpMethod::GET, Reddit::OAUTH_URL . $permalink . '.json');
+        $response = $this->httpRequest(HttpMethod::GET, $permalink . '.json');
     }
 
     public function raw($method, $url) {
