@@ -64,7 +64,7 @@ class Reddit {
 
     private function getHeaders() {
         $headers = [
-            'Authorization' => $this->tokenType . ' ' . $this->accessToken
+            'Authorization' => "{$this->tokenType} {$this->accessToken}"
         ];
 
         if (isset($this->userAgent)) {
