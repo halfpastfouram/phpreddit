@@ -16,7 +16,10 @@ class Reddit {
      */
     protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent, $callback;
 
-    protected $subredditContext, $userContext;
+    /**
+     * @var
+     */
+    protected $subredditContext, $userContext, $thingContext;
 
     const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
     const OAUTH_URL = 'https://oauth.reddit.com/';
@@ -69,6 +72,18 @@ class Reddit {
     public function subreddit($subreddit) {
         $subreddit = $this->stripPrefixes($subreddit);
         $this->subredditContext = $subreddit;
+
+        return $this;
+    }
+
+    /**
+     * Sets the thing context for future method calls.
+     *
+     * @param   $thing  The thing to set the context for.
+     * @return  self
+     */
+    public function thing($thing) {
+        $this->thingContext = $thing;
 
         return $this;
     }
@@ -155,6 +170,43 @@ class Reddit {
 
         $response = $this->httpRequest(HttpMethod::POST, "api/submit", $options);
         return $response;
+    }
+
+    /**
+     * Semantic alias of editUserText for comments.
+     *
+     * @param $text
+     * @return mixed
+     */
+    public function editComment($text) {
+        return $this->editusertext($text);
+    }
+
+    /**
+     * Semantic alias of editUserText for selfposts.
+     *
+     * @param $text
+     * @return mixed
+     */
+    public function editSelfPost($text) {
+        return $this->editusertext($text);
+    }
+
+    /**
+     * Edit the body text of a comment or self-post.
+     *
+     * Accepts a parameter containing the raw markdown text to update the thing with. Expects a
+     * thing exists as a context before being called.
+     *
+     * @param $text
+     * @return mixed
+     */
+    public function editUserText($text) {
+        $options['api_type'] = 'json';
+        $options['thing_id'] = $this->thingContext;
+        $options['text'] = $text;
+
+        return $this->httpRequest(HttpMethod::POST, "api/editusertext", $options);
     }
 
     /**
