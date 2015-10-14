@@ -2,14 +2,23 @@
 namespace LukeNZ\Reddit\Contexts;
 
 use LukeNZ\Reddit\HttpMethod;
+use LukeNZ\Reddit\Contexts\ContextSetter;
 
-class Thing {
+class Thing implements ContextSetter {
 
 	protected $client, $thing;
 
-	public function __construct($client, $thing) {
+	public function __construct($client, $thing, $otherContexts) {
 		$this->client = $client;
 		$this->thing = $thing;
+
+		if (array_key_exists('username', $otherContexts)) {
+			$this->username = $otherContexts['username'];
+		}
+
+		if (array_key_exists('subreddit', $otherContexts)) {
+			$this->thing = $otherContexts['subreddit'];
+		}
 	}
 
 	/**
@@ -95,4 +104,7 @@ class Thing {
         $response = $this->client->httpRequest(HttpMethod::POST, "api/editusertext", $options);
         return $response->getBody();
     }
+
+    public function setFlair(array $options) {		
+	}
 }
