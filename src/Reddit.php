@@ -175,7 +175,7 @@ class Reddit {
     /**
      * Semantic alias of editUserText for comments.
      *
-     * @param $text
+     * @param string $text
      * @return mixed
      */
     public function editComment($text) {
@@ -185,7 +185,7 @@ class Reddit {
     /**
      * Semantic alias of editUserText for selfposts.
      *
-     * @param $text
+     * @param string $text
      * @return mixed
      */
     public function editSelfPost($text) {
@@ -210,14 +210,39 @@ class Reddit {
         return $response->getBody();
     }
 
+    /**
+      * Stickies the current post in the thread context.
+      * 
+      * Semantic alias for setSubredditSticky(true, $num);
+      * 
+      * @param integer $num 
+      * @return mixed
+      */
     public function stickyPost($num) {
         return $this->setSubredditSticky(true, $num);
     }
 
+    /**
+     * Unstickies the current post in the thread context, if it is stickied.
+     * 
+     * Semantic alias for setSubredditSticky(false);
+     * 
+     * @return mixed
+     */
     public function unstickyPost() {
         return $this->setSubredditSticky(false);
     }
 
+    /**
+     * For a given post in the thread context, either stickies it or unstickies it
+     * based on the boolean $state argument in the $num'th position (either 1 or 2).
+     * 
+     * Direct one to one mapping with the "api/set_subreddit_sticky" Reddit call.
+     * 
+     * @param boolean $state 
+     * @param integer $num 
+     * @return mixed
+     */
     public function setSubredditSticky($state, $num = null) {
         $options['api_type'] = 'json';
         $options['id'] = $this->thingContext;
