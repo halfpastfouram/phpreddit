@@ -57,7 +57,7 @@ class Reddit {
         $user = $this->stripPrefixes($user);
         $this->userContext = $user;
 
-        return this;
+        return $this;
     }
 
     /**
@@ -70,7 +70,7 @@ class Reddit {
         $subreddit = $this->stripPrefixes($subreddit);
         $this->subredditContext = $subreddit;
 
-        return this;
+        return $this;
     }
 
     /**
