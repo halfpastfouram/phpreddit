@@ -2,14 +2,23 @@
 namespace LukeNZ\Reddit\Contexts;
 
 use LukeNZ\Reddit\HttpMethod;
+use LukeNZ\Reddit\Contexts\ContextSetter;
 
-class Subreddit {
+class Subreddit implements ContextSetter {
 
 	protected $client, $subreddit;
 
-	public function __construct($client, $subreddit) {
+	public function __construct($client, $subreddit, $otherContexts) {
 		$this->client = $client;
 		$this->subreddit = $subreddit;
+		
+		if (array_key_exists('username', $otherContexts)) {
+			$this->username = $otherContexts['username'];
+		}
+
+		if (array_key_exists('thing', $otherContexts)) {
+			$this->thing = $otherContexts['thing'];
+		}
 	}
 
 	/**
@@ -51,6 +60,18 @@ class Subreddit {
 
         $response = $this->client->httpRequest(HttpMethod::POST, "api/submit", $options);
         return $response->getBody();
+    }
+
+    public function clearFlairTemplates($flairType) {    	
+    }
+
+    public function deleteFlairTemplate($templateId) {    	
+    }
+
+    public function setFlairConfiguration(array $options) {    	
+    }
+
+    public function setFlairCSV(array $csv) {    	
     }
 
 }

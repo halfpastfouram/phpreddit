@@ -7,11 +7,13 @@ use LukeNZ\Reddit\Contexts\User;
 use LukeNZ\Reddit\Contexts\Subreddit;
 use LukeNZ\Reddit\Contexts\Thing;
 
+use LukeNZ\Reddit\Contexts\ContextSetter;
+
 /**
  * Class Reddit
  * @package LukeNZ\Reddit
  */
-class Reddit {
+class Reddit implements ContextSetter {
 
     /**
      * @var Client
