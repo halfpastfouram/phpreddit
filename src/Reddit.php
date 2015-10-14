@@ -5,8 +5,15 @@ use GuzzleHttp\Client;
 use LukeNZ\Reddit\Exceptions\SubredditContextException;
 use LukeNZ\Reddit\Exceptions\UserContextException;
 
+/**
+ * Class Reddit
+ * @package LukeNZ\Reddit
+ */
 class Reddit {
 
+    /**
+     * @var Client
+     */
     protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent, $callback;
 
     protected $subredditContext, $userContext;
@@ -38,6 +45,32 @@ class Reddit {
             $this->tokenType = explode(':', $cookie)[0];
             $this->accessToken = explode(':', $cookie)[1];
         }
+    }
+
+    /**
+     * Sets the user context for future method calls.
+     *
+     * @param   $user   The user to set the context for.
+     * @return  self
+     */
+    public function user($user) {
+        $user = $this->stripPrefixes($user);
+        $this->userContext = $user;
+
+        return this;
+    }
+
+    /**
+     * Sets the subreddit context for future method calls.
+     *
+     * @param   $subreddit  The subreddit to set the context for.
+     * @return  self
+     */
+    public function subreddit($subreddit) {
+        $subreddit = $this->stripPrefixes($subreddit);
+        $this->subredditContext = $subreddit;
+
+        return this;
     }
 
     /**
@@ -73,32 +106,6 @@ class Reddit {
     }
 
     /**
-     * Sets the user context for future method calls.
-     *
-     * @param   $user   The user to set the context for.
-     * @return  self
-     */
-    public function user($user) {
-        $user = $this->stripPrefixes($user);
-        $this->userContext = $user;
-
-        return this;
-    }
-
-    /**
-     * Sets the subreddit context for future method calls.
-     *
-     * @param   $subreddit  The subreddit to set the context for.
-     * @return  self
-     */
-    public function subreddit($subreddit) {
-        $subreddit = $this->stripPrefixes($subreddit);
-        $this->subredditContext = $subreddit;
-
-        return this;
-    }
-
-    /**
      * Returns a list of Wiki pages from the current subreddit context.
      *
      * @throws SubredditContextException
@@ -125,8 +132,29 @@ class Reddit {
         }
     }
 
-    public function raw($method, $url) {
+    /**
+     * Submits either a selfpost or a link to the subreddit specified in the context.
+     *
+     * Expects an array of options to be passed through as the POST body:
+     * 'captcha' the user's response to the CAPTCHA challenge
+     * 'extension' extension used for redirects
+     * 'iden' the identifier of the CAPTCHA challenge
+     * 'kind' one of (link, self)
+     * 'resubmit' boolean value
+     * 'sendreplies' boolean value
+     * 'text' raw markdown text
+     * 'title' title of the submission. up to 300 characters long
+     * 'url' a valid URL
+     *
+     * @param array $options
+     * @return mixed
+     */
+    public function submit(array $options) {
+        $options['api_type'] = 'json';
+        $options['sr'] = $this->subredditContext;
 
+        $response = $this->httpRequest(HttpMethod::POST, "api/submit", $options);
+        return $response;
     }
 
     /**
@@ -187,15 +215,21 @@ class Reddit {
      * @param   string  $method The method that the Reddit API expects to be used.
      * @param   string  $url    URL to send to.
      */
-    private function httpRequest($method, $url) {
+    private function httpRequest($method, $url, $body = null) {
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
         }
 
-        // Perform the request and return the response
-        return $this->client->{$method}(Reddit::OAUTH_URL . $url, array(
+        $headersAndBody = array(
             'headers' => $this->getHeaders()
-        ));
+        );
+
+        if (!is_null($body)) {
+            $headersAndBody['json'] = $body;
+        }
+
+        // Perform the request and return the response
+        return $this->client->{$method}(Reddit::OAUTH_URL . $url, $headersAndBody);
     }
 
     /**
