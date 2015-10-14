@@ -210,6 +210,27 @@ class Reddit {
         return $response->getBody();
     }
 
+    public function stickyPost($num) {
+        return $this->setSubredditSticky(true, $num);
+    }
+
+    public function unstickyPost() {
+        return $this->setSubredditSticky(false);
+    }
+
+    public function setSubredditSticky($state, $num = null) {
+        $options['api_type'] = 'json';
+        $options['id'] = $this->thingContext;
+        $options['state'] = $state;
+
+        if (!is_null($num)) {
+            $optioms['num'] = $num;
+        }
+
+        $response = $this->httpRequest(HttpMethod::POST, "api/set_subreddit_sticky", $options);
+        return $response->getBody();
+    }
+
     /**
      * Sets the user agent string for the Reddit client instance.
      *
