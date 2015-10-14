@@ -2,9 +2,10 @@
 namespace LukeNZ\Reddit\Contexts;
 
 use LukeNZ\Reddit\HttpMethod;
-use LukeNZ\Reddit\Contexts\ContextSetter;
 
-class Subreddit implements ContextSetter {
+class Subreddit {
+
+	use ContextSetterTrait;
 
 	protected $client, $subreddit;
 
