@@ -2,8 +2,10 @@
 namespace LukeNZ\Reddit;
 
 use GuzzleHttp\Client;
-use LukeNZ\Reddit\Exceptions\SubredditContextException;
-use LukeNZ\Reddit\Exceptions\UserContextException;
+
+use LukeNZ\Reddit\Contexts\User;
+use LukeNZ\Reddit\Contexts\Subreddit;
+use LukeNZ\Reddit\Contexts\Thing;
 
 /**
  * Class Reddit
@@ -54,38 +56,30 @@ class Reddit {
      * Sets the user context for future method calls.
      *
      * @param   $user   The user to set the context for.
-     * @return  self
+     * @return  Contexts\User
      */
     public function user($user) {
-        $user = $this->stripPrefixes($user);
-        $this->userContext = $user;
-
-        return $this;
+        return new Contexts\User($this, $this->stripPrefixes($user));
     }
 
     /**
      * Sets the subreddit context for future method calls.
      *
      * @param   $subreddit  The subreddit to set the context for.
-     * @return  self
+     * @return  Contexts\Subreddit
      */
     public function subreddit($subreddit) {
-        $subreddit = $this->stripPrefixes($subreddit);
-        $this->subredditContext = $subreddit;
-
-        return $this;
+        return new Contexts\Subreddit($this, $this->stripPrefixes($subreddit));
     }
 
     /**
      * Sets the thing context for future method calls.
      *
      * @param   $thing  The thing to set the context for.
-     * @return  self
+     * @return  Contexts\Thing
      */
     public function thing($thing) {
-        $this->thingContext = $thing;
-
-        return $this;
+        return new Contexts\Thing($this, $thing);
     }
 
     /**
@@ -118,142 +112,6 @@ class Reddit {
 
         // Strip off the listings and return the comment only.
         return json_decode($response->getBody())[1]->data->children[0];
-    }
-
-    /**
-     * Returns a list of Wiki pages from the current subreddit context.
-     *
-     * @throws SubredditContextException
-     */
-    public function wikiPages() {
-        if (isset($this->subredditContext)) {
-            $response = $this->httpRequest(HttpMethod::GET, "{$this->subredditContext}/wiki/pages");
-        } else {
-            throw new SubredditContextException();
-        }
-    }
-
-    /**
-     * Returns a Wiki page from the current subreddit context.
-     *
-     * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
-     * @throws      SubredditContextException
-     */
-    public function wikiPage($wikiPageName) {
-        if (isset($this->subredditContext)) {
-            $response = $this->httpRequest(HttpMethod::GET, "{$this->subredditContext}/wiki/page/{$wikiPageName}");
-        } else {
-            throw new SubredditContextException();
-        }
-    }
-
-    /**
-     * Submits either a selfpost or a link to the subreddit specified in the context.
-     *
-     * Expects an array of options to be passed through as the POST body:
-     * 'captcha' the user's response to the CAPTCHA challenge
-     * 'extension' extension used for redirects
-     * 'iden' the identifier of the CAPTCHA challenge
-     * 'kind' one of (link, self)
-     * 'resubmit' boolean value
-     * 'sendreplies' boolean value
-     * 'text' raw markdown text
-     * 'title' title of the submission. up to 300 characters long
-     * 'url' a valid URL
-     *
-     * @param array $options
-     * @return mixed
-     */
-    public function submit(array $options) {
-        $options['api_type'] = 'json';
-        $options['sr'] = $this->subredditContext;
-
-        $response = $this->httpRequest(HttpMethod::POST, "api/submit", $options);
-        return $response->getBody();
-    }
-
-    /**
-     * Semantic alias of editUserText for comments.
-     *
-     * @param string $text
-     * @return mixed
-     */
-    public function editComment($text) {
-        return $this->editusertext($text);
-    }
-
-    /**
-     * Semantic alias of editUserText for selfposts.
-     *
-     * @param string $text
-     * @return mixed
-     */
-    public function editSelfPost($text) {
-        return $this->editusertext($text);
-    }
-
-    /**
-     * Edit the body text of a comment or self-post.
-     *
-     * Accepts a parameter containing the raw markdown text to update the thing with. Expects a
-     * thing exists as a context before being called.
-     *
-     * @param $text
-     * @return mixed
-     */
-    public function editUserText($text) {
-        $options['api_type'] = 'json';
-        $options['thing_id'] = $this->thingContext;
-        $options['text'] = $text;
-
-        $response = $this->httpRequest(HttpMethod::POST, "api/editusertext", $options);
-        return $response->getBody();
-    }
-
-    /**
-      * Stickies the current post in the thread context.
-      * 
-      * Semantic alias for setSubredditSticky(true, $num);
-      * 
-      * @param integer $num 
-      * @return mixed
-      */
-    public function stickyPost($num) {
-        return $this->setSubredditSticky(true, $num);
-    }
-
-    /**
-     * Unstickies the current post in the thread context, if it is stickied.
-     * 
-     * Semantic alias for setSubredditSticky(false);
-     * 
-     * @return mixed
-     */
-    public function unstickyPost() {
-        return $this->setSubredditSticky(false);
-    }
-
-    /**
-     * For a given post in the thread context, either stickies it or unstickies it
-     * based on the boolean $state argument in the $num'th position (either 1 or 2).
-     * 
-     * Direct one to one mapping with the "api/set_subreddit_sticky" Reddit call.
-     * 
-     * @param boolean $state 
-     * @param integer $num 
-     * @return mixed
-     */
-    public function setSubredditSticky($state, $num = null) {
-        $options['api_type'] = 'json';
-        $options['id'] = $this->thingContext;
-        $options['state'] = $state;
-
-        if (!is_null($num)) {
-            $optioms['num'] = $num;
-        }
-
-        $response = $this->httpRequest(HttpMethod::POST, "api/set_subreddit_sticky", $options);
-        return $response->getBody();
     }
 
     /**
@@ -307,14 +165,12 @@ class Reddit {
     }
 
     /**
-     * @internal
-     *
      * Makes an OAuth request to Reddit's servers.
      *
      * @param   string  $method The method that the Reddit API expects to be used.
      * @param   string  $url    URL to send to.
      */
-    private function httpRequest($method, $url, $body = null) {
+    public function httpRequest($method, $url, $body = null) {
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
         }
