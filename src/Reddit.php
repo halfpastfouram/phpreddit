@@ -169,7 +169,7 @@ class Reddit {
         $options['sr'] = $this->subredditContext;
 
         $response = $this->httpRequest(HttpMethod::POST, "api/submit", $options);
-        return $response;
+        return $response->getBody();
     }
 
     /**
@@ -206,7 +206,8 @@ class Reddit {
         $options['thing_id'] = $this->thingContext;
         $options['text'] = $text;
 
-        return $this->httpRequest(HttpMethod::POST, "api/editusertext", $options);
+        $response = $this->httpRequest(HttpMethod::POST, "api/editusertext", $options);
+        return $response->getBody();
     }
 
     /**
@@ -277,7 +278,7 @@ class Reddit {
         );
 
         if (!is_null($body)) {
-            $headersAndBody['json'] = $body;
+            $headersAndBody['form_params'] = $body;
         }
 
         // Perform the request and return the response
