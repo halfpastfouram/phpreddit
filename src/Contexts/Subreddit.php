@@ -18,7 +18,7 @@ class Subreddit {
      * Returns a list of Wiki pages from the current subreddit.
      */
     public function wikiPages() {
-        $response = $this->client->httpRequest(HttpMethod::GET, "{$this->client->subredditContext}/wiki/pages");
+        $response = $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/pages");
     }
 
     /**
@@ -27,7 +27,7 @@ class Subreddit {
      * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
      */
     public function wikiPage($wikiPageName) {
-        return $this->client->httpRequest(HttpMethod::GET, "{$this->client->subredditContext}/wiki/{$wikiPageName}");
+        return $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/{$wikiPageName}");
     }
 
     /**
