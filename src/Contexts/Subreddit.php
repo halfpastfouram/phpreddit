@@ -19,7 +19,7 @@ class Subreddit {
      */
     public function wikiPages() {
         $response = $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/pages");
-        return json_decode($response->getBody())
+        return json_decode($response->getBody());
     }
 
     /**
