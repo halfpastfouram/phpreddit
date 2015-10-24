@@ -19,6 +19,7 @@ class Subreddit {
      */
     public function wikiPages() {
         $response = $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/pages");
+        return json_decode($response->getBody())
     }
 
     /**
@@ -27,7 +28,8 @@ class Subreddit {
      * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
      */
     public function wikiPage($wikiPageName) {
-        return $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/{$wikiPageName}");
+        $response = $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/{$wikiPageName}");
+        return json_decode($response->getBody());
     }
 
     /**
