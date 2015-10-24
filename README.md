@@ -46,12 +46,17 @@ still be used.
 
 ## Current Endpoints
 
-* me (/api/v1/me)
-* getComment (/{$permalink}.json)
-* wikiPages (/{$subreddit}/wiki/pages)
-* wikiPage (/{$subreddit}/wiki/page/{$page})
-* submit (/api/submit)
-* editComment, editSelfPost, editUserText (/api/editusertext)
-* stickyPost, unstickyPost, setSubredditSticky (/api/set_subreddit_sticky) *^(To be documented)
+Shown below is a list of API endpoints and how they are implemented by phpreddit, with the columns referring
+to what class the methods can be called from.
+
+| API endpoints | `Reddit` | `Subreddit`  | `User` | `Thing` |
+|---|---|---|---|---|
+| me (/api/v1/me) | me |  |  |  |
+| getComment (/{$permalink}.json)| getComment |  |  |  |
+| wikiPages (/{$subreddit}/wiki/pages) |  | wikiPages |  |  |
+| wikiPage (/{$subreddit}/wiki/page/{$page}) |  | wikiPage |  |  |
+| submit (/api/submit) |  | submit |  |  |
+| editUserText (/api/editusertext) |  |  |  | editComment, editSelfpost, editUserText |
+| setSubredditSticky (/api/set_subreddit_sticky) |  |  |  | stickyPost, unstickyPost, setSubredditSticky |
 
 Used in upcoming project, eventually will support all endpoints and other features such as appending/prepending, etc.

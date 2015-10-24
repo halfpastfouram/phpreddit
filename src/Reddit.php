@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use LukeNZ\Reddit\Contexts\User;
 use LukeNZ\Reddit\Contexts\Subreddit;
 use LukeNZ\Reddit\Contexts\Thing;
-
 /**
  * Class Reddit
  * @package LukeNZ\Reddit
