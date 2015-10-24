@@ -7,26 +7,18 @@ class Subreddit {
 
 	use ContextSetterTrait;
 
-	protected $client, $subreddit;
+	protected $client;
 
-	public function __construct($client, $subreddit, $otherContexts) {
+	public function __construct($client, $subreddit) {
 		$this->client = $client;
-		$this->subreddit = $subreddit;
-		
-		if (array_key_exists('username', $otherContexts)) {
-			$this->username = $otherContexts['username'];
-		}
-
-		if (array_key_exists('thing', $otherContexts)) {
-			$this->thing = $otherContexts['thing'];
-		}
+		$this->client->subredditContext = $subreddit;
 	}
 
 	/**
      * Returns a list of Wiki pages from the current subreddit.
      */
     public function wikiPages() {
-        $response = $this->client->httpRequest(HttpMethod::GET, "{$this->subreddit}/wiki/pages");
+        $response = $this->client->httpRequest(HttpMethod::GET, "{$this->client->subredditContext}/wiki/pages");
     }
 
     /**
@@ -35,7 +27,7 @@ class Subreddit {
      * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
      */
     public function wikiPage($wikiPageName) {
-        return $this->client->httpRequest(HttpMethod::GET, "{$this->subreddit}/wiki/{$wikiPageName}");
+        return $this->client->httpRequest(HttpMethod::GET, "{$this->client->subredditContext}/wiki/{$wikiPageName}");
     }
 
     /**
@@ -57,7 +49,7 @@ class Subreddit {
      */
     public function submit(array $options) {
         $options['api_type'] = 'json';
-        $options['sr'] = $this->subreddit;
+        $options['sr'] = $this->client->subredditContext;
 
         $response = $this->client->httpRequest(HttpMethod::POST, "api/submit", $options);
         return $response->getBody();

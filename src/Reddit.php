@@ -20,7 +20,7 @@ class Reddit {
     /**
      * @var
      */
-    protected $subredditContext, $userContext, $thingContext;
+    public $subredditContext, $userContext, $thingContext;
 
     const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
     const OAUTH_URL = 'https://oauth.reddit.com/';

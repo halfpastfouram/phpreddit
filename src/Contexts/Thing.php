@@ -9,17 +9,9 @@ class Thing {
 
 	protected $client, $thing;
 
-	public function __construct($client, $thing, $otherContexts) {
+	public function __construct($client, $thing) {
 		$this->client = $client;
-		$this->thing = $thing;
-
-		if (array_key_exists('username', $otherContexts)) {
-			$this->username = $otherContexts['username'];
-		}
-
-		if (array_key_exists('subreddit', $otherContexts)) {
-			$this->thing = $otherContexts['subreddit'];
-		}
+		$this->client->thingContext = $thing;
 	}
 
 	/**
@@ -57,7 +49,7 @@ class Thing {
      */
     public function setSubredditSticky($state, $num = null) {
         $options['api_type'] = 'json';
-        $options['id'] = $this->thing;
+        $options['id'] = $this->client->thingContext;
         $options['state'] = $state;
 
         if (!is_null($num)) {
@@ -99,7 +91,7 @@ class Thing {
      */
     public function editUserText($text) {
         $options['api_type'] = 'json';
-        $options['thing_id'] = $this->thing;
+        $options['thing_id'] = $this->client->thingContext;
         $options['text'] = $text;
 
         $response = $this->client->httpRequest(HttpMethod::POST, "api/editusertext", $options);
