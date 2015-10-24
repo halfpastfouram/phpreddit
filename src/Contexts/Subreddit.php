@@ -35,7 +35,7 @@ class Subreddit {
      * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
      */
     public function wikiPage($wikiPageName) {
-        $response = $this->client->httpRequest(HttpMethod::GET, "{$this->subreddit}/wiki/page/{$wikiPageName}");
+        return $this->client->httpRequest(HttpMethod::GET, "{$this->subreddit}/wiki/{$wikiPageName}");
     }
 
     /**
