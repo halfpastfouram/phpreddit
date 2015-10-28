@@ -7,7 +7,7 @@ class User {
 
 	use ContextSetterTrait;
 
-	protected $client, $user;
+	protected $client;
 
 	public function __construct($client, $username) {
 		$this->client = $client;

@@ -10,17 +10,7 @@ trait ContextSetterTrait {
      * @return  Contexts\User
      */
     public function user($user) {
-    	$otherContexts = [];
-
-    	if (isset($this->username)) {
-    		$otherContexts['username'] = $this->username;
-    	}
-
-    	if (isset($this->thing)) {
-    		$otherContexts['thing'] = $this->thing;
-    	}
-
-        return new Contexts\User($this->client, $otherContexts);
+        return new Contexts\User($this->client, $user);
     }
 
     /**
@@ -30,17 +20,7 @@ trait ContextSetterTrait {
      * @return  Contexts\Subreddit
      */
     public function subreddit($subreddit) {
-    	$otherContexts = [];
-
-    	if (isset($this->username)) {
-    		$otherContexts['username'] = $this->username;
-    	}
-
-    	if (isset($this->thing)) {
-    		$otherContexts['thing'] = $this->thing;
-    	}
-
-        return new Contexts\Subreddit($this->client, $subreddit, $otherContexts);
+        return new Contexts\Subreddit($this->client, $subreddit);
     }
 
     /**
@@ -50,16 +30,6 @@ trait ContextSetterTrait {
      * @return  Contexts\Thing
      */
     public function thing($thing) {
-    	$otherContexts = [];
-
-    	if (isset($this->username)) {
-    		$otherContexts['username'] = $this->username;
-    	}
-
-    	if (isset($this->thing)) {
-    		$otherContexts['thing'] = $this->thing;
-    	}
-
-        return new Contexts\Subreddit($this->client, $subreddit, $otherContexts);
+        return new Contexts\Thing($this->client, $thing);
     }
 }

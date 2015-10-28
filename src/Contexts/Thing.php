@@ -7,7 +7,7 @@ class Thing {
 
 	use ContextSetterTrait;
 
-	protected $client, $thing;
+	protected $client;
 
 	public function __construct($client, $thing) {
 		$this->client = $client;
@@ -61,23 +61,13 @@ class Thing {
     }
 
     /**
-     * Semantic alias of editUserText for comments.
+     * Semantic alias of editUserText to make for more readable code.
      *
      * @param string $text
      * @return mixed
      */
-    public function editComment($text) {
-        return $this->editusertext($text);
-    }
-
-    /**
-     * Semantic alias of editUserText for selfposts.
-     *
-     * @param string $text
-     * @return mixed
-     */
-    public function editSelfPost($text) {
-        return $this->editusertext($text);
+    public function edit($text) {
+        return $this->editUserText($text);
     }
 
     /**
