@@ -56,7 +56,7 @@ class Subreddit {
         $options['sr'] = $this->client->subredditContext;
 
         $response = $this->client->httpRequest(HttpMethod::POST, "api/submit", $options);
-        return json_decode($response->getBody());
+        return json_decode($response->getBody())->json;
     }
 
     public function clearFlairTemplates($flairType) {    	
