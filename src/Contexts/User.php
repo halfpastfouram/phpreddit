@@ -44,7 +44,7 @@ class User {
         $options['sr_detail'] = $subredditDetail;
 
         $response = $this->client->httpRequest(HttpMethod::POST, "api/{$this->client->userContext}/submitted", $options);
-        return $response->getBody();
+        return json_decode($response->getBody());
     }
 
 	public function setFlair(array $options) {		

@@ -85,7 +85,7 @@ class Thing {
         $options['text'] = $text;
 
         $response = $this->client->httpRequest(HttpMethod::POST, "api/editusertext", $options);
-        return $response->getBody();
+        return json_decode($response->getBody());
     }
 
     public function setFlair(array $options) {		
