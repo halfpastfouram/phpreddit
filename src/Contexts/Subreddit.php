@@ -26,7 +26,7 @@ class Subreddit {
     /**
      * Returns a Wiki page from the current subreddit.
      *
-     * @param       $wikiPageName               The page name from the subreddit wiki to retrieve.
+     * @param string $wikiPageName  The page name from the subreddit wiki to retrieve.
      * @return mixed
      */
     public function wikiPage($wikiPageName) {

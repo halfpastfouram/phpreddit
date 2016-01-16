@@ -152,6 +152,11 @@ class Reddit {
      * @return  array The headers to include in an HTTP request to Reddit
      */
     private function getHeaders() {
+        $token_info = explode(":", $_COOKIE['reddit_token']);
+
+        $this->token_type = $token_info[0];
+        $this->access_token = $token_info[1];
+
         $headers = [
             'Authorization' => "{$this->tokenType} {$this->accessToken}"
         ];
