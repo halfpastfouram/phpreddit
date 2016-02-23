@@ -42,13 +42,13 @@ class Reddit {
 
         if (!isset($_COOKIE['reddit_token'])) {
             $this->requestRedditToken();
-        } else {
-            // Get cookie params
-            $cookie = $_COOKIE['reddit_token'];
-
-            $this->tokenType = explode(':', $cookie)[0];
-            $this->accessToken = explode(':', $cookie)[1];
         }
+
+        // Get cookie params
+        $cookie = $_COOKIE['reddit_token'];
+
+        $this->tokenType = explode(':', $cookie)[0];
+        $this->accessToken = explode(':', $cookie)[1];
     }
 
     /**
@@ -154,8 +154,8 @@ class Reddit {
     private function getHeaders() {
         $token_info = explode(":", $_COOKIE['reddit_token']);
 
-        $this->token_type = $token_info[0];
-        $this->access_token = $token_info[1];
+        $this->tokenType = $token_info[0];
+        $this->accessToken = $token_info[1];
 
         $headers = [
             'Authorization' => "{$this->tokenType} {$this->accessToken}"
@@ -224,5 +224,8 @@ class Reddit {
 
         // Set the cookie to expire in 60 minutes.
         setcookie('reddit_token', $this->tokenType . ':' . $this->accessToken, 60 * 60 + time());
+
+        // Make the cookie available for this request.
+        $_COOKIE['reddit_token'] = $this->tokenType . ':' . $this->accessToken;
     }
 }
