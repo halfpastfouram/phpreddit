@@ -136,15 +136,15 @@ class Reddit {
      * This defaults to TokenStorageMethod::Cookie by default, but if serverside use is required, 'Redis' and 'File'
      * are also available.
      *
-     * @param TokenStorageMethod    $tokenStorageMethod     The method used to store tokens.
-     * @param string                $key                    The key to store the token in.
-     * @param string                $tokenStorageFile       If the chosen storage method is 'File', require a file to store the key at.
+     * @param int       $tokenStorageMethod     The method used to store tokens.
+     * @param string    $key                    The key to store the token in.
+     * @param string    $tokenStorageFile       If the chosen storage method is 'File', require a file to store the key at.
      *
      * @return Reddit
      *
      * @throws TokenStorageException
      */
-    public function setTokenStorageMethod(TokenStorageMethod $tokenStorageMethod, $key = "phpreddit:token", $tokenStorageFile = null) {
+    public function setTokenStorageMethod($tokenStorageMethod, $key = "phpreddit:token", $tokenStorageFile = null) {
         // If a storage method of file is chosen yet no file location is provided, throw a TokenStorageException
         if ($tokenStorageMethod === TokenStorageMethod::File && $tokenStorageFile === null) {
             throw new TokenStorageException();
