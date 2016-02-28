@@ -1,11 +1,10 @@
 <?php
 namespace LukeNZ\Reddit;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use LukeNZ\Reddit\Exceptions\TokenStorageException;
+use Predis\Client as PredisClient;
 
-use LukeNZ\Reddit\Contexts\User;
-use LukeNZ\Reddit\Contexts\Subreddit;
-use LukeNZ\Reddit\Contexts\Thing;
 /**
  * Class Reddit
  * @package LukeNZ\Reddit
@@ -13,12 +12,24 @@ use LukeNZ\Reddit\Contexts\Thing;
 class Reddit {
 
     /**
-     * @var Client
+     * @var $client
+     * @var $username
+     * @var $password
+     * @var $clientId
+     * @var $clientSecret
      */
-    protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType, $userAgent, $callback;
+    protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType,
+        $userAgent, $callback;
+
+
+    protected $tokenStorageMethod           = TokenStorageMethod::Cookie;
+    protected $tokenStorageKey              = "phpreddit:token";
+    protected $tokenStorageFile;
 
     /**
-     * @var
+     * @var $subredditContext
+     * @var $userContext
+     * @var $thingContext
      */
     public $subredditContext, $userContext, $thingContext;
 
@@ -38,23 +49,13 @@ class Reddit {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
 
-        $this->client = new Client();
-
-        if (!isset($_COOKIE['reddit_token'])) {
-            $this->requestRedditToken();
-        }
-
-        // Get cookie params
-        $cookie = $_COOKIE['reddit_token'];
-
-        $this->tokenType = explode(':', $cookie)[0];
-        $this->accessToken = explode(':', $cookie)[1];
+        $this->client = new GuzzleClient();
     }
 
     /**
      * Sets the user context for future method calls.
      *
-     * @param   $user   The user to set the context for.
+     * @param   string  $user   The user to set the context for.
      * @return  Contexts\User
      */
     public function user($user) {
@@ -64,7 +65,7 @@ class Reddit {
     /**
      * Sets the subreddit context for future method calls.
      *
-     * @param   $subreddit  The subreddit to set the context for.
+     * @param   string  $subreddit  The subreddit to set the context for.
      * @return  Contexts\Subreddit
      */
     public function subreddit($subreddit) {
@@ -74,7 +75,7 @@ class Reddit {
     /**
      * Sets the thing context for future method calls.
      *
-     * @param   $thing  The thing to set the context for.
+     * @param   string  $thing  The thing to set the context for.
      * @return  Contexts\Thing
      */
     public function thing($thing) {
@@ -119,10 +120,43 @@ class Reddit {
      * Not required, but recommended by Reddit's API guidelines to prevent ratelimiting. Unique and
      * descriptive names encouraged. Spoofing browsers and bots disallowed.
      *
-     * @param   string  $userAgentString    The user agent string to assign.
+     * @param   string $userAgentString     The user agent string to assign.
+     * @return $this    The Reddit client
      */
     public function setUserAgent($userAgentString) {
         $this->userAgent = $userAgentString;
+
+        // Allow for method chaining
+        return $this;
+    }
+
+    /**
+     * Sets the way a Reddit OAuth Bearer token is stored.
+     *
+     * This defaults to TokenStorageMethod::Cookie by default, but if serverside use is required, 'Redis' and 'File'
+     * are also available.
+     *
+     * @param TokenStorageMethod    $tokenStorageMethod     The method used to store tokens.
+     * @param string                $key                    The key to store the token in.
+     * @param string                $tokenStorageFile       If the chosen storage method is 'File', require a file to store the key at.
+     *
+     * @return Reddit
+     *
+     * @throws TokenStorageException
+     */
+    public function setTokenStorageMethod(TokenStorageMethod $tokenStorageMethod, $key = "phpreddit:token", $tokenStorageFile = null) {
+        // If a storage method of file is chosen yet no file location is provided, throw a TokenStorageException
+        if ($tokenStorageMethod === TokenStorageMethod::File && $tokenStorageFile === null) {
+            throw new TokenStorageException();
+        }
+
+        // Set the storage method and the chosen key name
+        $this->tokenStorageMethod       = $tokenStorageMethod;
+        $this->tokenStorageKey          = $key;
+        $this->tokenStorageFile         = $tokenStorageFile;
+
+        // Allow for method chaining
+        return $this;
     }
 
     /**
@@ -152,13 +186,10 @@ class Reddit {
      * @return  array The headers to include in an HTTP request to Reddit
      */
     private function getHeaders() {
-        $token_info = explode(":", $_COOKIE['reddit_token']);
-
-        $this->tokenType = $token_info[0];
-        $this->accessToken = $token_info[1];
+        $token = $this->getRedditToken();
 
         $headers = [
-            'Authorization' => "{$this->tokenType} {$this->accessToken}"
+            'Authorization' => "{$token['tokenType']} {$token['accessToken']}"
         ];
 
         if (isset($this->userAgent)) {
@@ -173,11 +204,10 @@ class Reddit {
      *
      * @param   string  $method The method that the Reddit API expects to be used.
      * @param   string  $url    URL to send to.
+     * @param   array   $body   The body of the request.
      */
     public function httpRequest($method, $url, $body = null) {
-        if (!isset($_COOKIE['reddit_token'])) {
-            $this->requestRedditToken();
-        }
+        $this->getRedditToken();
 
         $headersAndBody = array(
             'headers' => $this->getHeaders()
@@ -194,9 +224,77 @@ class Reddit {
     /**
      * @internal
      *
+     * Retrieve the Reddit token in a storage-agnostic way.
+     *
+     * If the token does not exist, make sure it is created and stored.
+     *
+     * @return array    The array of strings containing the Reddit token.
+     */
+    private function getRedditToken() {
+        if ($this->tokenStorageMethod === TokenStorageMethod::Cookie) {
+
+            if (!isset($_COOKIE[$this->tokenStorageKey])) {
+                $this->requestRedditToken();
+                // Set the cookie to expire in 60 minutes.
+                setcookie($this->tokenStorageKey, $this->tokenType . ':' . $this->accessToken, 60 * 59 + time());
+                // Make the cookie available for this request.
+                $_COOKIE[$this->tokenStorageKey] = $this->tokenType . ':' . $this->accessToken;
+                // Return the newly created token
+                return ['tokenType' => $this->tokenType, 'accessToken' => $this->accessToken];
+            } else {
+                // Fetch the cookie instead
+                $tokenInfo = explode(":", $_COOKIE[$this->tokenStorageKey]);
+                return ['tokenType' => $tokenInfo[0], 'accessToken' => $tokenInfo[1]];
+            }
+
+        } elseif ($this->tokenStorageMethod === TokenStorageMethod::Redis) {
+
+            $redis = new PredisClient();
+            if (!$redis->get($this->tokenStorageKey)) {
+                $this->requestRedditToken();
+                // Set the key to expire in 60 minutes
+                $redis->setex($this->tokenStorageKey, 60 * 59, $this->tokenType . ':' . $this->accessToken);
+                // Return the newly created token
+                return ['tokenType' => $this->tokenType, 'accessToken' => $this->accessToken];
+            } else {
+                // Fetch the Redis key instead
+                $tokenInfo = explode(":", $redis->get($this->tokenStorageKey));
+                return ['tokenType' => $tokenInfo[0], 'accessToken' => $tokenInfo[1]];
+            }
+
+        } elseif ($this->tokenStorageMethod === TokenStorageMethod::File) {
+
+            // If the file does not exist, request a token
+            if (!file_exists($this->tokenStorageFile)) {
+                $this->requestRedditToken();
+                file_put_contents($this->tokenStorageFile, $this->tokenType . ':' . $this->accessToken . ':' . (time() + 60 * 59));
+                // Return the newly created token
+                return ['tokenType' => $this->tokenType, 'accessToken' => $this->accessToken];
+
+            // A file does exist, check if the token is still valid
+            } else {
+                $tokenInfo = explode(':', file_get_contents($this->tokenStorageFile));
+
+                // The token is valid
+                if ($tokenInfo[2] < time()) {
+                    $this->requestRedditToken();
+                    file_put_contents($this->tokenStorageFile, $this->tokenType . ':' . $this->accessToken . ':' . (time() + 60 * 59));
+                    // Return the newly created token
+                    return ['tokenType' => $this->tokenType, 'accessToken' => $this->accessToken];
+                } else {
+                    return ['tokenType' => $tokenInfo[0], 'accessToken' => $tokenInfo[1]];
+                }
+            }
+        }
+    }
+
+    /**
+     * @internal
+     *
      * Request A Reddit Token
      *
-     * If the client does not have a current valid OAuth2 token, fetch one here. Set it as a cookie.
+     * If the client does not have a current valid OAuth2 token, fetch one here and set the values as properties
+     * on the Client.
      */
     private function requestRedditToken() {
         $response = $this->client->post(Reddit::ACCESS_TOKEN_URL, array(
@@ -219,13 +317,8 @@ class Reddit {
         ));
 
         $body = json_decode($response->getBody());
+
         $this->tokenType = $body->token_type;
         $this->accessToken = $body->access_token;
-
-        // Set the cookie to expire in 60 minutes.
-        setcookie('reddit_token', $this->tokenType . ':' . $this->accessToken, 60 * 60 + time());
-
-        // Make the cookie available for this request.
-        $_COOKIE['reddit_token'] = $this->tokenType . ':' . $this->accessToken;
     }
 }

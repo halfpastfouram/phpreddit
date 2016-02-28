@@ -1,3 +1,6 @@
 .idea
 vendor
 composer.lock
+Vagrantfile
+public
+.vagrant
