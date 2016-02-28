@@ -12,7 +12,11 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "guzzlehttp/guzzle": "~6.0"
+    "guzzlehttp/guzzle": "~6.0",
+    "predis/predis": ">=1.0.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.2.*"
   },
   "autoload": {
     "psr-4": {"LukeNZ\\Reddit\\": "src/"}
