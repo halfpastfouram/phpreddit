@@ -1,6 +1,7 @@
 <?php
 namespace LukeNZ\Reddit\Contexts;
 
+use LukeNZ\Reddit\ArrayOptions\Listing;
 use LukeNZ\Reddit\HttpMethod;
 
 class Subreddit {
@@ -13,6 +14,20 @@ class Subreddit {
 		$this->client = $client;
 		$this->client->subredditContext = $subreddit;
 	}
+
+    /**
+     * Returns a collection of new listing from the current subreddit.
+     *
+     * @param Listing   $listing    A Reddit 'Listing' type
+     *
+     * @return mixed
+     */
+    public function newListings(Listing $listing) {
+        $response = $this->client->httpRequest(HttpMethod::GET, "r/{$this->client->subredditContext}/new", [
+            'query' => $listing->output()
+        ]);
+        return json_decode($response->getBody());
+    }
 
     /**
      * Returns a list of Wiki pages from the current subreddit.

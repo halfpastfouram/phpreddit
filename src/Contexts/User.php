@@ -23,7 +23,7 @@ class User {
      * @param $beforeThing
      * @param $count
      * @param $limit
-     * @param bool|false $subredditDetail
+     * @param bool $subredditDetail
      * @return mixed
      */
     public function submitted($sort, $timeInterval, $afterThing, $beforeThing, $count, $limit, $subredditDetail = false) {
