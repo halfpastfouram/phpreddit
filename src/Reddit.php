@@ -298,6 +298,9 @@ class Reddit {
      */
     private function requestRedditToken() {
         $response = $this->client->post(Reddit::ACCESS_TOKEN_URL, array(
+            'headers' => [
+                'User-Agent' => $this->userAgent
+            ],
             'query' => [
                 [
                     'client_id' => $this->clientId,
