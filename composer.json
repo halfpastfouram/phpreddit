@@ -1,17 +1,20 @@
 {
   "name": "halfpastfouram/phpreddit",
-  "description": "A PHP Reddit API wrapper that doesn't completely suck.",
-  "keywords": ["reddit", "api"],
+  "description": "Expressive PHP Reddit API wrapper with oauth2 support.",
+  "keywords": [
+    "reddit",
+    "api"
+  ],
   "homepage": "http://github.com/halfpastfouram/phpreddit",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
-      "name": "Luke Davia"
+      "name": "Bob Kruithof"
     }
   ],
   "require": {
-    "php": ">=5.5.0",
+    "php": ">=5.5.0 || ^7.0",
     "guzzlehttp/guzzle": "~6.0",
     "predis/predis": ">=1.0.3",
     "zendframework/zend-config": "2.6.0"
@@ -20,6 +23,8 @@
     "phpunit/phpunit": "5.2.*"
   },
   "autoload": {
-    "psr-4": {"LukeNZ\\Reddit\\": "src/"}
+    "psr-4": {
+      "Halfpastfour\\Reddit\\": "src/"
+    }
   }
 }
