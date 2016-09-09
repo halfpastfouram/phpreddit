@@ -4,3 +4,4 @@ composer.lock
 Vagrantfile
 public
 .vagrant
+/composer.phar

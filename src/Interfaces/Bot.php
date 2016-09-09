@@ -17,48 +17,43 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Halfpastfour\Reddit\Contexts;
+namespace Halfpastfour\Reddit\Interfaces;
+
+use Zend\Config\Config;
 
 /**
- * Class ContextSetterTrait
- * @package Halfpastfour\Reddit\Contexts
- * @property Reddit $client
+ * Interface Bot
+ * @package Halfpastfour\Reddit\Interfaces
  */
-trait ContextSetterTrait
+Interface Bot
 {
 	/**
-	 * Sets the user context for future method calls.
+	 * Overwrite the configuration values.
 	 *
-	 * @param   string $user The user to set the context for.
+	 * @param Config $p_oConfig
 	 *
-	 * @return  User
+	 * @return Bot
 	 */
-	public function user( $user )
-	{
-		return new User( $this->client, $user );
-	}
+	public function setConfig( Config $p_oConfig );
 
 	/**
-	 * Sets the subreddit context for future method calls.
+	 * Should take care of requirements before doing its job.
 	 *
-	 * @param string $subreddit The subreddit to set the context for.
-	 *
-	 * @return Subreddit
+	 * @return Bot
 	 */
-	public function subreddit( $subreddit )
-	{
-		return new Subreddit( $this->client, $subreddit );
-	}
+	public function init();
 
 	/**
-	 * Sets the thing context for future method calls.
+	 * Should execute the logic performing the bot's job.
 	 *
-	 * @param string $thing The thing to set the context for.
-	 *
-	 * @return Thing
+	 * @return Bot
 	 */
-	public function thing( $thing )
-	{
-		return new Thing( $this->client, $thing );
-	}
+	public function run();
+
+	/**
+	 * Should shut down all activity or open connections and should be the last method to be executed.
+	 *
+	 * @return Bot
+	 */
+	public function shutdown();
 }

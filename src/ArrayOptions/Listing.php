@@ -1,102 +1,253 @@
 <?php
+/**
+ * Copyright (c) 2016 halfpastfour.am
+ * MIT
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
-namespace LukeNZ\Reddit\ArrayOptions;
+namespace Halfpastfour\Reddit\ArrayOptions;
 
+/**
+ * Class Listing
+ * @package Halfpastfour\Reddit\ArrayOptions
+ */
 class Listing
 {
-    private $shouldPaginate = false;
+	/**
+	 * @var bool
+	 */
+	private $shouldPaginate = false;
 
-    private $after;
-    private $before;
+	/**
+	 * @var string
+	 */
+	private $after;
 
-    private $count = 0;
-    private $limit = 25;
-    private $show;
-    private $subredditDetail;
+	/**
+	 * @var string
+	 */
+	private $before;
 
-    public function isPaginating() {
-        return ($this->shouldPaginate === 'increment' || $this->shouldPaginate === 'decrement');
-    }
+	/**
+	 * @var int
+	 */
+	private $count = 0;
 
-    public function setPaginationDirection($paginationDirection) {
-        if ($paginationDirection === 'increment' || $paginationDirection === 'decrement') {
-            $this->shouldPaginate = $paginationDirection;
-        }
-    }
+	/**
+	 * @var int
+	 */
+	private $limit = 25;
 
-    public function disablePagination() {
-        $this->shouldPaginate = false;
-    }
+	/**
+	 * @var string|null
+	 */
+	private $show;
 
-    public function getAfter() {
-        return $this->after;
-    }
+	/**
+	 * @var
+	 */
+	private $subredditDetail;
 
-    public function setAfter($after) {
-        $this->after = $after;
-    }
+	/**
+	 * @return bool
+	 */
+	public function isPaginating()
+	{
+		return ( $this->shouldPaginate === 'increment' || $this->shouldPaginate === 'decrement' );
+	}
 
-    public function getBefore() {
-        return $this->before;
-    }
+	/**
+	 * @param $paginationDirection
+	 */
+	public function setPaginationDirection( $paginationDirection )
+	{
+		if( $paginationDirection === 'increment' || $paginationDirection === 'decrement' ) {
+			$this->shouldPaginate = $paginationDirection;
+		}
+	}
 
-    public function setBefore($before) {
-        $this->before = $before;
-    }
+	/**
+	 * @return bool
+	 */
+	public function disablePagination()
+	{
+		$this->shouldPaginate = false;
+	}
 
-    public function setCount($count) {
-        $this->count = $count;
-    }
+	/**
+	 * @return string|null
+	 */
+	public function getAfter()
+	{
+		return $this->after;
+	}
 
-    public function setLimit($limit) {
-        $this->limit = $limit;
-    }
+	/**
+	 * @param string $p_sAfter
+	 *
+	 * @return Listing
+	 */
+	public function setAfter( $p_sAfter )
+	{
+		$this->after = strval( $p_sAfter );
 
-    public function enableShow() {
-        $this->show = 'all';
-    }
+		return $this;
+	}
 
-    public function disableShow() {
-        $this->show = null;
-    }
+	/**
+	 * @return string|null
+	 */
+	public function getBefore()
+	{
+		return $this->before;
+	}
 
-    public function enableSubredditDetail() {
-        $this->subredditDetail = true;
-    }
+	/**
+	 * @param string $p_sBefore
+	 *
+	 * @return Listing
+	 */
+	public function setBefore( $p_sBefore )
+	{
+		$this->before = $p_sBefore;
 
-    public function disableSubredditDetail() {
-        $this->subredditDetail = false;
-    }
+		return $this;
+	}
 
-    /**
-     * Output the listing for use in an API request.
-     *
-     * @return array    The listing as an array.
-     */
-    public function output() {
-        if (isset($this->after)) {
-            $output['after'] = $this->getAfter();
-        } else if (isset($this->before)) {
-            $output['before'] = $this->getBefore();
-        }
+	/**
+	 * @return int|null
+	 */
+	public function getCount()
+	{
+		return $this->count;
+	}
 
-        $output['limit'] = $this->limit;
-        $output['count'] = $this->count;
+	/**
+	 * @param int $p_iCount
+	 *
+	 * @return Listing
+	 */
+	public function setCount( $p_iCount )
+	{
+		$this->count = intval( $p_iCount );
 
-        if ($this->show === 'all') {
-            $output['show'] = 'all';
-        }
+		return $this;
+	}
 
-        $output['sr_detail'] = $this->subredditDetail;
+	/**
+	 * @return int|null
+	 */
+	public function getLimit()
+	{
+		return $this->limit;
+	}
 
-        return $output;
-    }
+	/**
+	 * @param int $p_iLimit
+	 *
+	 * @return Listing
+	 */
+	public function setLimit( $p_iLimit )
+	{
+		$this->limit = intval( $p_iLimit );
 
-    public function incrementPagination() {
-        $this->count += $this->limit;
-    }
+		return $this;
+	}
 
-    public function decrementPagination() {
-        $this->count -= $this->limit;
-    }
+	/**
+	 * @return Listing
+	 */
+	public function enableShow()
+	{
+		$this->show = 'all';
+
+		return $this;
+	}
+
+	/**
+	 * @return Listing
+	 */
+	public function disableShow()
+	{
+		$this->show = null;
+
+		return $this;
+	}
+
+	/**
+	 * @return Listing
+	 */
+	public function enableSubredditDetail()
+	{
+		$this->subredditDetail = true;
+
+		return $this;
+	}
+
+	/**
+	 * @return Listing
+	 */
+	public function disableSubredditDetail()
+	{
+		$this->subredditDetail = false;
+
+		return $this;
+	}
+
+	/**
+	 * Output the listing for use in an API request.
+	 *
+	 * @return array The listing as an array.
+	 */
+	public function output()
+	{
+		if( isset( $this->after ) ) {
+			$output['p_sAfter'] = $this->getAfter();
+		} else if( isset( $this->before ) ) {
+			$output['p_sBefore'] = $this->getBefore();
+		}
+
+		$output['limit']    = $this->limit;
+		$output['p_iCount'] = $this->count;
+
+		if( $this->show === 'all' ) {
+			$output['show'] = 'all';
+		}
+
+		$output['sr_detail'] = $this->subredditDetail;
+
+		return $output;
+	}
+
+	/**
+	 * @return Listing
+	 */
+	public function incrementPagination()
+	{
+		$this->count += $this->limit;
+
+		return $this;
+	}
+
+	/**
+	 * @return Listing
+	 */
+	public function decrementPagination()
+	{
+		$this->count -= $this->limit;
+
+		return $this;
+	}
 }
