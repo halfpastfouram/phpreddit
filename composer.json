@@ -1,8 +1,8 @@
 {
-  "name": "luke-nz/phpreddit",
+  "name": "halfpastfouram/phpreddit",
   "description": "A PHP Reddit API wrapper that doesn't completely suck.",
   "keywords": ["reddit", "api"],
-  "homepage": "http://github.com/LukeNZ/phpreddit",
+  "homepage": "http://github.com/halfpastfouram/phpreddit",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -13,7 +13,8 @@
   "require": {
     "php": ">=5.5.0",
     "guzzlehttp/guzzle": "~6.0",
-    "predis/predis": ">=1.0.3"
+    "predis/predis": ">=1.0.3",
+    "zendframework/zend-config": "2.6.0"
   },
   "require-dev": {
     "phpunit/phpunit": "5.2.*"
