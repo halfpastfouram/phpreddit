@@ -27,7 +27,7 @@ abstract class TokenStorageMethod
 {
 	const COOKIE = 1;
 
-	const Redis  = 2;
+	const REDIS  = 2;
 
 	const FILE   = 3;
 }

@@ -30,6 +30,7 @@ use Predis\Client as PredisClient;
 class Reddit
 {
 	const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
+
 	const OAUTH_URL        = 'https://oauth.reddit.com/';
 
 	/**
@@ -50,14 +51,17 @@ class Reddit
 	/**
 	 * @var string
 	 */
-	protected $tokenStorageKey    = "phpreddit:token";
+	protected $tokenStorageKey = "phpreddit:token";
 
 	/**
-	 * @var
+	 * @var string
 	 */
 	protected $tokenStorageFile;
 
 	/**
+	 * protected $tokenStorageFile;
+	 *
+	 * /**
 	 * @var $subredditContext
 	 * @var $userContext
 	 * @var $thingContext
@@ -125,6 +129,7 @@ class Reddit
 	public function me()
 	{
 		$response = $this->httpRequest( HttpMethod::GET, 'api/v1/me' );
+
 		return json_decode( $response, true );
 	}
 
@@ -138,13 +143,15 @@ class Reddit
 	 */
 	public function comment( $p_sThingName, $p_sReply )
 	{
-		$response	= $this->httpRequest( HttpMethod::POST, '/api/comment.json', [
-			'text'		=> strval( $p_sReply ),
-			'thing_id'	=> $p_sThingName,
-			'api_type'	=> 'json',
-		] );
+		$response = $this->httpRequest(
+			HttpMethod::POST, '/api/comment.json', [
+			'text'     => strval( $p_sReply ),
+			'thing_id' => $p_sThingName,
+			'api_type' => 'json',
+		]
+		);
 
-		$result	= json_decode( $response, true );
+		$result = json_decode( $response, true );
 
 		return $response && isset( $result['json']['data']['things'][0]['data'] )
 			? $result['json']['data']['things'][0]['data']
@@ -172,7 +179,7 @@ class Reddit
 		$response = $this->httpRequest( HttpMethod::GET, "{$permalink}.json" );
 
 		// Strip off the listings and return the comment only.
-		return json_decode( $response->getBody() )[1]->data->children[0];
+		return json_decode( $response, true )[1]->data->children[0];
 	}
 
 	/**
@@ -188,20 +195,20 @@ class Reddit
 	public function getComments( $p_mSubreddit, $p_iLimit = 100, $p_sAfter = null, $p_sBefore = null )
 	{
 		if( !is_array( $p_mSubreddit ) ) {
-			$subreddits	= [ strval( $p_mSubreddit ) ];
+			$subreddits = [ strval( $p_mSubreddit ) ];
 		} else {
-			$subreddits	= array_map( 'strval', $p_mSubreddit );
+			$subreddits = array_map( 'strval', $p_mSubreddit );
 		}
 
 		// Create the permalink
-		$permalink	= 'r/' . implode( '+', $subreddits ) . '/comments.json?limit=' . intval( $p_iLimit );
+		$permalink = 'r/' . implode( '+', $subreddits ) . '/comments.json?limit=' . intval( $p_iLimit );
 		if( $p_sAfter ) $permalink .= '&after=' . strval( $p_sAfter );
 		if( $p_sBefore ) $permalink .= '&before=' . strval( $p_sBefore );
-		$response	= $this->httpRequest( HttpMethod::GET, $permalink );
+		$response = $this->httpRequest( HttpMethod::GET, $permalink );
 		if( $response ) {
 			return json_decode( $response, true )['data']['children'];
 		} else {
-			return [];
+			return [ ];
 		}
 	}
 
@@ -226,7 +233,7 @@ class Reddit
 	/**
 	 * Sets the way a Reddit OAuth Bearer token is stored.
 	 *
-	 * This defaults to TokenStorageMethod::Cookie by default, but if serverside use is required, 'Redis' and 'FILE'
+	 * This defaults to TokenStorageMethod::COOKIE by default, but if serverside use is required, 'Redis' and 'FILE'
 	 * are also available.
 	 *
 	 * @param int    $tokenStorageMethod The method used to store tokens.
@@ -300,9 +307,9 @@ class Reddit
 	/**
 	 * Makes an OAuth request to Reddit's servers.
 	 *
-	 * @param   string  $method The method that the Reddit API expects to be used.
-	 * @param   string  $url    URL to send to.
-	 * @param   array   $body   The body of the request.
+	 * @param   string $method The method that the Reddit API expects to be used.
+	 * @param   string $url    URL to send to.
+	 * @param   array  $body   The body of the request.
 	 *
 	 * @return string
 	 */
@@ -310,24 +317,25 @@ class Reddit
 	{
 		try {
 			$this->getRedditToken();
-			$headersAndBody	= [ 'headers' => $this->getHeaders() ];
+			$headersAndBody = [ 'headers' => $this->getHeaders() ];
 
 			if( !is_null( $body ) ) {
-				$headersAndBody['form_params']	= $body;
+				$headersAndBody['form_params'] = $body;
 			}
 
 			// Perform the request and return the response
 			/** @var \GuzzleHttp\Psr7\Response $result */
-			$result			= $this->client->{$method}(Reddit::OAUTH_URL . $url, $headersAndBody);
-			$returnValue	= $result->getBody()->getContents();
+			$result      = $this->client->{$method}( Reddit::OAUTH_URL . $url, $headersAndBody );
+			$returnValue = $result->getBody()->getContents();
 		} catch( \Exception $exception ) {
 			// A problem occurred
 			print( "EXCEPTION CAUGHT:\n" );
 			print( $exception->getMessage() . "\n" );
 			print( "STACK TRACE:\n" );
 			print( $exception->getTraceAsString() . "\n" );
-			$returnValue	= null;
+			$returnValue = null;
 		}
+
 		return $returnValue;
 	}
 
@@ -342,7 +350,7 @@ class Reddit
 	 */
 	private function getRedditToken()
 	{
-		if( $this->tokenStorageMethod === TokenStorageMethod::Cookie ) {
+		if( $this->tokenStorageMethod === TokenStorageMethod::COOKIE ) {
 
 			if( !isset( $_COOKIE[ $this->tokenStorageKey ] ) ) {
 				$this->requestRedditToken();
@@ -359,7 +367,7 @@ class Reddit
 
 				return [ 'tokenType' => $tokenInfo[0], 'accessToken' => $tokenInfo[1] ];
 			}
-		} elseif( $this->tokenStorageMethod === TokenStorageMethod::Redis ) {
+		} elseif( $this->tokenStorageMethod === TokenStorageMethod::REDIS ) {
 
 			$redis = new PredisClient();
 			if( !$redis->get( $this->tokenStorageKey ) ) {
@@ -405,6 +413,7 @@ class Reddit
 				}
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -419,26 +428,26 @@ class Reddit
 	{
 		$response = $this->client->post(
 			Reddit::ACCESS_TOKEN_URL, array(
-			'headers'     => [
-				'User-Agent' => $this->userAgent,
-			],
-			'query'       => [
-				[
-					'client_id'     => $this->clientId,
-					'response_type' => 'code',
-					'state'         => bin2hex( openssl_random_pseudo_bytes( 10 ) ),
-					'redirect_uri'  => 'http://localhost/reddit/test.php',
-					'duration'      => 'permanent',
-					'scope'         => 'save,modposts,identity,edit,flair,history,modconfig,modflair,modlog,modposts,modwiki,mysubreddits,privatemessages,read,report,submit,subscribe,vote,wikiedit,wikiread',
+				'headers'     => [
+					'User-Agent' => $this->userAgent,
 				],
-			],
-			'auth'        => [ $this->clientId, $this->clientSecret ],
-			'form_params' => [
-				'grant_type' => 'password',
-				'username'   => $this->username,
-				'password'   => $this->password,
-			],
-		)
+				'query'       => [
+					[
+						'client_id'     => $this->clientId,
+						'response_type' => 'code',
+						'state'         => bin2hex( openssl_random_pseudo_bytes( 10 ) ),
+						'redirect_uri'  => 'http://localhost/reddit/test.php',
+						'duration'      => 'permanent',
+						'scope'         => 'save,modposts,identity,edit,flair,history,modconfig,modflair,modlog,modposts,modwiki,mysubreddits,privatemessages,read,report,submit,subscribe,vote,wikiedit,wikiread',
+					],
+				],
+				'auth'        => [ $this->clientId, $this->clientSecret ],
+				'form_params' => [
+					'grant_type' => 'password',
+					'username'   => $this->username,
+					'password'   => $this->password,
+				],
+			)
 		);
 
 		$body = json_decode( $response->getBody() );
