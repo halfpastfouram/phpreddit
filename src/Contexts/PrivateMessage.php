@@ -33,7 +33,7 @@ class PrivateMessage implements Context
 	use ContextGetterTrait;
 
 	/**
-	 * @var Reddit
+	 * @var Reddit A pointer to the reddit client.
 	 */
 	protected $client;
 
@@ -50,7 +50,9 @@ class PrivateMessage implements Context
 	}
 
 	/**
-	 * @return mixed
+	 * Return the contents of the message.
+	 *
+	 * @return array|null
 	 */
 	public function read()
 	{
@@ -64,6 +66,8 @@ class PrivateMessage implements Context
 	}
 
 	/**
+	 * Reply to the message.
+	 *
 	 * @param string $p_sThingName
 	 * @param string $p_sMessage
 	 *

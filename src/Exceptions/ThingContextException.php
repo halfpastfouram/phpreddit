@@ -26,7 +26,7 @@ namespace Halfpastfour\Reddit\Exceptions;
 class ThingContextException extends \Exception
 {
 	/**
-	 * @var string
+	 * @var string The exception message.
 	 */
 	protected $message = "Please set a thing using the 'thing' method before calling methods dependent on a thing context";
 }

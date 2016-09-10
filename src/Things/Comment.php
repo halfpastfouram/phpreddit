@@ -18,6 +18,7 @@
  */
 
 namespace Halfpastfour\Reddit\Things;
+use Halfpastfour\Reddit\Reddit;
 
 /**
  * Class Comment
@@ -25,5 +26,14 @@ namespace Halfpastfour\Reddit\Things;
  */
 class Comment implements ThingInterface
 {
-
+	/**
+	 * ThingInterface constructor.
+	 *
+	 * @param Reddit $p_oClient
+	 * @param string $p_sId
+	 */
+	public function __construct( Reddit $p_oClient, $p_sId )
+	{
+		parent::__construct( $p_oClient, $p_sId );
+	}
 }

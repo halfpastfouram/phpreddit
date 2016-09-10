@@ -26,5 +26,11 @@ use Halfpastfour\Reddit\Reddit;
  */
 interface ThingInterface
 {
+	/**
+	 * ThingInterface constructor.
+	 *
+	 * @param \Halfpastfour\Reddit\Reddit $p_oClient
+	 * @param                             $p_sId
+	 */
 	public function __construct( Reddit $p_oClient, $p_sId );
 }
