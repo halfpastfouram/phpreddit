@@ -1,0 +1,9 @@
+<?php
+
+return [
+	'username'	=> '',
+	'password'	=> '',
+	'id'		=> '',
+	'secret'	=> '',
+	'userAgent'	=> '',
+];

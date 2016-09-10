@@ -20,6 +20,7 @@
 namespace Halfpastfour\Reddit;
 
 use GuzzleHttp\Client as GuzzleClient;
+use Halfpastfour\Reddit\ArrayOptions\Listing;
 use Halfpastfour\Reddit\Exceptions\TokenStorageException;
 use Predis\Client as PredisClient;
 
@@ -59,14 +60,12 @@ class Reddit
 	protected $tokenStorageFile;
 
 	/**
-	 * protected $tokenStorageFile;
-	 *
-	 * /**
 	 * @var $subredditContext
 	 * @var $userContext
+	 * @var $privateMessageContext
 	 * @var $thingContext
 	 */
-	public $subredditContext, $userContext, $thingContext;
+	public $subredditContext, $userContext, $privateMessageContext, $thingContext;
 
 	/**
 	 * @param   string $username     The username of the user you wish to control.
@@ -143,19 +142,59 @@ class Reddit
 	 */
 	public function comment( $p_sThingName, $p_sReply )
 	{
-		$response = $this->httpRequest(
-			HttpMethod::POST, '/api/comment.json', [
+		$response = $this->httpRequest( HttpMethod::POST, '/api/comment.json', [
 			'text'     => strval( $p_sReply ),
 			'thing_id' => $p_sThingName,
 			'api_type' => 'json',
-		]
-		);
+		] );
 
 		$result = json_decode( $response, true );
 
 		return $response && isset( $result['json']['data']['things'][0]['data'] )
 			? $result['json']['data']['things'][0]['data']
 			: null;
+	}
+
+	/**
+	 * @param Listing $p_oListing
+	 *
+	 * @return mixed
+	 */
+	public function getPrivateMessages( Listing $p_oListing )
+	{
+		$response = $this->httpRequest( HttpMethod::GET, 'r/message/inbox.json', [
+			'query'	=> $p_oListing->output()
+		] );
+
+		return json_decode( $response, true )[0]['data'];
+	}
+
+	/**
+	 * @param Listing $p_oListing
+	 *
+	 * @return mixed
+	 */
+	public function getUnreadPrivateMessages( Listing $p_oListing )
+	{
+		$response = $this->httpRequest( HttpMethod::GET, 'r/message/unread.json', [
+			'query'	=> $p_oListing->output()
+		] );
+
+		return json_decode( $response, true )[0]['data'];
+	}
+
+	/**
+	 * @param Listing $p_oListing
+	 *
+	 * @return mixed
+	 */
+	public function getSentPrivateMessages( Listing $p_oListing )
+	{
+		$response = $this->httpRequest( HttpMethod::GET, 'r/message/sent.json', [
+			'query'	=> $p_oListing->output()
+		] );
+
+		return json_decode( $response, true )[0]['data'];
 	}
 
 	/**
@@ -213,20 +252,27 @@ class Reddit
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getUserAgent()
+	{
+		return $this->userAgent;
+	}
+
+	/**
 	 * Sets the user agent string for the Reddit client instance.
 	 *
 	 * Not required, but recommended by Reddit's API guidelines to prevent ratelimiting. Unique and
 	 * descriptive names encouraged. Spoofing browsers and bots disallowed.
 	 *
-	 * @param   string $userAgentString The user agent string to assign.
+	 * @param string $p_sUserAgent The user agent string to assign.
 	 *
-	 * @return $this    The Reddit client
+	 * @return Reddit
 	 */
-	public function setUserAgent( $userAgentString )
+	public function setUserAgent( $p_sUserAgent )
 	{
-		$this->userAgent = $userAgentString;
+		$this->userAgent	= strval( $p_sUserAgent );
 
-		// Allow for method chaining
 		return $this;
 	}
 
@@ -454,5 +500,18 @@ class Reddit
 
 		$this->tokenType   = $body->token_type;
 		$this->accessToken = $body->access_token;
+	}
+
+	/**
+	 * @return Reddit
+	 */
+	public function clearContext()
+	{
+		$this->privateMessageContext	= null;
+		$this->subredditContext			= null;
+		$this->thingContext				= null;
+		$this->userContext				= null;
+
+		return $this;
 	}
 }

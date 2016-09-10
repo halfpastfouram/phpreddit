@@ -18,6 +18,7 @@
  */
 
 namespace Halfpastfour\Reddit\Things;
+use Halfpastfour\Reddit\Reddit;
 
 /**
  * Interface ThingInterface
@@ -25,5 +26,5 @@ namespace Halfpastfour\Reddit\Things;
  */
 interface ThingInterface
 {
-
+	public function __construct( Reddit $p_oClient, $p_sId );
 }

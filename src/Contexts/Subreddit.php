@@ -21,31 +21,33 @@ namespace Halfpastfour\Reddit\Contexts;
 
 use Halfpastfour\Reddit\ArrayOptions\Listing;
 use Halfpastfour\Reddit\HttpMethod;
+use Halfpastfour\Reddit\Interfaces\Context;
 use Halfpastfour\Reddit\Reddit;
 
 /**
  * Class Subreddit
  * @package Halfpastfour\Reddit\Contexts
  */
-class Subreddit
+class Subreddit implements Context
 {
 	use ContextSetterTrait;
+	use ContextGetterTrait;
 
 	/**
-	 * @var \Reddit
+	 * @var Reddit
 	 */
 	protected $client;
 
 	/**
 	 * Subreddit constructor.
 	 *
-	 * @param Reddit $client
-	 * @param string $subreddit
+	 * @param Reddit $p_oClient
+	 * @param string $p_sId
 	 */
-	public function __construct( Reddit $client, $subreddit )
+	public function __construct( Reddit $p_oClient, $p_sId )
 	{
-		$this->client                   = $client;
-		$this->client->subredditContext = $subreddit;
+		$this->client                   = $p_oClient;
+		$this->client->subredditContext = $p_sId;
 	}
 
 	/**
@@ -70,7 +72,10 @@ class Subreddit
 	 */
 	public function wikiPages()
 	{
-		$response = $this->client->httpRequest( HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/pages" );
+		$response = $this->client->httpRequest(
+			HttpMethod::GET,
+			"r/{$this->client->subredditContext}/wiki/pages"
+		);
 
 		return json_decode( $response, true );
 	}
@@ -84,8 +89,10 @@ class Subreddit
 	 */
 	public function wikiPage( $wikiPageName )
 	{
-		$response =
-			$this->client->httpRequest( HttpMethod::GET, "r/{$this->client->subredditContext}/wiki/{$wikiPageName}" );
+		$response = $this->client->httpRequest(
+			HttpMethod::GET,
+			"r/{$this->client->subredditContext}/wiki/{$wikiPageName}"
+		);
 
 		return json_decode( $response, true );
 	}
