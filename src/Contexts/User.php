@@ -20,54 +20,90 @@
 namespace Halfpastfour\Reddit\Contexts;
 
 use Halfpastfour\Reddit\HttpMethod;
+use Halfpastfour\Reddit\Interfaces\Context;
+use Halfpastfour\Reddit\Reddit;
 
-class User {
+/**
+ * Class User
+ * @package Halfpastfour\Reddit\Contexts
+ */
+class User implements Context
+{
+	use ContextSetterTrait;use ContextGetterTrait;
 
-	use ContextSetterTrait;
 
+	/**
+	 * @var Reddit
+	 */
 	protected $client;
 
-	public function __construct($client, $username) {
-		$this->client = $client;
-		$this->client->userContext = $username;
+	/**
+	 * User constructor.
+	 *
+	 * @param Reddit $p_oClient
+	 * @param string $p_sId
+	 */
+	public function __construct( Reddit $p_oClient, $p_sId )
+	{
+		$this->client              = $p_oClient;
+		$this->client->userContext = $p_sId;
 	}
 
-    /**
-     * Fetch the submitted selfposts and links for the user in the current context.
-     *
-     * @param $sort
-     * @param $timeInterval
-     * @param $afterThing
-     * @param $beforeThing
-     * @param $count
-     * @param $limit
-     * @param bool $subredditDetail
-     * @return mixed
-     */
-    public function submitted($sort, $timeInterval, $afterThing, $beforeThing, $count, $limit, $subredditDetail = false) {
-        $options['show'] = 'given';
-        $options['sort'] = $sort;
-        $options['t'] = $timeInterval;
-        $options['username'] = $this->client->userContext;
-        $options['after'] = $afterThing;
-        $options['before'] = $beforeThing;
-        $options['count'] = $count;
+	/**
+	 * Fetch the submitted selfposts and links for the user in the current context.
+	 *
+	 * @param      $sort
+	 * @param      $timeInterval
+	 * @param      $afterThing
+	 * @param      $beforeThing
+	 * @param      $count
+	 * @param      $limit
+	 * @param bool $subredditDetail
+	 *
+	 * @return mixed
+	 */
+	public function submitted(
+		$sort,
+		$timeInterval,
+		$afterThing,
+		$beforeThing,
+		$count,
+		$limit,
+		$subredditDetail = false
+	) {
+		$options['show']     = 'given';
+		$options['sort']     = $sort;
+		$options['t']        = $timeInterval;
+		$options['username'] = $this->client->userContext;
+		$options['after']    = $afterThing;
+		$options['before']   = $beforeThing;
+		$options['count']    = $count;
 
-        if (!is_null($limit)) {
-            $options['limit'] = min($options['count'], 100);
-        } else {
-            $options['limit'] = 25;
-        }
+		if( !is_null( $limit ) ) {
+			$options['limit'] = min( $options['count'], 100 );
+		} else {
+			$options['limit'] = 25;
+		}
 
-        $options['sr_detail'] = $subredditDetail;
+		$options['sr_detail'] = $subredditDetail;
 
-        $response = $this->client->httpRequest(HttpMethod::POST, "api/{$this->client->userContext}/submitted", $options);
-        return json_decode($response->getBody());
-    }
+		$response =
+			$this->client->httpRequest( HttpMethod::POST, "api/{$this->client->userContext}/submitted", $options );
 
-	public function setFlair(array $options) {		
+		return json_decode( $response->getBody() );
 	}
 
-	public function deleteFlair() {		
+	/**
+	 * @param array $options
+	 */
+	public function setFlair( array $options )
+	{
+	}
+
+	/**
+	 *
+	 */
+	public function deleteFlair()
+	{
 	}
 }

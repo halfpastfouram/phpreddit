@@ -19,60 +19,68 @@
 
 namespace Halfpastfour\Reddit\Contexts;
 
+use Halfpastfour\Reddit\HttpMethod;
+use Halfpastfour\Reddit\Interfaces\Context;
 use Halfpastfour\Reddit\Reddit;
 
 /**
- * Class ContextSetterTrait
+ * Class PrivateMessage
  * @package Halfpastfour\Reddit\Contexts
- * @property Reddit $client
  */
-trait ContextSetterTrait
+class PrivateMessage implements Context
 {
+	use ContextSetterTrait;
+	use ContextGetterTrait;
+
 	/**
-	 * Sets the user context for future method calls.
-	 *
-	 * @param   string $user The user to set the context for.
-	 *
-	 * @return  User
+	 * @var Reddit
 	 */
-	public function user( $user )
+	protected $client;
+
+	/**
+	 * PrivateMessage constructor.
+	 *
+	 * @param Reddit $client
+	 * @param string $p_sId
+	 */
+	public function __construct( Reddit $client, $p_sId )
 	{
-		return new User( $this->client, $user );
+		$this->client              				= $client;
+		$this->client->privateMessageContext	= $p_sId;
 	}
 
 	/**
-	 * Sets the subreddit context for future method calls.
-	 *
-	 * @param string $subreddit The subreddit to set the context for.
-	 *
-	 * @return Subreddit
+	 * @return mixed
 	 */
-	public function subreddit( $subreddit )
+	public function read()
 	{
-		return new Subreddit( $this->client, $subreddit );
+		$response	= $this->client->httpRequest( HttpMethod::POST, '/api/read_message.json', [
+			'id'	=> $this->client->privateMessageContext,
+		] );
+
+		$result		= @json_decode( $response, true )['data'];
+
+		return $response ? $result : null;
 	}
 
 	/**
-	 * Sets the thing context for future method calls.
+	 * @param string $p_sThingName
+	 * @param string $p_sMessage
 	 *
-	 * @param string $p_sThingId The thing to set the context for.
-	 *
-	 * @return Thing
+	 * @return array|null
 	 */
-	public function thing( $p_sThingId )
+	public function reply( $p_sThingName, $p_sMessage )
 	{
-		return new Thing( $this->client, $p_sThingId );
-	}
+		$response = $this->client->httpRequest( HttpMethod::POST, '/api/comment.json', [
+			'text'     => strval( $p_sMessage ),
+			'thing_id' => $p_sThingName,
+			'api_type' => 'json',
+		] );
 
-	/**
-	 * Sets the private message context for future method calls
-	 *
-	 * @param string $p_sMessageId
-	 *
-	 * @return PrivateMessage
-	 */
-	public function privateMessage( $p_sMessageId )
-	{
-		return new PrivateMessage( $this->client, $p_sMessageId );
+		$result	= json_decode( $response, true );
+
+		return $response && isset( $result['json']['data']['things'][0]['data'] )
+			? $result['json']['data']['things'][0]['data']
+			: null;
 	}
 }

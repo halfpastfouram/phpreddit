@@ -5,3 +5,5 @@ Vagrantfile
 public
 .vagrant
 /composer.phar
+/test/config.php
+/test/reddit.token
