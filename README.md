@@ -1,7 +1,9 @@
 # A clean, expressive API wrapper for Reddit, written in PHP
 
 Based on the work of LukeNz: [LukeNZ/phpreddit](https://github.com/LukeNZ/phpreddit)
-[Read the documentation here](https://halfpastfouram.github.io/phpreddit/)
+
+[Read the API documentation here](https://halfpastfouram.github.io/phpreddit/)
+-
 
 Created simply because nothing else out there worked. Use by requiring in the master dev stream in your `composer.json`:
 
