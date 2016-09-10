@@ -26,7 +26,7 @@ namespace Halfpastfour\Reddit\Exceptions;
 class SubredditContextException extends \Exception
 {
 	/**
-	 * @var string
+	 * @var string The exception message.
 	 */
 	protected $message	= "Please set a subreddit using the 'subreddit' method before calling methods dependent on a subreddit context";
 }

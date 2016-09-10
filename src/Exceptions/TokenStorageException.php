@@ -26,7 +26,7 @@ namespace Halfpastfour\Reddit\Exceptions;
 class TokenStorageException extends \Exception
 {
 	/**
-	 * @var string
+	 * @var string The exception message.
 	 */
 	protected $message = "When a TokenStorageMethod of 'FILE' is passed, please set the location the file should be stored at";
 }

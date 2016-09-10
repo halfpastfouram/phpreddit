@@ -34,7 +34,7 @@ class Subreddit implements Context
 	use ContextGetterTrait;
 
 	/**
-	 * @var Reddit
+	 * @var Reddit A pointer to the Reddit api client;
 	 */
 	protected $client;
 
@@ -68,6 +68,7 @@ class Subreddit implements Context
 
 	/**
 	 * Returns a list of Wiki pages from the current subreddit.
+	 *
 	 * @return mixed
 	 */
 	public function wikiPages()

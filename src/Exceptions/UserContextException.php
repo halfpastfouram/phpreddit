@@ -26,7 +26,7 @@ namespace Halfpastfour\Reddit\Exceptions;
 class UserContextException extends \Exception
 {
 	/**
-	 * @var string
+	 * @var string The exception message.
 	 */
 	protected $message = "Please set a user using the 'user' method before calling methods dependent on a user context";
 }

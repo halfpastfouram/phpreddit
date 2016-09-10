@@ -31,44 +31,45 @@ use Predis\Client as PredisClient;
 class Reddit
 {
 	const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
-
 	const OAUTH_URL        = 'https://oauth.reddit.com/';
 
 	/**
-	 * @var $client
-	 * @var $username
-	 * @var $password
-	 * @var $clientId
-	 * @var $clientSecret
+	 * @var $client GuzzleClient
+	 * @var $username string
+	 * @var $password string
+	 * @var $clientId string
+	 * @var $clientSecret string
 	 */
 	protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType,
 		$userAgent, $callback;
 
 	/**
-	 * @var int
+	 * @var int The method used for storing the oauth token.
 	 */
 	protected $tokenStorageMethod = TokenStorageMethod::COOKIE;
 
 	/**
-	 * @var string
+	 * @var string The storage key used for storing the oauth token.
 	 */
 	protected $tokenStorageKey = "phpreddit:token";
 
 	/**
-	 * @var string
+	 * @var string The name of the token storage file.
 	 */
 	protected $tokenStorageFile;
 
 	/**
-	 * @var $subredditContext
-	 * @var $userContext
-	 * @var $privateMessageContext
-	 * @var $thingContext
+	 * @var $subredditContext      string The current subreddit context
+	 * @var $userContext           string The current user context
+	 * @var $privateMessageContext string The current private message context
+	 * @var $thingContext          string The current thing context
 	 */
 	public $subredditContext, $userContext, $privateMessageContext, $thingContext;
 
 	/**
-	 * @param   string $username     The username of the user you wish to control.
+	 * Reddit constructor.
+	 *
+	 * @param   string $username The username of the user you wish to control.
 	 * @param   string $password     The password of the user you wish to control.
 	 * @param   string $clientId     Your application's client ID.
 	 * @param   string $clientSecret Your application's client secret.
@@ -156,9 +157,11 @@ class Reddit
 	}
 
 	/**
+	 * Request a list of private messages.
+	 *
 	 * @param Listing $p_oListing
 	 *
-	 * @return mixed
+	 * @return array|null
 	 */
 	public function getPrivateMessages( Listing $p_oListing )
 	{
@@ -166,13 +169,15 @@ class Reddit
 			'query'	=> $p_oListing->output()
 		] );
 
-		return json_decode( $response, true )[0]['data'];
+		return @json_decode( $response, true )[0]['data'];
 	}
 
 	/**
+	 * Request a list of unread private messages.
+	 *
 	 * @param Listing $p_oListing
 	 *
-	 * @return mixed
+	 * @return array|null
 	 */
 	public function getUnreadPrivateMessages( Listing $p_oListing )
 	{
@@ -180,13 +185,15 @@ class Reddit
 			'query'	=> $p_oListing->output()
 		] );
 
-		return json_decode( $response, true )[0]['data'];
+		return @json_decode( $response, true )[0]['data'];
 	}
 
 	/**
+	 * Request a list of sent private messages.
+	 *
 	 * @param Listing $p_oListing
 	 *
-	 * @return mixed
+	 * @return array|null
 	 */
 	public function getSentPrivateMessages( Listing $p_oListing )
 	{
@@ -194,7 +201,7 @@ class Reddit
 			'query'	=> $p_oListing->output()
 		] );
 
-		return json_decode( $response, true )[0]['data'];
+		return @json_decode( $response, true )[0]['data'];
 	}
 
 	/**
@@ -252,6 +259,8 @@ class Reddit
 	}
 
 	/**
+	 * Return the user agent
+	 *
 	 * @return string
 	 */
 	public function getUserAgent()
@@ -503,6 +512,8 @@ class Reddit
 	}
 
 	/**
+	 * Clears context of private message, subreddit, thing and user.
+	 *
 	 * @return Reddit
 	 */
 	public function clearContext()
