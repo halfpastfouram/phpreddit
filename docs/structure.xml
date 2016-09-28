@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project title="halfpastfouram/phpreddit" version="v2.9.0">
+  <partials/>
+  <file path="Interfaces/Bot.php" generated-path="Interfaces.Bot.html" hash="1238f16521261f7e3d23edc8b8ae129b" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJyVVF9v2zYQf44/xSEYsCQQnG0Pe2gLtLJNx8RkyZDkphkCDLREWWxlUSWpeMGw7947SqkTDNsQwICs493vz1F37953dTe5vrqawBXMdfdo1L52cFFcwi8//fwr1KKpOmFdpXszFQfKWvMcH/RvI81BWat0C8pCLY3cPcLeiNbJMoDKSAm6gqIWZi8DcBpE+widNBYL9M4J1ap2DwIK5KVMVyOM1ZU7CiMxuQRhrS6UQDziK3XRH2TrhCPKSjXSwoWrJZxnY9H5pecppWhAtUBnT0dwVK7WvQMjrTOqIIwAk4qmL0nG03GjDmpkwHKi9S2xhNtb9EFqAzjoUlX0lN5c1+8aZesASkXou95h0FKwkC1VoZtrbcDKpiEEhdK945NAn4MsRNlRZ93YK099rPXhpR/sVdWbFlll6U1r7J0n/SwLRxFKr3TT6CMZLHRbKvJl34z3l+O52OkH6T0NN99qh5IHKXQd3emOxyOL30QDOzn2Dsmx0+KZLUMarMPPQOE1dNp40tEu8T5ZmD7pWDHIkmV+G6YMeAabNPnIF2wB52GG7+cB3PJ8lWxzwIw0jPM7SJYQxnfwG48XAbBPm5RlGSQp8PUm4gxjPJ5H2wWPb2CGdXGSQ8Txy0XQPCFC4h3ROMsIb83S+QpfwxmPeH4XwJLnMcEuETeETZjmfL6NwhQ223STZAwVLBA55vEyRSK2ZnE+RWKMAfuIL5Ctwijy9sItGkhJoh+0ZHOX8ptVDqskWjCMzxjqC2cRG9jQ2jwK+TqARbgOb5j3liBQ6tNGgbcr5kNIGeJvnvMkJifzJM5TfA3Qa5qPnL76lmcsgDDlGXVmmSbIQH3FosTjYGnMBiDq+curwRR632bsJGfBwgixMip+nkx3ez2ZtOIgbSfws1k92yT3qSzxW7znuClMhaf27WSCwwW/y7a8n+u2UvvxgQfjdvqeDDPtKPABcb+I/f9BeyEvi/+anBHoGbXlQZqjUU76aSk8Z2+G+X8QTS/tlPJ8LhIacYBBGPzQ/aGHv6cEIx2OpOc4I9ozvxcKHNTWLxycfzfUXPwTBi7hDZWi5e/yMtxJDY6i+ILiaOpxioz82isjaRNanMNKY7jUNOIKA5/1bvoKQbiD3cW/E8s/ZdGPzWn0HitxISDjgegouNPux1eTmr79D05b4xou9XHYKgJLHpR7pL2iO9nSHbWyGHYKrSk7VO1Gkfgd4FLGXe6XIkZHC+VrBJIEUnBS+fc3U/k97w==</source>
+  </file>
+  <file path="Exceptions/SubredditContextException.php" generated-path="Exceptions.SubredditContextException.html" hash="cfe056e16c4dff32c37108c401bd23d9" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Halfpastfour\Reddit\Exceptions" line="26" package="Halfpastfour\Reddit\Exceptions">
+      <extends>\Exception</extends>
+      <name>SubredditContextException</name>
+      <full_name>\Halfpastfour\Reddit\Exceptions\SubredditContextException</full_name>
+      <docblock line="26">
+        <description>Class SubredditContextException</description>
+        <long-description></long-description>
+        <tag name="package" line="26" description="Halfpastfour\Reddit\Exceptions"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="Halfpastfour\Reddit\Exceptions" line="31" package="Halfpastfour\Reddit\Exceptions">
+        <name>$message</name>
+        <full_name>\Halfpastfour\Reddit\Exceptions\SubredditContextException::message</full_name>
+        <default>"Please set a subreddit using the 'subreddit' method before calling methods dependent on a subreddit context"</default>
+        <docblock line="31">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="31" description="&lt;p&gt;The exception message.&lt;/p&gt;" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+    </class>
+    <source>eJyFVN9v2zYQfo7/ioMxoG0gJNse9rB22BSbjonKkiHJzQL0hZaoiJssCiLdNBj2v/c7Wk7Slw0wIPN49/048vjh96EdZteXlzO6pIUdnkbz0Hp6W72jn3/86RdqVdcMyvnGHscrdeCsjSzx4X9bPR6Mc8b2ZBy1etT7J3oYVe91HVEzak22oapV44OOyFtS/RMNenQosHuvTG/6B1JUgZczfQsYZxv/qEaN5JqUc7YyCnjMV9vqeNC9V54pG9NpR299q2leTEXzd4Gn1qoj0xPvnbfo0fjWHj2N2vnRVIwRIanqjjXLOG935mAmBpQzbWiJY9yjgw9WG9HB1qbhrw7mhuO+M66NqDaMvj96BB0HK91zFdxc25Gc7jpGMJAeHL8IDDlgYcqBO+unXgXqx9YevveDXjXHsQerroNpi94F0r905TnC6Y3tOvvIBivb14Z9uV+n8yuxr/b2iw6eTiffWw/JJyl8HMPLGU9bDneio72eegdydFq9sjWyBudxDQyOYbBjIJ3sMu/ZwtVZx1pQka3KuzgXJAva5tknuRRLmscF1vOI7mS5znYlISOP0/KeshXF6T19lOkyIvHnNhdFQVlOcrNNpEBMpotkt5TpLd2gLs1KSiRuLkDLjAmZd0KTomC8jcgXayzjG5nI8j6ilSxThl0BN6ZtnJdysUvinLa7fJsVAgqWQE5luspBJDYiLa9AjBiJT1hQsY6TJNiLdzCQs8QwaNn2Ppe365LWWbIUiN8I6ItvEnFig7VFEstNRMt4E9+K4C0DUB7SJoF3axFCoIzxW5QyS9nJIkvLHMsIXvNy4gzVd7IQEcW5LLgzqzwDA/cVRVnAQWkqTkDc8++PBim83hXiRc5SxAmwCi5+ncxnez2b9eqg3aBwbdavXpLPua5xFz+Lr5Uewu14P3t+hDoMPRXH/RhyFhavyVf/nMkpfwDwb/Xwf5hBQfXfcISF7mtHL3Wzf2YXrOWCmb4o3GYMNOaHp0U/18GWg4QrTrueXQyj9Zg6DMMP087FbzTfdlo5TIz2eOXcWQOeEcbj6XzzHHwDRDxANQarsZjuChPFWaeow5M2QCcePwL5a7Dq5Gj+fvbvN7hQ3KE=</source>
+  </file>
+  <file path="Exceptions/ThingContextException.php" generated-path="Exceptions.ThingContextException.html" hash="caa4621d1cfcf63f3c29d962826bf39f" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Halfpastfour\Reddit\Exceptions" line="26" package="Halfpastfour\Reddit\Exceptions">
+      <extends>\Exception</extends>
+      <name>ThingContextException</name>
+      <full_name>\Halfpastfour\Reddit\Exceptions\ThingContextException</full_name>
+      <docblock line="26">
+        <description>Class ThingContextException</description>
+        <long-description></long-description>
+        <tag name="package" line="26" description="Halfpastfour\Reddit\Exceptions"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="Halfpastfour\Reddit\Exceptions" line="31" package="Halfpastfour\Reddit\Exceptions">
+        <name>$message</name>
+        <full_name>\Halfpastfour\Reddit\Exceptions\ThingContextException::message</full_name>
+        <default>"Please set a thing using the 'thing' method before calling methods dependent on a thing context"</default>
+        <docblock line="31">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="31" description="&lt;p&gt;The exception message.&lt;/p&gt;" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+    </class>
+    <source>eJyFVFFv2zYQfo5/xcEY0DYQkm0Pe1g7bIpNx0RlyZDkZgH6QktUxE0WBZFuGgz77/2OlpP0YRhg2Obx7vvuO97dh9+HdphdX17O6JIWdngazUPr6W31jn7+8adfqFVdMyjnG3scr9SBvTayxA//2+rxYJwztifjqNWj3j/Rw6h6r+uImlFrsg1VrRofdETekuqfaNCjQ4Dde2V60z+Qogq87OlbwDjb+Ec1ajjXpJyzlVHAY77aVseD7r3yTNmYTjt661tN82IKmr8LPLVWHZme+O58RY/Gt/boadTOj6ZijAhOVXesOY3zdWcOZmJAONOGkjjGPTro4GwjOtjaNPyrg7jhuO+MayOqDaPvjx5Gx8ZK9xwFNdd2JKe7jhEMUg+KXxIMPmBhyoEr66daBerH1h6+14NaNcexB6uug2iL2gXSv3Tl2cLuje06+8gCK9vXhnW5X6f3K3Gv9vaLDppOL99bj5RPqfBzDC9vPF059ERHez3VDuSotHola+QcnEcbGDzDYMdAOsll3rOEq3Mea0FFtirv4lyQLGibZ5/kUixpHhc4zyO6k+U625UEjzxOy3vKVhSn9/RRpsuIxJ/bXBQFZTnJzTaRAjaZLpLdUqa3dIO4NCspkehcgJYZEzLvhCZFwXgbkS/WOMY3MpHlfUQrWaYMuwJuTNs4L+Vil8Q5bXf5NisEMlgCOZXpKgeR2Ii0vAIxbCQ+4UDFOk6SIC/eQUDOKYZBy7b3ubxdl7TOkqWA/UYgv/gmESc2SFsksdxEtIw38a0I2jIA5cFtSvBuLYIJlDE+i1JmKStZZGmZ4xhBa15OnCH6ThYiojiXBVdmlWdg4LoiKAs4CE3FCYhr/v3TwIXPu0K8pLMUcQKsgoNfO/PbXs9mvTpoNyi0zfrVJvmc6xq9+Fl8rfQQuuP97HkJdRh6tCZadmGxSb76Zy++/gNgf6uH/8ML7NV/QxEOuq8dvcTM/pldcA4XzPJFoYsxyJgbnhL9HAc5DvRX7HY9uxhG6zFtGIIfphv6jebbTiuHSdEe280zP1YHf/NEvgmGN0DCwqkxSI3FNFeYIPY4WR1W2ID8sOwIpGeQ6qRi/n727zcezNRc</source>
+  </file>
+  <file path="Things/ThingInterface.php" generated-path="Things.ThingInterface.html" hash="d31a0a3da2f68f946c8913064bcf6815" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <namespace-alias name="Reddit">\Halfpastfour\Reddit\Reddit</namespace-alias>
+    <interface namespace="Halfpastfour\Reddit\Things" line="27" package="Halfpastfour\Reddit\Things">
+      <name>ThingInterface</name>
+      <full_name>\Halfpastfour\Reddit\Things\ThingInterface</full_name>
+      <docblock line="27">
+        <description>Interface ThingInterface</description>
+        <long-description></long-description>
+        <tag name="package" line="27" description="Halfpastfour\Reddit\Things"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Halfpastfour\Reddit\Things" line="35" package="Halfpastfour\Reddit\Things">
+        <name>__construct</name>
+        <full_name>\Halfpastfour\Reddit\Things\ThingInterface::__construct()</full_name>
+        <docblock line="35">
+          <description>ThingInterface constructor.</description>
+          <long-description></long-description>
+          <tag name="param" line="35" description="" type="\Halfpastfour\Reddit\Reddit" variable="$p_oClient">
+            <type>\Halfpastfour\Reddit\Reddit</type>
+          </tag>
+          <tag name="param" line="35" description="" type="" variable="$p_sId"/>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$p_oClient</name>
+          <default></default>
+          <type>\Halfpastfour\Reddit\Reddit</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$p_sId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+    </interface>
+    <source>eJx9VFtv2zYUfo5+xUHQhyQQkm4Pe2gKdIpNx8RkyaDkZgECBLREWdxkUSCpBkGx/75zaLlxsbVBAJnn8l0OLx8/De0Q3VxdRXAFMzO8Wr1rPVxUl/Dr+19+g1Z2zSCdb8xor+Weqla8xA/9Wiu7185p04N20Cqrtq+ws7L3qo6hsUqBaaBqpd2pGLwB2b/CoKzDBrP1Uve634GECnmp0rcI40zjX6RVWFyDdM5UWiIe8dWmGveq99ITZaM75eDCtwrOi6np/DLw1Ep2oHug3DEFL9q3ZvRglfNWV4QRY1HVjTXJOKY7vdcTA7YTbRiJI9zRoQ9SG8Pe1LqhrwrmhnHbadfGUGtC344eg46CleqpC93cGAtOdR0haJQeHL8JDDXIQpQDTdZPswrUL63Zf+8HZ9WMtkdWVQfTBmcXSP9SlacIlTem68wLGaxMX2vy5T5M+1diXm7NFxU8HXa+Nx4lH6TQdgxvezylHJ6JDrZqmh2S46TliS1LGpzHY6BxGwZjA+lkl3iPFq6POpYMinxRPiSCAS9gLfLPfM7mcJ4UuD6P4YGXy3xTAlaIJCsfIV9Akj3CHzybx8D+XAtWFJAL4Kt1yhnGeDZLN3Oe3cMd9mV5CSnHk4ugZU6ExDuhcVYQ3oqJ2RKXyR1PefkYw4KXGcEuEDeBdSJKPtukiYD1RqzzgqGCOSJnPFsIJGIrlpXXSIwxYJ9xAcUySdNgL9mgAUESw0XL14+C3y9LWObpnGH8jqG+5C5lBza0NksTvophnqySexa85QgkQtkk8GHJQggpE/yflTzPyMksz0qByxi9inLiDN0PvGAxJIIXNJmFyJGB5opNecDB1owdgGjm328NltB6U7A3OXOWpIhVUPNpMe3tTRT1cq/cIPHYLE9ekiehajyLT2WLB9PdRniv/jd/+NxGxweK48tiG0ILnd+WlPsdWf6Wu58RBUn6RxhfozOiOQsX4zRDNwcv9Vh5Y68pH2qQz8o9PP1YN7wbns2s0/hinXb87A87HK+p+iY6C29KhZe8D48VPD9/E3IB/6GIp2a4vI3++RdQttTs</source>
+  </file>
+  <file path="Things/Comment.php" generated-path="Things.Comment.html" hash="665cc9b8a360706209d6a0eb230b807c" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <namespace-alias name="Reddit">\Halfpastfour\Reddit\Reddit</namespace-alias>
+    <class final="false" abstract="false" namespace="Halfpastfour\Reddit\Things" line="27" package="Halfpastfour\Reddit\Things">
+      <extends/>
+      <implements>\Halfpastfour\Reddit\Things\ThingInterface</implements>
+      <name>Comment</name>
+      <full_name>\Halfpastfour\Reddit\Things\Comment</full_name>
+      <docblock line="27">
+        <description>Class Comment</description>
+        <long-description></long-description>
+        <tag name="package" line="27" description="Halfpastfour\Reddit\Things"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Halfpastfour\Reddit\Things" line="35" package="Halfpastfour\Reddit\Things">
+        <name>__construct</name>
+        <full_name>\Halfpastfour\Reddit\Things\Comment::__construct()</full_name>
+        <docblock line="35">
+          <description>ThingInterface constructor.</description>
+          <long-description></long-description>
+          <tag name="param" line="35" description="" type="\Halfpastfour\Reddit\Reddit" variable="$p_oClient">
+            <type>\Halfpastfour\Reddit\Reddit</type>
+          </tag>
+          <tag name="param" line="35" description="" type="string" variable="$p_sId">
+            <type>string</type>
+          </tag>
+          <tag name="inherited_from" description="\Halfpastfour\Reddit\Things\ThingInterface::__construct()" refers="\Halfpastfour\Reddit\Things\ThingInterface::__construct()" link="/classes/Halfpastfour.Reddit.Things.ThingInterface.html#method___construct"/>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$p_oClient</name>
+          <default></default>
+          <type>\Halfpastfour\Reddit\Reddit</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$p_sId</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+    </class>
+    <source>eJx9VFtr4zgUfo5/xaHMQ1tMO7sP+9Au7LqJ0oh17CA70y0MFMWWY+3alpGUKWWY/z7nKO40ZYeFgKNz+S5Hl9//GNsxur68jOAS5mZ8sXrfejivLuDXj7/8Bq3smlE635iDvZI9Va15iR/6t1G2185pM4B20Cqrdi+wt3Lwqo6hsUqBaaBqpd2rGLwBObzAqKzDBrPzUg962IOECnmp0rcI40zjn6VVWFyDdM5UWiIe8dWmOvRq8NITZaM75eDctwrOiqnp7CLw1Ep2oAeg3GsKnrVvzcGDVc5bXRFGjEVVd6hJxmu6072eGLCdaMNIHOEeHPogtTH0ptYNfVUwNx52nXZtDLUm9N3BY9BRsFIDdaGba2PBqa4jBI3Sg+M3gaEGWYhypMn6aVaB+rk1/Xs/OKvmYAdkVXUwbXB2gfQfVXmKUHljus48k8HKDLUmX+5m2r8S83Jnvqjg6bjzg/Eo+SiFtmN82+Mp5fBMdLBT0+yQHCctT2xZ0uA8HgON2zAaG0gnu8T7auHqVceKQZEvy4dEMOAFbET+iS/YAs6SAtdnMTzwcpVvS8AKkWTlI+RLSLJH+ItnixjY3xvBigJyAXy9STnDGM/m6XbBs3u4w74sLyHleHIRtMyJkHgnNM4KwlszMV/hMrnjKS8fY1jyMiPYJeImsElEyefbNBGw2YpNXjBUsEDkjGdLgURszbLyCokxBuwTLqBYJWka7CVbNCBIYrho+eZR8PtVCas8XTCM3zHUl9yl7MiG1uZpwtcxLJJ1cs+CtxyBRCibBD6sWAghZYK/ecnzjJzM86wUuIzRqygnztD9wAsWQyJ4QZNZihwZaK7YlAccbM3YEYhm/n5rsITW24K9yVmwJEWsgppPi2lvr6NokL1yo8Rjszp5ST4LVeNZ/Fy2eDDdbYT36qf54+c2+vFAdfgg4DPV0ytAgT8R+l+5/z/0oKM6bQTdj52ifw5CDccHyzYoMvoazYhqFi7HaYZuD17sQ+WNvaJ8qEF6K3s48sGH8cnMO03STpL0HODtw6TjNSWuo1l4LSq8vkN4huDp6Qf8+X/R4qkZLqIZCpwhLkZvbt51/az8Npp9i759B8Ou3LM=</source>
+  </file>
+  <file path="TokenStorageMethod.php" generated-path="TokenStorageMethod.html" hash="c9140bddc8da8b68e9904ce0c023f96f" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="true" abstract="false" namespace="Halfpastfour\Reddit" line="26" package="Halfpastfour\Reddit">
+      <extends/>
+      <name>TokenStorageMethod</name>
+      <full_name>\Halfpastfour\Reddit\TokenStorageMethod</full_name>
+      <docblock line="26">
+        <description>Class TokenStorageMethod</description>
+        <long-description></long-description>
+        <tag name="package" line="26" description="Halfpastfour\Reddit"/>
+      </docblock>
+      <constant namespace="Halfpastfour\Reddit" line="28" package="Halfpastfour\Reddit">
+        <name>COOKIE</name>
+        <full_name>\Halfpastfour\Reddit\TokenStorageMethod::COOKIE</full_name>
+        <value>1</value>
+        <docblock line="28">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+      <constant namespace="Halfpastfour\Reddit" line="29" package="Halfpastfour\Reddit">
+        <name>REDIS</name>
+        <full_name>\Halfpastfour\Reddit\TokenStorageMethod::REDIS</full_name>
+        <value>2</value>
+        <docblock line="29">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+      <constant namespace="Halfpastfour\Reddit" line="30" package="Halfpastfour\Reddit">
+        <name>FILE</name>
+        <full_name>\Halfpastfour\Reddit\TokenStorageMethod::FILE</full_name>
+        <value>3</value>
+        <docblock line="30">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+    </class>
+    <source>eJx1VN1v0zAQf6Z/xWlPMEUbHxIPDARe464WaVI5LmMSL27iNIY0jmKXaUL879x56TYkkCqlPt/9Pu4uef9xaIfZ+enpDE5h7oa70e7aAM+rF/D65au30OquGbQPjTuMZ3pPWSuh8EH/1mbcW++t68F6aM1otnewG3UfTJ1AMxoDroGq1ePOJBAc6P4OBjN6LHDboG1v+x1oqJCXMkOLMN414VaPBpNr0N67ymrEI77aVYe96YMORNnYznh4HloDJ+VUdPIi8tRGd2B7oLvjFdza0LpDgNH4MNqKMBJMqrpDTTKO153d24kBy4k2tsQT7sGjD1KbwN7VtqGnieaGw7azvk2gtoS+PQQMegpWpqcqdHPuRvCm6wjBovTo+FFgzEEWohyos2HqVaS+bd3+bz/Yq+Yw9shq6mjaYe8i6XdTBYpQeuO6zt2Swcr1tSVf/t00P4X3eut+mujpfvK9Cyj5XgqNY3ic8XTlcSc62Jqpd0iOndZPbI2kwQdcA4tjGNwYSSe7xHu0cHbUseRQFgt1zSQHUcJaFl9EylM4YSWeTxK4FmpZbBRghmS5uoFiASy/gc8iTxPgX9eSlyUUEsRqnQmOMZHPs00q8iu4xLq8UJAJ3FwEVQUREu+EJnhJeCsu50s8skuRCXWTwEKonGAXiMtgzaQS803GJKw3cl2UHBWkiJyLfCGRiK94rs6QGGPAv+AByiXLsmiPbdCAJInxRSvWN1JcLRUsiyzlGL/kqI9dZvyeDa3NMyZWCaRsxa549FYgkIxpk8DrJY8hpGT4mytR5ORkXuRK4jFBr1JNnLH6WpQ8ASZFSZ1ZyAIZqK9YVEQcLM35PRD1/O/RYAqdNyV/lJNyliFWScVPk2m257NZr/fGDxrXZvnkS/JNmhp38WL28OXp8E0H5X6Yvgxu1DuzMvg6xrf+E5b/wMi/ECJJY3vcs+p/EL9mz3D1fUBvxWfB4QO8ujiGJE9x3zD0+iG0EDgECr25mP3+Ay8jmSk=</source>
+  </file>
+  <file path="Contexts/ContextSetterTrait.php" generated-path="Contexts.ContextSetterTrait.html" hash="ac86fe38ed73fcb422413390051419ee" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydVU1v4zYQPdu/YhDk4ARq0vbQw27RVrHpmKgsGRK9aYC9yBJts5VFgaTXDYr9752h5PVH4nZbYAGvyHnvzXvkMD/+3Kyb/v3tbR9uYaibF6NWaweD4ga+//a7H2CdV8smt26pt+Yu31DVlAv8of/NpNkoa5WuQVlYSyMXL7Ayee1kGcDSSAl6CcU6NysZgNOQ1y/QSGMRoBcuV7WqV5BDgbpU6dZIY/XS7XIjsbiE3FpdqBz5SK/UxXYja5c7klyqSloYuLWEq6wDXd14nVLmFagaaG+/BTvl1nrrwEjrjCqII8CiotqW1MZ+u1Ib1SkgnGR9JJZ4txZ9ULcBbHSplvQrvblmu6iUXQdQKmJfbB0uWlosZE0odHOvDVhZVcSgsHXv+NCgr0EVkmwoWddl5aV3a7059YNZLbemRlVZetMas/Oiv8vC0QqVL3VV6R0ZLHRdKvJl33XnJ3A/X+hP0ntqT77WDltuW6HjaA5n3G1ZvBMVLGSXHYpj0vmRLUM9WIfXQOExNNp40c4u6e4t3O37mDDIkrF4ClMGPINZmnzgIzaCqzDD76sAnriYJHMBWJGGsXiGZAxh/Ay/8ngUAPttlrIsgyQFPp1FnOEaj4fRfMTjR3hAXJwIiDjeXCQVCQmSbsfGWUZ8U5YOJ/gZPvCIi+cAxlzERDtG3hBmYSr4cB6FKczm6SzJGHYwQuaYx+MUhdiUxeIOhXEN2Af8gGwSRpG3F87RQEot+kFLZs8pf5wImCTRiOH6A8P+woeItWpobRiFfBrAKJyGj8x7S5Ao9WVdg08T5pdQMsR/Q8GTmJwMk1ik+Bmg11R0mh79xDMWQJjyjJIZpwkqUK4ISjwPQmPWElHmp0eDJfQ9z9ihnRELI+TKCHxcTGd73+/X+UbaJsdrMzl6ST6mssS7+HGo8an409n3/T6O1psl7Q8W7N+oCt8E6ICZdE4aYXLlaO8XFPojX/2zVltoNF5s9wLtJlwXlcKHxffsiO4thb/6PWqiRzdY0oOA44NtG5osqsVZMziSbovDuZH4mpRQ4FzYO4J4GDZo8g0A0BuBI3nt4WLPgyNrpfO8R5RHcCORvAaYYzWt3Pd7/uEpULb2L5onGpzy38C7DoEOeh1HLXd+cQDXNOff/NQmEOwx7/u9z/03DONomzaz/+p639OBQZzwfa37bI+4kMAXxsEbkpTFEcFZINkBep7KEcWlaBDRPrP/KxaP5qUPpWX62kAEVV8IwzMNXolQDB3sLALRAs7tfwFeMt8Y9Qn/TqNXa2kE/yWGSyl0cF6+cjlrBaZtwQW7zUnR4DWtd35OdRbB7IzkPIsjMp/G578B/Qby8Q==</source>
+  </file>
+  <file path="Tools/RequestLimitHandler.php" generated-path="Tools.RequestLimitHandler.html" hash="cde789d26a882f16d4868e4df8520694" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <file path="HttpMethod.php" generated-path="HttpMethod.html" hash="2c6cda5fcead033a488d308e9341a4f6" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="true" abstract="false" namespace="Halfpastfour\Reddit" line="27" package="Halfpastfour\Reddit">
+      <extends/>
+      <name>HttpMethod</name>
+      <full_name>\Halfpastfour\Reddit\HttpMethod</full_name>
+      <docblock line="27">
+        <description>Class HttpMethod</description>
+        <long-description></long-description>
+        <tag name="package" line="27" description="Halfpastfour\Reddit"/>
+      </docblock>
+      <constant namespace="Halfpastfour\Reddit" line="29" package="Halfpastfour\Reddit">
+        <name>GET</name>
+        <full_name>\Halfpastfour\Reddit\HttpMethod::GET</full_name>
+        <value>'get'</value>
+        <docblock line="29">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+      <constant namespace="Halfpastfour\Reddit" line="30" package="Halfpastfour\Reddit">
+        <name>POST</name>
+        <full_name>\Halfpastfour\Reddit\HttpMethod::POST</full_name>
+        <value>'post'</value>
+        <docblock line="30">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+      <constant namespace="Halfpastfour\Reddit" line="31" package="Halfpastfour\Reddit">
+        <name>PATCH</name>
+        <full_name>\Halfpastfour\Reddit\HttpMethod::PATCH</full_name>
+        <value>'patch'</value>
+        <docblock line="31">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+      <constant namespace="Halfpastfour\Reddit" line="32" package="Halfpastfour\Reddit">
+        <name>PUT</name>
+        <full_name>\Halfpastfour\Reddit\HttpMethod::PUT</full_name>
+        <value>'put'</value>
+        <docblock line="32">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+      <constant namespace="Halfpastfour\Reddit" line="33" package="Halfpastfour\Reddit">
+        <name>DELETE</name>
+        <full_name>\Halfpastfour\Reddit\HttpMethod::DELETE</full_name>
+        <value>'delete'</value>
+        <docblock line="33">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </constant>
+    </class>
+    <source>eJxtVE1v4zYQPde/YpDL7gZC0vbQQ3cXLWPREVFZMih60wC90BJlsZVFQaQ2CIr+987QMuItahiQOB/vzZsZ6tMvYzeuVve3tyu4hbUbXyd77AK8rz/Aj9//8BN0um9H7UPr5ulOnyhqKxQ+6G1nppP13roBrIfOTObwCsdJD8E0CbSTMeBaqDs9HU0CwYEeXmE0k8cEdwjaDnY4goYaeSkydAjjXRte9GQwuAHtvautRjzia1w9n8wQdCDK1vbGw/vQGbiplqSbD5GnMboHOwD5Li54saFzc4DJ+DDZmjASDKr7uaEyLu7enuzCgOlEG1viCXf2qIOqTeDkGtvS00Rx43zore8SaCyhH+aARk/G2gyUhWru3QTe9D0hWCw9Kn4rMMYgC1GO1Nmw9CpSv3Tu9K0e7FU7TwOymiaKdti7SPqnqQNZKLx1fe9eSGDthsaSLv/zMj+Ffn1wX03UdJ784AKWfC6FxjG+zXhxedyJHg5m6R2SY6f1layJavAB18DiGEY3RdJFLvFeJNxd6sg4VOVGPTHJQVSwk+UXkfIUbliF55sEnoTKyr0CjJCsUM9QboAVz/CbKNIE+O87yasKSgliu8sFR5so1vk+FcUjPGBeUSrIBW4ugqqSCIl3QRO8Irwtl+sMj+xB5EI9J7ARqiDYDeIy2DGpxHqfMwm7vdyVFccKUkQuRLGRSMS3vFB3SIw24F/wAFXG8jzKY3sUIKnEeNHK3bMUj5mCrMxTjvYHjvWxh5yf2VDaOmdim0DKtuyRR20lAskYthT4lPFoQkqG/7USZUFK1mWhJB4T1CrVwhmzn0TFE2BSVNSZjSyRgfqKSWXEwdSCn4Go59+OBkPovK/4WzkpZzliVZR8HUyzvV+tBn0yftS4NtnVl+QPaRrcxY9vX54ebzpkIYxbg9cw3vZfMe0vffzfzAje2gH3q/5v6t+r73DVfYBHrgB/n+Hd0YR3Hy9mHJ06m0fnr+1MrbOzXYe6u3LsLzjjfBWf8pwrTubG9CYY9PzzL3nnpW4=</source>
+  </file>
+  <file path="ArrayOptions/Listing.php" generated-path="ArrayOptions.Listing.html" hash="73a24b33883ed1e72d35d42a82fb7707" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJytV+9v2zYQ/Wz/FYeggJ3OTboC24d27qbYSi1MkQxJaRa0xUBblK1NljSKShCs/d93R9G25B+ZUgQI4JB6fHfveHyUfvk1X+bd85cvu/ASRln+IOLFUkJ/fgpvXv/4MyxZEuWskFFWijO2ItSVFeAP/TflYhUXRZylEBew5ILPHmAhWCp5OIBIcA5ZBPMlEws+AJkBSx8g56LABdlMsjiN0wUwmGNcQsol0hRZJO+Z4AgOgRVFNo8Z8lG8MJuXK55KJilkFCe8gL5ccjjx9aKTUxUn5CyBOAV6tn4E97FcZqUEwQsp4jlxDBA0T8qQ0lg/TuJVrCPgcgqrSlIQb1mgDsp2AKssjCP65UpcXs6SuFgOIIyJfVZKnCxocs5TWoVqzjMBBU8SYogxdaV4m6DCYBQKmVNlpa6VCn2/zFZNPVirqBQpRuWhEp1h7VTQv/hc0gzBoyxJsnsSOM/SMCZdxVu9fwE+Z7PsjitN1c6nmcSUq1RoO/LtHutHBfZEAjOua4fBsdKsJktQDoXENohxG/JMqKBaLsVdSzhb5zExwXcvgxvDM8HyYeq5H62xOYYTw8fxyQBurGDiXgeACM9wgltwL8FwbuF3yxkPwPxj6pm+D64H1tXUtkycs5yRfT22nA9wgescNwDbws5F0sClgBRXs1mmT3xXpjea4NC4sGwruB3ApRU4RHuJvAZMDS+wRte24cH02pu6vokZjJHZsZxLDwOZV6YTnGFgnAPzIw7Anxi2reQZ1yjAoxTVQXOnt571YRLAxLXHJs5fmJifcWGbVTSUNrIN62oAY+PK+GAqbS4SeQqmE7yZmGoKQxr4Nwos1yElI9cJPBwOUKsX6Jhq9Y3lmwMwPMunylx6LkaguuIiV/HgUsesiKjmza1BCI2vfXObztg0bOTyaXEdTHt73u2mbMWLnGHbTGpO8tnjIfbiZ0MI9uDmqj/edTc2lOCxBxsPErYtTfyGBH+zxf9zqJjzxvJ/ux2i7RDNHRMwy7KERufdTi7iO7QWeFHgwU/CKVvEKY2HELGk4JhQcykdbGTcWcwiyUVL7IxHmdgnjlO5i5xnZSoxk9dtwMqyEPzmpyN5fE3L5JDq+138HqacCVXmMUe7ThpwwSXaT6Ogyu/QlVLlruhQuqaYQv8U3mosbklHL+7DC3KZV+93t2A4hB76i+Dk9z34+vUxYMg3wNN33c63epY5E2wFL3KdSJaOY8FVevS8oWTdMofFFFxO90n6B6mBxG7oSG8cHUEeUnoUVxcKRNs5UpWDHFgaVZt18dXa3Xq1qgVecmyW8G09+nuCjyW2OVptsjjQvTuZLLg06AD2Txt9paPrs3moIypqfXyf3gpV0CbL/q7X0+gMa17xbOIvlKMcVr92m8fkV5in69dxd3iOVqB6TCXYWmCbGtTMbl/7iDxSdZ6C1QqA4zuWbMylMtMj1oBYbbdPr0KVwdqtj4lfe/kmq00+z1AEm7y/TRGqS+KxIijE04tQZVCjOFqI9T1VwdrKfzwBnpIT+XiXPeZB9xi1h++ovecJqv2vTVQ6vs+qtHkjHw/fxGEmUpStz107+d+dSqtLwC1ljt9j9BGTVKz4MSPoG0x9cKRgTC38mPunxO+5s722ZfRaqL5w1otZQYvU/NkRYZkKqYQonJZRTaN7faIrt6e6t9fpDN+vz9b2HA4UQh3wXYS2K0J8UdrVO8HhEp2CDvqpV4g/QzXZ+0L+eRD/rslWuxfqTJX11mlqwH0Kfa/WGdT9tUOgYXuKVPsP9bHbvK5sVOHj3pftqdx5M6lg39Wcm3epFm8nlRH/MGx45DOdEf7UNF61SePbf4p1Xjk=</source>
+  </file>
+  <file path="Tools/RateLimitHandler.php" generated-path="Tools.RateLimitHandler.html" hash="28c07e5b2541cfe0e66a74940c7109da" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <file path="Contexts/User.php" generated-path="Contexts.User.html" hash="ce799b452e12c7a1bfe534c9e3b10fa2" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <namespace-alias name="HttpMethod">\Halfpastfour\Reddit\HttpMethod</namespace-alias>
+    <namespace-alias name="Context">\Halfpastfour\Reddit\Interfaces\Context</namespace-alias>
+    <namespace-alias name="Reddit">\Halfpastfour\Reddit\Reddit</namespace-alias>
+    <class final="false" abstract="false" namespace="Halfpastfour\Reddit\Contexts" line="30" package="Halfpastfour\Reddit\Contexts">
+      <extends/>
+      <implements>\Halfpastfour\Reddit\Interfaces\Context</implements>
+      <name>User</name>
+      <full_name>\Halfpastfour\Reddit\Contexts\User</full_name>
+      <docblock line="30">
+        <description>Class User</description>
+        <long-description></long-description>
+        <tag name="package" line="30" description="Halfpastfour\Reddit\Contexts"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="Halfpastfour\Reddit\Contexts" line="38" package="Halfpastfour\Reddit\Contexts">
+        <name>$client</name>
+        <full_name>\Halfpastfour\Reddit\Contexts\User::client</full_name>
+        <default></default>
+        <docblock line="38">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="38" description="" type="\Halfpastfour\Reddit\Reddit" variable="">
+            <type>\Halfpastfour\Reddit\Reddit</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Halfpastfour\Reddit\Contexts" line="46" package="Halfpastfour\Reddit\Contexts">
+        <name>__construct</name>
+        <full_name>\Halfpastfour\Reddit\Contexts\User::__construct()</full_name>
+        <docblock line="46">
+          <description>User constructor.</description>
+          <long-description></long-description>
+          <tag name="param" line="46" description="" type="\Halfpastfour\Reddit\Reddit" variable="$p_oClient">
+            <type>\Halfpastfour\Reddit\Reddit</type>
+          </tag>
+          <tag name="param" line="46" description="" type="string" variable="$id">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$p_oClient</name>
+          <default></default>
+          <type>\Halfpastfour\Reddit\Reddit</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Halfpastfour\Reddit\Contexts" line="65" package="Halfpastfour\Reddit\Contexts">
+        <name>submitted</name>
+        <full_name>\Halfpastfour\Reddit\Contexts\User::submitted()</full_name>
+        <docblock line="65">
+          <description>Fetch the submitted selfposts and links for the user in the current context.</description>
+          <long-description></long-description>
+          <tag name="param" line="65" description="" type="" variable="$sort"/>
+          <tag name="param" line="65" description="" type="" variable="$timeInterval"/>
+          <tag name="param" line="65" description="" type="" variable="$afterThing"/>
+          <tag name="param" line="65" description="" type="" variable="$beforeThing"/>
+          <tag name="param" line="65" description="" type="" variable="$count"/>
+          <tag name="param" line="65" description="" type="" variable="$limit"/>
+          <tag name="param" line="65" description="" type="boolean" variable="$subredditDetail">
+            <type>boolean</type>
+          </tag>
+          <tag name="return" line="65" description="" type="mixed">
+            <type>mixed</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$sort</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$timeInterval</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$afterThing</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$beforeThing</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$count</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$limit</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$subredditDetail</name>
+          <default>false</default>
+          <type>boolean</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Halfpastfour\Reddit\Contexts" line="102" package="Halfpastfour\Reddit\Contexts">
+        <name>setFlair</name>
+        <full_name>\Halfpastfour\Reddit\Contexts\User::setFlair()</full_name>
+        <docblock line="102">
+          <description></description>
+          <long-description></long-description>
+          <tag name="param" line="102" description="" type="array" variable="$options">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$options</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Halfpastfour\Reddit\Contexts" line="109" package="Halfpastfour\Reddit\Contexts">
+        <name>deleteFlair</name>
+        <full_name>\Halfpastfour\Reddit\Contexts\User::deleteFlair()</full_name>
+        <docblock line="109">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="102" code="PPC:ERR-50008">No summary for method setFlair()</error>
+      <error line="109" code="PPC:ERR-50008">No summary for method deleteFlair()</error>
+      <error line="38" code="PPC:ERR-50007">No summary for property $client</error>
+    </parse_markers>
+    <source>eJx9VmFv2zYQ/Wz9ilsQIHahJm2B7UOzdlNsORZmW4YkNwvWIaAlKmYriypJJQ2K/PfdUXIsJ/UMAxbJx/fe3ZEn//5Hta6cs1evHHgFQ1k9KHG7NtBPB/DuzdvfYM2KvGLa5LJWp2xDqFmQ4A89LbjaCK2FLEFoWHPFVw9wq1hpeOZCrjgHmUO6ZuqWu2AksPIBKq40bpArw0QpyltgkKIuIc0aabTMzT1THMEZMK1lKhjykV4m03rDS8MMSeai4Br6Zs3hKG43HQ2sTsZZAaIEWtsuwb0wa1kbUFwbJVLicBGUFnVGNrbLhdiIVgG3k6xNiSbeWmMc5NaFjcxETr/cBlfVq0LotQuZIPZVbXBS02TKS9qF0ZxJBZoXBTEItG4j3hm0GFQhyYoya9pcWen7tdzsx4O5ymtVoirPbNASc2dFv/DU0AzBc1kU8p4CTGWZCYpLv2/rl+A6W8k7bmNqKl9Kg5YbK1SOalfjdknjmShgxdvcoThmmnXCUuRBGzwGAstQSWVF23BJdxvC6dbHxIc4HCdXXuRDEMMiCj8FI38ER16M4yMXroJkEi4TQETkzZNrCMfgza/hr2A+csH/exH5cQxhBMFsMQ18nAvmw+lyFMwv4QL3zcMEpgGeXCRNQhIk3ZYt8GPim/nRcIJD7yKYBsm1C+MgmRPtGHk9WHhREgyXUy+CxTJahLGPDkbIPA/m4wiF/Jk/T05RGOfA/4QDiCfedGrD85YYQEQW7UULF9dRcDlJYBJORz7OX/joz7uY+o0ahjacesHMhZE38y59G1uIRJGFtQavJr6dQkkPv8MkCOcUyTCcJxEOXYw1SlpNu/sqiH0XvCiIKTPjKEQFyituCi0Pbp37DRHlfL80CKHxMvZ3dka+N0WumDZ3wVTbM8cp2YbriuGxmXQ6yeeIZ3gWPw8ltorvRp87Dl6tn0ImxlQzjlczOz+ICZBF5Siit4yHsc0PCm57XoE9BpaaKxr9iVa/stv/d2sjS5/2gdhUBae+pKGFOD+cHhlohzE3aDBRDIU705edacdxeuSoRybumIJGk8ZnTq9S0uCdxqt2nBYClc47cOsBLzf2nTo1Up3SbENUMcU2LRUcVzdyaHd3F6lbYXM4FtlWyzYtbC2lbZFwc/PE3X9J5XYIYOD0MPDeMTWO1x8bp7D3+dDZev4c+vojJke1ySGowJr3HjuhjrlJ17atYYfBBkkZwY6aV1Jj8qlnFaL8in0RexChalue5j2Q1kqRn7Thf5El+znW2K1ezhqx4faQ3bHi5SrLqYxrzMLLtRVHL/zAYirr8idq9g3UnV5JWaC1eqVs+kccX53Fzr/iBt8DsBHf+aEiPqWrT0mnIF2b/U5cdmIXih123NuxNWyfrEf79MwW1i1nheZObwD2MMjKtv9/TvRa3p/82x6Dk1txx8uT830E+npCWJf769vFZr1rfh9HZafGg3DCHTpi+5ts6I3Ah25N91FNRizsw15192E2UU9kdkRXtifyPvwi9E1ZF0W/rTQMoElVZ79dsPY3okTgc2IX3r55AwMSfQSO6T5M8O5Xi3L2M61uMluuJkXPamitHuP/pArB/GUO19iTI/6txj9SdJ56ux79/j2+GBM6F70jVomzH4ez/3j2dCiP3K55fB5YB+25/oJ/gdBtKjOOmdi6ev3xlpsLmT30B/bRsmIL7g9sWrpdo71FTCn2ADuVn18UbsYFE6r/DN72tg7tAYKMF9zwhmO75/E/m0eJAA==</source>
+  </file>
+  <file path="config/config.php" generated-path="config.config.html" hash="9d09fc352066b13f97cc350c9a10eb3c" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJxVU19vmzAQf8+nOOWprVC77WEP06TJCU5jjQAyTrM8EjDBE8EIm0X99rtzqNpKSHDnu9+fO/Pz19AOi6eHhwU8wNoOr6M5tx7uqnv49uXrd2jLrhlK5xs7jY/lhap2QuGLvnI9XoxzxvZgHLR61KdXOI9l73UdQTNqDbaBqi3Hs47AWyj7Vxj06LDBnnxpetOfoYQKeanStwjjbOOv5aixuIbSOVuZEvGIr7bVdNG9Lz1RNqbTDu58q2FZzE3L+8BT67ID0wOdvR3B1fjWTh5G7fxoKsKIsKjqpppkvB135mJmBmwn2jASR7iTQx+kNoKLrU1Dbx3MDdOpM66NoDaEfpo8Jh0lK91TF7p5siM43XWEYFB6cPwuMNQgC1EONFk/zypQX1t7+ewHZ9VMY4+sug6mLc4ukP7VlacMlTe26+yVDFa2rw35cj/m/Sk8L0/2nw6ebpvvrUfJNym0juF9x/ORwzvRwUnPs0NynHT5wdZIGpzHa2BwDYMdA+lsl3jfLDy+6dhyKLKNOjDJQRSQy+xFxDyGJSswXkZwEGqb7RVghWSpOkK2AZYe4bdI4wj4n1zyooBMgtjlieCYE+k62ccifYYV9qWZgkTgzUVQlREh8c5ogheEt+NyvcWQrUQi1DGCjVApwW4Ql0HOpBLrfcIk5HuZZwVHBTEipyLdSCTiO56qRyTGHPAXDKDYsiQJ9tgeDUiSGH60LD9K8bxVsM2SmGN+xVEfWyX8xobW1gkTuwhitmPPPHjLEEiGslngYctDCikZPmslspScrLNUSQwj9CrVzBm6D6LgETApCprMRmbIQHPFpizgYGvKb0A088+rwRKK9wV/lxNzliBWQc0fi2m3T4vF4j99Vlw4</source>
+  </file>
+  <file path="Contexts/Thing.php" generated-path="Contexts.Thing.html" hash="8cd88cab6a075c561d86b5df817fe56c" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <file path="Contexts/Subreddit.php" generated-path="Contexts.Subreddit.html" hash="7fa0ca68ac013b53e0ac4b7275ad0627" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <file path="Contexts/PrivateMessage.php" generated-path="Contexts.PrivateMessage.html" hash="ca68c5c37e68bb31a2e13aa385e8a83d" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydVm1P4zgQ/tz+ihFC2xYF2LsP94E9YEMbaHRtUiVhOcQiZBK39V4a52wHrjrtf78ZJ4GWl5N2K6TE9szzPPPiCb+flsuye7i314U9GMpyrcRiaaCfDuDXj7/8BkuWz0umzVxW6oCtyGrqJ/igtxlXK6G1kAUIDUuu+P0aFooVhmcOzBXnIOeQLplacAeMBFasoeRKo4O8N0wUolgAgxR5ydIsEUbLuXlkiqNxBkxrmQqGeMSXybRa8cIwQ5RzkXMNfbPksBM3TjsDy5NxloMogM7aI3gUZikrA4pro0RKGA4apXmVkYz2OBcr0TCgO9HalGjCrTTGQWodWMlMzOnJbXBldZ8LvXQgE4R+Xxnc1LSZ8oK8MJpDqUDzPCcEgdJtxM8CrQ2yEGVJmTVNriz141KutuPBXM0rVSArz2zQEnNnSb/x1NAOmc9lnstHCjCVRSYoLn3U1C/Bc3YvH7iNqa58IQ1KrqVQOcrnGjdHGnsih3ve5A7JMdNsIyxFGrTBNhBYhlIqS9qES7xtCAetjrEHcXieXLmRB34Msyj84o+8Eey4Ma53HLjyk3F4mQBaRG6QXEN4Dm5wDX/4wcgB789Z5MUxhBH409nE93DPD4aTy5EfXMAZ+gVhAhMfOxdBk5AIibdB872Y8KZeNBzj0j3zJ35y7cC5nwQEe464LszcKPGHlxM3gtllNAtjDxWMEDnwg/MIibypFyQHSIx74H3BBcRjdzKx4bmXGEBEEu1FC2fXkX8xTmAcTkYe7p95qM89m3g1G4Y2nLj+1IGRO3UvPBtbiECRNWsEXo09u4WULv4NEz8MKJJhGCQRLh2MNUoaTut95ceeA27kx5SZ8yhEBsorOoUWB10DrwainG+XBk1ofRl7z3JGnjtBrJicN42ptofdbsFWXJcM22a8MUm+RjzDXvw6lDgq/jH6U7eLV+tNk7Ex5ZTj1cw+vWvjI4qaI4luEd+3rR9I2M68HGcMzJR4wCkz5Vqzhe3Rzyj6L3z/X902xvQNBBCrMuc0qzQ0xt1/ux0S1SxjblB0ohiJ2Ty42Dzodkhmh/Q8MAU1PTZjKQXF3F5yVe+nuUDGA7I/7HZKJQ0OAryfu/XBJtwLuTgbcGxVqZHKuteUJVNs1ZI2IJsnNOlwsOyKrKW0Aw/HUmHHK9zdPQH3X+A4G94w6HYwO51dmjj7J7UBbP06+Dt+DuSF7f5JuRVPk0ryENg3ne8bkUfc4NS0aUvJjErUTOJV7b2RAVUbM6XY+p0YFWdZfwBHrZENBL8xJUbOScG20CX2c8T/rvAj1Ifn5j46womCF7Z3yEpxSJh3rZpv+AnoOXCDuJ2eyHqd45OXoG9G76DDLQyo6lZQlRvK4WfCu8t4KjPehyel+ycLbs5ktu4P7OuwyU2fvqiq4jC46WXMsN6tBWwS8+QOp9BwYCZubl/lvMzXbbO+zvJ2N2FoxSLAufHWYeP8gxVC9v5rfOclKrxXRvi5MqZyRSNgu4JUmp7taawjCnhgeX9DgVMbkcY7LDY0xW4U20OEvjPrktvDXg3+Rq2P4Wcr/XaFP3zAfzk0N/220jc1923bGDe1bI1vH5826W53Oqc/5EMeR1BUeW776Pt/RA9aXA==</source>
+  </file>
+  <file path="Interfaces/Context.php" generated-path="Interfaces.Context.html" hash="6626982b81f174c601370179341998fc" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydVF9r40YQf44/xRAOnAThtH24h2uhp9jreKksGUm+NHAQ1tLa3lbWit1VUlP63Tuzkh0fudBiMMi7O/P7M7szv/zabJvB7c3NAG5grJu9UZutg6viGn764cePsBXVuhHWrXVrRmJHUXOe44f+LaTZKWuVrkFZ2EojV3vYGFE7WQawNlKCXkOxFWYjA3AaRL2HRhqLCXrlhKpVvQEBBfJSpNsijNVr9yKMxOAShLW6UALxiK/URbuTtROOKNeqkhau3FbCZdYnXV57nlKKClQNdHY4ghfltrp1YKR1RhWEEWBQUbUlyTgcV2qnegZMJ1pfEku4rUUfpDaAnS7Vmr7Sm2vaVaXsNoBSEfqqdbhpabOQNWWhm1ttwMqqIgSF0r3jV4E+BlmIsqHKur5Wnvplq3ff+sFarVtTI6ssvWmNtfOkf8jC0Q6Fr3VV6RcyWOi6VOTLfurvL8dzsdLP0nvqbr7WDiV3Uug6mtc77o8svokKVrKvHZJjpcWJLUMarMNnoPAaGm08aW+XeA8WRgcdMwZZMs0fwpQBz2CRJl/4hE3gMsxwfRnAA89nyTIHjEjDOH+EZAph/Ai/8XgSAPt9kbIsgyQFPl9EnOEej8fRcsLje7jDvDjJIeL4chE0T4iQeHs0zjLCm7N0PMNleMcjnj8GMOV5TLBTxA1hEaY5Hy+jMIXFMl0kGUMFE0SOeTxNkYjNWZyPkBj3gH3BBWSzMIq8vXCJBlKS6BstWTym/H6WwyyJJgz37xjqC+8i1rGhtXEU8nkAk3Ae3jPvLUGg1If1Ah9mzG8hZYi/cc6TmJyMkzhPcRmg1zTvOX32A89YAGHKM6rMNE2QgeqKSYnHwdSYdUBU82+vBkNovczYq5wJCyPEyij5NJju9nYwqMVO2kbgs5mdTJKvqSzxLX7lOCnMGk/tz4MBNtd3g7oPBvRT6piE8wr//uVo8zNy/Ck2/0XTP7jPjdH4sN0eugj4UFQKB4vXrN7g/z24IO4LPyL9FjUT9nlbOG1GdOAPUYQRuyNm86THHezJIU0HbMYPqqTd28GFnxwFtnLtRxI8PR2xr95CBScAcI1FOSrLcHpVJU43h0MB+xeEMWLvx5ofBNSh4lmoSqwqanjvw/o//SD240LJqrQwxA42nnsYwBBvxgwDzzJsjHrGefyE12qx3kM/KYY4KurN8LUQBxUk4R2fG+n6Yl5dw6cu9H0/pK1ojcESQC8BegkHL6M39F2p3udfdEDzDudUTZf5/+QcS3W+kOwAca4GX//z+XNKP5ebXsf51EvM/i7zP/8C9kO8GA==</source>
+  </file>
+  <file path="Exceptions/UserContextException.php" generated-path="Exceptions.UserContextException.html" hash="619b9b1e26f2097101f32aebf91550aa" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Halfpastfour\Reddit\Exceptions" line="26" package="Halfpastfour\Reddit\Exceptions">
+      <extends>\Exception</extends>
+      <name>UserContextException</name>
+      <full_name>\Halfpastfour\Reddit\Exceptions\UserContextException</full_name>
+      <docblock line="26">
+        <description>Class UserContextException</description>
+        <long-description></long-description>
+        <tag name="package" line="26" description="Halfpastfour\Reddit\Exceptions"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="Halfpastfour\Reddit\Exceptions" line="31" package="Halfpastfour\Reddit\Exceptions">
+        <name>$message</name>
+        <full_name>\Halfpastfour\Reddit\Exceptions\UserContextException::message</full_name>
+        <default>"Please set a user using the 'user' method before calling methods dependent on a user context"</default>
+        <docblock line="31">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="31" description="&lt;p&gt;The exception message.&lt;/p&gt;" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+    </class>
+    <source>eJyFVE2P2zYQPa9/xcAokGQh7LY99NCkaLU2vSYiS4YkZ7tALrREWWxlURDpbBZF/3ve0NqPHIoChm0OZ96bN5yZD78P7TC7vryc0SUt7PA4mkPr6W31jn7+8adfqFVdMyjnG3sar9SRvTayxA//2+rxaJwztifjqNWj3j/SYVS913VEzag12YaqVo0HHZG3pPpHGvToEGD3Xpne9AdSVIGXPX0LGGcb/6BGDeealHO2Mgp4zFfb6nTUvVeeKRvTaUdvfatpXkxB83eBp9aqI9MT3z1d0YPxrT15GrXzo6kYI4JT1Z1qTuPpujNHMzEgnGlDSRzjnhx0cLYRHW1tGv7VQdxw2nfGtRHVhtH3Jw+jY2Ole46Cmms7ktNdxwgGqQfFLwkGH7Aw5cCV9VOtAvVDa4/f60GtmtPYg1XXQbRF7QLpX7rybGH3xnadfWCBle1rw7rcr9P7lbhXe/tFB03nl++tR8rnVPg5hpc3nq4ceqKjvZ5qB3JUWr2SNXIOzqMNDJ5hsGMgneQy75OEq6c81oKKbFXexbkgWdA2zz7JpVjSPC5wnkd0J8t1tisJHnmclveUrShO7+mjTJcRiT+3uSgKynKSm20iBWwyXSS7pUxv6QZxaVZSItG5AC0zJmTeCU2KgvE2Il+scYxvZCLL+4hWskwZdgXcmLZxXsrFLolz2u7ybVYIZLAEcirTVQ4isRFpeQVi2Eh8woGKdZwkQV68g4CcUwyDlm3vc3m7LmmdJUsB+41AfvFNIs5skLZIYrmJaBlv4lsRtGUAyoPblODdWgQTKGN8FqXMUlayyNIyxzGC1rycOEP0nSxERHEuC67MKs/AwHVFUBZwEJqKMxDX/PungQufd4V4SWcp4gRYBQe/dua3vZ7NenXUblBom/WrTfI51zV68bP4WukhdMf72fMS6jD0tHN6XFgskq/+2Ylv/wDW3+rwf3CBvPpPJMJB97Wjl5DZP7MLzuCCSb4o9DDGGFPDM6Kf4yDGgf2K3a5nF8NoPWYNI/DDdEO/0XzbaeUwJ9pjt2FljPhiKB7HN3x+AxwsmxpD1FhMcoXpYYez1WF9DcgOi45AOUFUZwnz97N/vwH4o9KV</source>
+  </file>
+  <file path="Contexts/ContextGetterTrait.php" generated-path="Contexts.ContextGetterTrait.html" hash="130764ed95bd7eb2d6927898605f5c68" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJydVG1v2zYQ/mz/ikNQIC9Qk60f9qHdsio2HROTJUOSmwXrMNASbXOTRYGkkwVD//vuKKmJ8zIsBQzIPN7d8zx3vPvx52bTDM9OToZwAiPd3Bm13jg4Ko7h3Xff/wAbUa0aYd1K78yp2JLXjOf4oX9zabbKWqVrUBY20sjlHayNqJ0sA1gZKUGvoNgIs5YBOA2ivoNGGosBeumEqlW9BgEF4pKn22Aaq1fuVhiJziUIa3WhBOYjvFIXu62snXAEuVKVtHDkNhIOsi7o4NjjlFJUoGqgu/4KbpXb6J0DI60zqqAcAToV1a4kGv11pbaqQ8BwgvUlsZR3Z1EHsQ1gq0u1oq/04prdslJ2E0CpKPty59BoyVjImqJQzZk2YGVVUQaF1L3ie4LeB1EIsqHKuq5WHvp2o7f7erBWq52pEVWWXrTG2nnQP2XhyELuK11V+pYEFrouFemy77v+5XgvlvpGek1t52vtkHJLhdrR3Pe4u7L4JipYyq52CI6VFg9kGeJgHT4DhW1otPGgnVzC7SWc9jymDLJkkl+FKQOewTxNPvExG8NBmOH5IIArnk+TRQ7okYZxfg3JBML4Gn7h8TgA9us8ZVkGSQp8No84QxuPR9FizONLuMC4OMkh4vhyMWmeECDhdtk4yyjfjKWjKR7DCx7x/DqACc9jSjvBvCHMwzTno0UUpjBfpPMkY8hgjJljHk9SBGIzFuenCIw2YJ/wANk0jCIvL1yggJQo+kFL5tcpv5zmME2iMUP7BUN+4UXEWjSUNopCPgtgHM7CS+a1JZgo9W4dwasp8yaEDPE3ynkSk5JREucpHgPUmuYdpo++4hkLIEx5RpWZpAkiUF0xKPF5MDRmbSKq+X5r0IXOi4zd0xmzMMJcGQU/dKbeng2HtdhK2wh8NtMHm+RzKkt8i59HGlfF385+GA5xtJ51aT/o0O+oCncCdIGX0jlpciOUo7uPCPSXWP83VutoND5sdwftJbwpKoWLxXN2lO45hH+GAyIxoBeMq6IqcZU4nEAcFhDGiDu/Q/zU0TiIG6Eqsaxoulpo/6fben42laxKC4c4LsbzOAzgEAth6NsYdYOL7w+sn0VNhx7Xz+UhDma99gZv/NjTIA5kORsO/D4qcEHUftHBWrpO0dExvO9dUdGgC/4N/w6egA5+Ooc3tAfenmOGeXs7ay+/5gt86L0IPO2FZf3No4hWxuCxe07mR66+KE88F2jdc/z9w3DwZfhSm6jkxc4YbDR0AvvWnD4pJm3xev1yNV+oBda2j3xQXDTdiOqop94+trfnzXM54Ph/i/ha8m+X8bQ3r1JgH4W/grzv/rcT338lryLtHoS+gjC9wW/nu/dWX0V3dx/Zsf3yL7GQF7o=</source>
+  </file>
+  <file path="Exceptions/TokenStorageException.php" generated-path="Exceptions.TokenStorageException.html" hash="3542dc9e62ccf0d8352372038d20e449" package="Default">
+    <docblock line="0">
+      <description>Copyright (c) 2016 halfpastfour.am
+MIT</description>
+      <long-description>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Halfpastfour\Reddit\Exceptions" line="26" package="Halfpastfour\Reddit\Exceptions">
+      <extends>\Exception</extends>
+      <name>TokenStorageException</name>
+      <full_name>\Halfpastfour\Reddit\Exceptions\TokenStorageException</full_name>
+      <docblock line="26">
+        <description>Class TokenStorageException</description>
+        <long-description></long-description>
+        <tag name="package" line="26" description="Halfpastfour\Reddit\Exceptions"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="Halfpastfour\Reddit\Exceptions" line="31" package="Halfpastfour\Reddit\Exceptions">
+        <name>$message</name>
+        <full_name>\Halfpastfour\Reddit\Exceptions\TokenStorageException::message</full_name>
+        <default>"When a TokenStorageMethod of 'FILE' is passed, please set the location the file should be stored at"</default>
+        <docblock line="31">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="31" description="&lt;p&gt;The exception message.&lt;/p&gt;" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+    </class>
+    <source>eJyFVEtv4zYQPke/YmAU2N1ASNoeeui2aBmbjonKkkHJ6wbYCy1RFruyKJDUZoOi/70zjPI6FAUMyBzOfI8hh7/8NnZjcn15mcAlLO344MypC/C+/gA/fv/DT9Cpvh2VD62d3JU6U9ZWVPihfzvtzsZ7YwcwHjrt9PEBTk4NQTcptE5rsC3UnXInnUKwoIYHGLXzWGCPQZnBDCdQUCMvZYYOYbxtw71yGpMbUN7b2ijEI77G1tNZD0EFomxNrz28D52GRTkXLT5EnkarHswAtPe0BfcmdHYK4LQPztSEkWJS3U8NyXja7s3ZzAxYTrSxJZ5wJ48+SG0KZ9uYlr46mhunY298l0JjCP04BQx6CtZ6oCp0c20deN33hGBQenT8IjDmIAtRjtTZMPcqUt939vzWD/aqndyArLqJpi32LpL+petAEUpvbd/bezJY26Ex5Mv/PJ9fhfvqaL/q6Onx5AcbUPKjFDqO8eWM5y2Pd6KHo557h+TYafXKliMNPuA1MHgMo3WRdLZLvE8Wrp50bDiUxbo6MMlBlLCTxSex4itYsBLXixQOotoU+wowQ7K8uoNiDSy/gz9EvkqB/7mTvCyhkCC2u0xwjIl8me1XIr+FG6zLiwoygTcXQauCCIl3RhO8JLwtl8sNLtmNyER1l8JaVDnBrhGXwY7JSiz3GZOw28tdUXJUsELkXORriUR8y/PqCokxBvwTLqDcsCyL9tgeDUiSGAet2N1JcbupYFNkK47xG4762E3GH9nQ2jJjYpvCim3ZLY/eCgSSMW0WeNjwGEJKhr9lJYqcnCyLvJK4TNGrrGbOWH0QJU+BSVFSZ9ayQAbqKxYVEQdLc/4IRD1/ezSYQut9yV/krDjLEKuk4tfJdLbXSTKos/ajwmuzefWSfJa6wbv4mX+r9Rhvx8fk+RHqceihsl/0UAbr1Ek/Z9H27wj2BYP/gxfZ6/+GAv0t6KHx8FKT/J1ckIYLYvmq8BbjIOPc0JTo5zq04xHoitKuk4vR2YDThkPw3bwDv8Li0GkciTfMW43PS0ND8G4tMv6Oxhfle3opx14rj4OlQxzZ3tbP70985XDk7NQ3NHMe0ZBMhcXH5J9/AS3g1JY=</source>
+  </file>
+  <file path="Reddit.php" generated-path="Reddit.html" hash="af2813769931a11c2b66d37751fda1dc" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <package name="Default" full_name="Default"/>
+  <package name="Halfpastfour" full_name="Halfpastfour">
+    <package name="Reddit" full_name="Halfpastfour\Reddit">
+      <package name="Contexts" full_name="Halfpastfour\Reddit\Contexts"/>
+      <package name="Exceptions" full_name="Halfpastfour\Reddit\Exceptions"/>
+      <package name="Things" full_name="Halfpastfour\Reddit\Things"/>
+    </package>
+  </package>
+  <package name="global" full_name="global"/>
+  <namespace name="Halfpastfour" full_name="Halfpastfour">
+    <namespace name="Reddit" full_name="Halfpastfour\Reddit">
+      <namespace name="Contexts" full_name="Halfpastfour\Reddit\Contexts"/>
+      <namespace name="Exceptions" full_name="Halfpastfour\Reddit\Exceptions"/>
+      <namespace name="Things" full_name="Halfpastfour\Reddit\Things"/>
+    </namespace>
+  </namespace>
+  <deprecated count="0"/>
+</project>
