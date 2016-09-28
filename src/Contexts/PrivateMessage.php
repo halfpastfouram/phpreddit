@@ -41,47 +41,47 @@ class PrivateMessage implements Context
 	 * PrivateMessage constructor.
 	 *
 	 * @param Reddit $client
-	 * @param string $p_sId
+	 * @param string $id
 	 */
-	public function __construct( Reddit $client, $p_sId )
+	public function __construct( Reddit $client, string $id )
 	{
 		$this->client              				= $client;
-		$this->client->privateMessageContext	= $p_sId;
+		$this->client->privateMessageContext	= $id;
 	}
 
 	/**
 	 * Return the contents of the message.
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function read()
+	public function read() : array
 	{
 		$response	= $this->client->httpRequest( HttpMethod::POST, '/api/read_message.json', [
 			'id'	=> $this->client->privateMessageContext,
 		] );
 
-		$result		= @json_decode( $response, true )['data'];
+		$result		= @json_decode( $response->getBody()->getContents(), true )['data'];
 
-		return $response ? $result : null;
+		return $response ? $result : [];
 	}
 
 	/**
 	 * Reply to the message.
 	 *
-	 * @param string $p_sThingName
-	 * @param string $p_sMessage
+	 * @param string $thingName
+	 * @param string $message
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function reply( $p_sThingName, $p_sMessage )
+	public function reply( string $thingName, string $message ) : array
 	{
 		$response = $this->client->httpRequest( HttpMethod::POST, '/api/comment.json', [
-			'text'     => strval( $p_sMessage ),
-			'thing_id' => $p_sThingName,
+			'text'     => strval( $message ),
+			'thing_id' => $thingName,
 			'api_type' => 'json',
 		] );
 
-		$result	= json_decode( $response, true );
+		$result	= json_decode( $response->getBody()->getContents(), true );
 
 		return $response && isset( $result['json']['data']['things'][0]['data'] )
 			? $result['json']['data']['things'][0]['data']

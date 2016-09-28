@@ -34,7 +34,7 @@ trait ContextGetterTrait
 	 *
 	 * @return array
 	 */
-	public function getContext()
+	public function getContext() : array
 	{
 		return [
 			'private_message'	=> $this->getPrivateMessageContext(),
@@ -47,40 +47,40 @@ trait ContextGetterTrait
 	/**
 	 * Should return the current message context.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
-	public function getPrivateMessageContext()
+	public function getPrivateMessageContext() : string
 	{
-		return $this->client->privateMessageContext;
+		return strval( $this->client->privateMessageContext );
 	}
 
 	/**
 	 * Should return the current subreddit context.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
-	public function getSubredditContext()
+	public function getSubredditContext() : string
 	{
-		return $this->client->subredditContext;
+		return strval( $this->client->subredditContext );
 	}
 
 	/**
 	 * Should return the current thing context.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
-	public function getThingContext()
+	public function getThingContext() : string
 	{
-		return $this->client->thingContext;
+		return strval( $this->client->thingContext );
 	}
 
 	/**
 	 * Should return the current user context.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
-	public function getUserContext()
+	public function getUserContext() : string
 	{
-		return $this->client->userContext;
+		return strval( $this->client->userContext );
 	}
 }

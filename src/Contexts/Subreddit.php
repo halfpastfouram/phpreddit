@@ -42,12 +42,12 @@ class Subreddit implements Context
 	 * Subreddit constructor.
 	 *
 	 * @param Reddit $p_oClient
-	 * @param string $p_sId
+	 * @param string $id
 	 */
-	public function __construct( Reddit $p_oClient, $p_sId )
+	public function __construct( Reddit $p_oClient, string $id )
 	{
 		$this->client                   = $p_oClient;
-		$this->client->subredditContext = $p_sId;
+		$this->client->subredditContext = $id;
 	}
 
 	/**
@@ -57,13 +57,13 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function newListings( Listing $listing )
+	public function newListings( Listing $listing ) : mixed
 	{
 		$response = $this->client->httpRequest( HttpMethod::GET, "r/{$this->client->subredditContext}/new", [
 				'query' => $listing->output(),
 		] );
 
-		return json_decode( $response, true );
+		return json_decode( $response->getBody()->getContents(), true );
 	}
 
 	/**
@@ -71,14 +71,14 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function wikiPages()
+	public function wikiPages() : mixed
 	{
 		$response = $this->client->httpRequest(
 			HttpMethod::GET,
 			"r/{$this->client->subredditContext}/wiki/pages"
 		);
 
-		return json_decode( $response, true );
+		return json_decode( $response->getBody()->getContents(), true );
 	}
 
 	/**
@@ -88,14 +88,14 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function wikiPage( $wikiPageName )
+	public function wikiPage( string $wikiPageName ) : mixed
 	{
 		$response = $this->client->httpRequest(
 			HttpMethod::GET,
 			"r/{$this->client->subredditContext}/wiki/{$wikiPageName}"
 		);
 
-		return json_decode( $response, true );
+		return json_decode( $response->getBody()->getContents(), true );
 	}
 
 	/**
@@ -116,14 +116,14 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function submit( array $options )
+	public function submit( array $options ) : mixed
 	{
 		$options['api_type'] = 'json';
 		$options['sr']       = $this->client->subredditContext;
 
 		$response = $this->client->httpRequest( HttpMethod::POST, "api/submit", $options );
 
-		return json_decode( $response, true )->json;
+		return json_decode( $response->getBody()->getContents(), true )->json;
 	}
 
 	/**
@@ -157,9 +157,9 @@ class Subreddit implements Context
 	/**
 	 * Return an array with the names of the moderators of the current subreddit.
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function getMods()
+	public function getMods() : array
 	{
 		$response = $this->client->httpRequest(
 			HttpMethod::GET,
@@ -167,10 +167,10 @@ class Subreddit implements Context
 			[ 'api_type' => 'json' ]
 		);
 
-		$result = json_decode( $response, true );
+		$result = json_decode( $response->getBody()->getContents(), true );
 
 		return $response && isset( $result['data']['children'] )
 			? array_column( $result['data']['children'], 'name' )
-			: null;
+			: [];
 	}
 }

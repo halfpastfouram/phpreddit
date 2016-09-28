@@ -23,11 +23,9 @@ namespace Halfpastfour\Reddit;
  * Class TokenStorageMethod
  * @package Halfpastfour\Reddit
  */
-abstract class TokenStorageMethod
+final class TokenStorageMethod
 {
 	const COOKIE = 1;
-
 	const REDIS  = 2;
-
 	const FILE   = 3;
 }

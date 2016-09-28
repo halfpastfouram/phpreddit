@@ -35,7 +35,7 @@ trait ContextSetterTrait
 	 *
 	 * @return  User
 	 */
-	public function user( $user )
+	public function user( string $user ) : User
 	{
 		return new User( $this->client, $user );
 	}
@@ -47,7 +47,7 @@ trait ContextSetterTrait
 	 *
 	 * @return Subreddit
 	 */
-	public function subreddit( $subreddit )
+	public function subreddit( string $subreddit ) : Subreddit
 	{
 		return new Subreddit( $this->client, $subreddit );
 	}
@@ -55,24 +55,24 @@ trait ContextSetterTrait
 	/**
 	 * Sets the thing context for future method calls.
 	 *
-	 * @param string $p_sThingId The thing to set the context for.
+	 * @param string $thingId The thing to set the context for.
 	 *
 	 * @return Thing
 	 */
-	public function thing( $p_sThingId )
+	public function thing( string $thingId ) : Thing
 	{
-		return new Thing( $this->client, $p_sThingId );
+		return new Thing( $this->client, $thingId );
 	}
 
 	/**
 	 * Sets the private message context for future method calls
 	 *
-	 * @param string $p_sMessageId
+	 * @param string $messageId
 	 *
 	 * @return PrivateMessage
 	 */
-	public function privateMessage( $p_sMessageId )
+	public function privateMessage( string $messageId ) : PrivateMessage
 	{
-		return new PrivateMessage( $this->client, $p_sMessageId );
+		return new PrivateMessage( $this->client, $messageId );
 	}
 }

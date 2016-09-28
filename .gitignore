@@ -4,7 +4,8 @@ composer.lock
 Vagrantfile
 public
 .vagrant
-/composer.phar
-/test/config.php
-/test/reddit.token
-/phpDocumentor.phar
+composer.phar
+config.php
+reddit.token
+phpDocumentor.phar
+phpdoc-cache*

@@ -2,8 +2,8 @@
 
 return [
 	'username'	=> 'coinflipbot',
-	'password'	=> 'tijdelijk',
-	'id'		=> 'JAoOFzVJHrw4zQ',
-	'secret'	=> '54D8KIeNwFnG3Su-eaUE7OlCkM8',
+	'password'	=> 'quohxuujo1fe3aefahZai1ke5vah7eer',
+	'id'		=> 'qdCxfhRnK0gquA',
+	'secret'	=> 'dtI4s_iq52UDlA5wljEw_BLFBPI',
 	'userAgent'	=> 'Coinflipbot by /u/supersniperguy',
 ];

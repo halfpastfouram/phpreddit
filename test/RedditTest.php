@@ -2,11 +2,14 @@
 
 Namespace Test;
 
+use GuzzleHttp\Exception\RequestException;
+use Halfpastfour\Reddit\ArrayOptions\Listing;
 use Halfpastfour\Reddit\Contexts\Subreddit;
 use Halfpastfour\Reddit\Contexts\User;
 use Halfpastfour\Reddit\Reddit;
 use Halfpastfour\Reddit\TokenStorageMethod;
 use PHPUnit_Framework_TestCase;
+use Prophecy\Exception\Exception;
 
 /**
  * Class RedditTest
@@ -37,14 +40,8 @@ class RedditTest extends PHPUnit_Framework_TestCase
 
 		// Set token storage method to FILE to avoid exceptions about headers already being sent
 		$this->reddit->setTokenStorageMethod( TokenStorageMethod::FILE, 'phpreddit:token', 'reddit.token' );
-	}
-
-	/**
-	 * Use this to avoid 'Too may requests' messages
-	 */
-	private function timeout()
-	{
-		sleep( 5 );
+		// Set the user agent
+		$this->reddit->setUserAgent( $this->config['userAgent'] );
 	}
 
 	/**
@@ -93,5 +90,36 @@ class RedditTest extends PHPUnit_Framework_TestCase
 		$this->reddit->clearContext();
 		$this->assertTrue( is_null( $this->reddit->subredditContext ), 'Subreddit context is null' );
 		$this->assertTrue( is_null( $this->reddit->userContext ), 'User context is null' );
+	}
+
+	/**
+	 *
+	 */
+	public function testPrivateMessages()
+	{
+		$this->reddit->clearContext();
+		$limit		= rand( 10, 1000 );
+		$resultSet	= $this->reddit->getPrivateMessages( $limit );
+		$this->assertTrue( is_array( $resultSet ), 'Not empty result' );
+		$this->assertEquals( count( $resultSet ), $limit, "Result limited to {$limit}" );
+	}
+
+	/**
+	 *
+	 */
+	public function testGetComments()
+	{
+		$this->reddit->clearContext();
+
+		// Test result set from /r/all
+		$limit		= rand( 10, 1000 );
+		$resultSet	= $this->reddit->getComments( 'all', $limit );
+		$this->assertTrue( !empty( $resultSet ), 'Not empty result' );
+		$this->assertEquals( count( $resultSet ), $limit, "Result limited to {$limit}" );
+
+		// Empty result set
+		$this->expectException( RequestException::class );
+		$this->expectExceptionCode( 404 );
+		$this->reddit->getComments( uniqid( 'non_existing_subreddit_' ) );
 	}
 }

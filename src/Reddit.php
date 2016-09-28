@@ -20,8 +20,14 @@
 namespace Halfpastfour\Reddit;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Psr7\Response;
 use Halfpastfour\Reddit\ArrayOptions\Listing;
+use Halfpastfour\Reddit\Contexts\Subreddit;
+use Halfpastfour\Reddit\Contexts\Thing;
+use Halfpastfour\Reddit\Contexts\User;
 use Halfpastfour\Reddit\Exceptions\TokenStorageException;
+use Halfpastfour\Reddit\Tools\RateLimitHandler;
+use Halfpastfour\Reddit\Tools\RequestLimitHandler;
 use Predis\Client as PredisClient;
 
 /**
@@ -31,13 +37,14 @@ use Predis\Client as PredisClient;
 class Reddit
 {
 	const ACCESS_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
+
 	const OAUTH_URL        = 'https://oauth.reddit.com/';
 
 	/**
-	 * @var $client GuzzleClient
-	 * @var $username string
-	 * @var $password string
-	 * @var $clientId string
+	 * @var $client       GuzzleClient
+	 * @var $username     string
+	 * @var $password     string
+	 * @var $clientId     string
 	 * @var $clientSecret string
 	 */
 	protected $client, $username, $password, $clientId, $clientSecret, $accessToken, $tokenType,
@@ -69,7 +76,7 @@ class Reddit
 	/**
 	 * Reddit constructor.
 	 *
-	 * @param   string $username The username of the user you wish to control.
+	 * @param   string $username     The username of the user you wish to control.
 	 * @param   string $password     The password of the user you wish to control.
 	 * @param   string $clientId     Your application's client ID.
 	 * @param   string $clientSecret Your application's client secret.
@@ -90,11 +97,11 @@ class Reddit
 	 *
 	 * @param   string $user The user to set the context for.
 	 *
-	 * @return  Contexts\User
+	 * @return  User
 	 */
-	public function user( $user )
+	public function user( string $user ) : User
 	{
-		return new Contexts\User( $this, $this->stripPrefixes( $user ) );
+		return new User( $this, $this->stripPrefixes( $user ) );
 	}
 
 	/**
@@ -102,11 +109,11 @@ class Reddit
 	 *
 	 * @param   string $subreddit The subreddit to set the context for.
 	 *
-	 * @return  Contexts\Subreddit
+	 * @return  Subreddit
 	 */
-	public function subreddit( $subreddit )
+	public function subreddit( string $subreddit ) : Subreddit
 	{
-		return new Contexts\Subreddit( $this, $this->stripPrefixes( $subreddit ) );
+		return new Subreddit( $this, $this->stripPrefixes( $subreddit ) );
 	}
 
 	/**
@@ -114,94 +121,112 @@ class Reddit
 	 *
 	 * @param   string $thing The thing to set the context for.
 	 *
-	 * @return  Contexts\Thing
+	 * @return  Thing
 	 */
-	public function thing( $thing )
+	public function thing( string $thing ) : Thing
 	{
-		return new Contexts\Thing( $this, $thing );
+		return new Thing( $this, $thing );
 	}
 
 	/**
 	 * Fetches the user currently logged and returns their data.
 	 *
-	 * @return mixed    The user currently logged in.
+	 * @return mixed The user currently logged in.
 	 */
-	public function me()
+	public function me() : mixed
 	{
 		$response = $this->httpRequest( HttpMethod::GET, 'api/v1/me' );
 
-		return json_decode( $response, true );
+		return json_decode( $response->getBody()->getContents(), true );
 	}
 
 	/**
 	 * Post a comment to a thing identified by the given thing name. Returns the created comment upon sucess.
 	 *
-	 * @param string $p_sThingName
-	 * @param string $p_sReply
+	 * @param string $thingName
+	 * @param string $reply
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function comment( $p_sThingName, $p_sReply )
+	public function comment( string $thingName, string $reply ) : array
 	{
 		$response = $this->httpRequest( HttpMethod::POST, '/api/comment.json', [
-			'text'     => strval( $p_sReply ),
-			'thing_id' => $p_sThingName,
+			'text'     => strval( $reply ),
+			'thing_id' => $thingName,
 			'api_type' => 'json',
-		] );
+		] )->getBody()->getContents();
 
 		$result = json_decode( $response, true );
 
 		return $response && isset( $result['json']['data']['things'][0]['data'] )
 			? $result['json']['data']['things'][0]['data']
-			: null;
+			: [];
 	}
 
 	/**
 	 * Request a list of private messages.
 	 *
-	 * @param Listing $p_oListing
+	 * @param int $limit
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function getPrivateMessages( Listing $p_oListing )
+	public function getPrivateMessages( int $limit = 25 ) : array
 	{
-		$response = $this->httpRequest( HttpMethod::GET, 'r/message/inbox.json', [
-			'query'	=> $p_oListing->output()
-		] );
+		$listing = new Listing;
+		$listing->setLimit( $limit );
 
-		return @json_decode( $response, true )[0]['data'];
+		$requestLimitHandler = new RequestLimitHandler(
+			$this->client,
+			HttpMethod::GET,
+			'message/inbox.json',
+			$listing
+		);
+
+		return $requestLimitHandler->doHttpRequests( new RateLimitHandler( $this->client, $this->getHeaders() ) );
 	}
 
 	/**
 	 * Request a list of unread private messages.
 	 *
-	 * @param Listing $p_oListing
+	 * @param int $limit
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function getUnreadPrivateMessages( Listing $p_oListing )
+	public function getUnreadPrivateMessages( int $limit = 25 ) : array
 	{
-		$response = $this->httpRequest( HttpMethod::GET, 'r/message/unread.json', [
-			'query'	=> $p_oListing->output()
-		] );
+		$listing = new Listing;
+		$listing->setLimit( $limit );
 
-		return @json_decode( $response, true )[0]['data'];
+		$requestLimitHandler = new RequestLimitHandler(
+			$this->client,
+			HttpMethod::GET,
+			'message/unread.json',
+			$listing
+		);
+
+		return $requestLimitHandler->doHttpRequests( new RateLimitHandler( $this->client, $this->getHeaders() ) );
 	}
 
 	/**
 	 * Request a list of sent private messages.
 	 *
-	 * @param Listing $p_oListing
+	 * @param int $limit
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	public function getSentPrivateMessages( Listing $p_oListing )
+	public function getSentPrivateMessages( int $limit ) : array
 	{
-		$response = $this->httpRequest( HttpMethod::GET, 'r/message/sent.json', [
-			'query'	=> $p_oListing->output()
-		] );
+		$listing = new Listing;
+		$listing->setLimit( $limit );
 
-		return @json_decode( $response, true )[0]['data'];
+		$requestLimitHandler = new RequestLimitHandler(
+			$this->client,
+			HttpMethod::GET,
+			'message/sent.json',
+			$listing
+		);
+
+		return $requestLimitHandler->doHttpRequests( new RateLimitHandler( $this->client, $this->getHeaders() ) );
 	}
 
 	/**
@@ -222,7 +247,7 @@ class Reddit
 			$permalink = substr( $permalink, stripos( $permalink, 'reddit.com/' ) + strlen( 'reddit.com/' ) );
 		}
 
-		$response = $this->httpRequest( HttpMethod::GET, "{$permalink}.json" );
+		$response = $this->httpRequest( HttpMethod::GET, "{$permalink}.json" )->getBody()->getContents();
 
 		// Strip off the listings and return the comment only.
 		return json_decode( $response, true )[1]->data->children[0];
@@ -232,13 +257,11 @@ class Reddit
 	 * For a given subreddit or list of subreddits, returns the comments.
 	 *
 	 * @param string|array $p_mSubreddit
-	 * @param int          $p_iLimit
-	 * @param string|null  $p_sAfter
-	 * @param string|null  $p_sBefore
+	 * @param int          $limit
 	 *
-	 * @return array       The requested comments.
+	 * @return array  The requested comments.
 	 */
-	public function getComments( $p_mSubreddit, $p_iLimit = 100, $p_sAfter = null, $p_sBefore = null )
+	public function getComments( $p_mSubreddit, int $limit = 100 ) : array
 	{
 		if( !is_array( $p_mSubreddit ) ) {
 			$subreddits = [ strval( $p_mSubreddit ) ];
@@ -247,15 +270,19 @@ class Reddit
 		}
 
 		// Create the permalink
-		$permalink = 'r/' . implode( '+', $subreddits ) . '/comments.json?limit=' . intval( $p_iLimit );
-		if( $p_sAfter ) $permalink .= '&after=' . strval( $p_sAfter );
-		if( $p_sBefore ) $permalink .= '&before=' . strval( $p_sBefore );
-		$response = $this->httpRequest( HttpMethod::GET, $permalink );
-		if( $response ) {
-			return json_decode( $response, true )['data']['children'];
-		} else {
-			return [ ];
-		}
+		$permalink = 'r/' . implode( '+', $subreddits ) . '/comments.json';
+
+		$listing = new Listing;
+		$listing->setLimit( $limit );
+
+		$requestLimitHandler = new RequestLimitHandler(
+			$this->client,
+			HttpMethod::GET,
+			$permalink,
+			$listing
+		);
+
+		return $requestLimitHandler->doHttpRequests( new RateLimitHandler( $this->client, $this->getHeaders() ) );
 	}
 
 	/**
@@ -280,7 +307,7 @@ class Reddit
 	 */
 	public function setUserAgent( $p_sUserAgent )
 	{
-		$this->userAgent	= strval( $p_sUserAgent );
+		$this->userAgent = strval( $p_sUserAgent );
 
 		return $this;
 	}
@@ -366,32 +393,14 @@ class Reddit
 	 * @param   string $url    URL to send to.
 	 * @param   array  $body   The body of the request.
 	 *
-	 * @return string
+	 * @return Response
 	 */
 	public function httpRequest( $method, $url, $body = null )
 	{
-		try {
-			$this->getRedditToken();
-			$headersAndBody = [ 'headers' => $this->getHeaders() ];
+		$this->getRedditToken();
+		$ratelimitHandler = new RateLimitHandler( $this->client, $this->getHeaders() );
 
-			if( !is_null( $body ) ) {
-				$headersAndBody['form_params'] = $body;
-			}
-
-			// Perform the request and return the response
-			/** @var \GuzzleHttp\Psr7\Response $result */
-			$result      = $this->client->{$method}( Reddit::OAUTH_URL . $url, $headersAndBody );
-			$returnValue = $result->getBody()->getContents();
-		} catch( \Exception $exception ) {
-			// A problem occurred
-			print( "EXCEPTION CAUGHT:\n" );
-			print( $exception->getMessage() . "\n" );
-			print( "STACK TRACE:\n" );
-			print( $exception->getTraceAsString() . "\n" );
-			$returnValue = null;
-		}
-
-		return $returnValue;
+		return $ratelimitHandler->httpRequest( $method, $url, $body );
 	}
 
 	/**
@@ -468,6 +477,7 @@ class Reddit
 				}
 			}
 		}
+
 		return null;
 	}
 
@@ -493,7 +503,9 @@ class Reddit
 						'state'         => bin2hex( openssl_random_pseudo_bytes( 10 ) ),
 						'redirect_uri'  => 'http://localhost/reddit/test.php',
 						'duration'      => 'permanent',
-						'scope'         => 'save,modposts,identity,edit,flair,history,modconfig,modflair,modlog,modposts,modwiki,mysubreddits,privatemessages,read,report,submit,subscribe,vote,wikiedit,wikiread',
+						'scope'         => 'save,modposts,identity,edit,flair,history,modconfig,modflair,modlog,'
+							. 'modposts,modwiki,mysubreddits,privatemessages,read,report,submit,subscribe,vote,'
+							. 'wikiedit,wikiread',
 					],
 				],
 				'auth'        => [ $this->clientId, $this->clientSecret ],
@@ -518,10 +530,10 @@ class Reddit
 	 */
 	public function clearContext()
 	{
-		$this->privateMessageContext	= null;
-		$this->subredditContext			= null;
-		$this->thingContext				= null;
-		$this->userContext				= null;
+		$this->privateMessageContext = null;
+		$this->subredditContext      = null;
+		$this->thingContext          = null;
+		$this->userContext           = null;
 
 		return $this;
 	}

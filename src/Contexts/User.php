@@ -41,12 +41,12 @@ class User implements Context
 	 * User constructor.
 	 *
 	 * @param Reddit $p_oClient
-	 * @param string $p_sId
+	 * @param string $id
 	 */
-	public function __construct( Reddit $p_oClient, $p_sId )
+	public function __construct( Reddit $p_oClient, string $id )
 	{
 		$this->client              = $p_oClient;
-		$this->client->userContext = $p_sId;
+		$this->client->userContext = $id;
 	}
 
 	/**
@@ -87,10 +87,13 @@ class User implements Context
 
 		$options['sr_detail'] = $subredditDetail;
 
-		$response =
-			$this->client->httpRequest( HttpMethod::POST, "api/{$this->client->userContext}/submitted", $options );
+		$response = $this->client->httpRequest(
+			HttpMethod::POST,
+			"api/{$this->client->userContext}/submitted",
+			$options
+		);
 
-		return json_decode( $response->getBody() );
+		return json_decode( $response->getBody()->getContents() );
 	}
 
 	/**

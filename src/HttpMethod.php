@@ -24,7 +24,7 @@ namespace Halfpastfour\Reddit;
  * Class HttpMethod
  * @package Halfpastfour\Reddit
  */
-abstract class HttpMethod
+final class HttpMethod
 {
 	const GET    = 'get';
 	const POST   = 'post';

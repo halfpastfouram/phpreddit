@@ -34,26 +34,26 @@ Interface Bot
 	 *
 	 * @return Bot
 	 */
-	public function setConfig( Config $p_oConfig );
+	public function setConfig( Config $p_oConfig ) : Bot;
 
 	/**
 	 * Should take care of requirements before doing its job.
 	 *
 	 * @return Bot
 	 */
-	public function init();
+	public function init() : Bot;
 
 	/**
 	 * Should execute the logic performing the bot's job.
 	 *
 	 * @return Bot
 	 */
-	public function run();
+	public function run() : Bot;
 
 	/**
 	 * Should shut down all activity or open connections and should be the last method to be executed.
 	 *
 	 * @return Bot
 	 */
-	public function shutdown();
+	public function shutdown() : Bot;
 }

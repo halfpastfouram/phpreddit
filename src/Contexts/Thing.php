@@ -41,12 +41,12 @@ class Thing implements Context
 	 * Thing constructor.
 	 *
 	 * @param Reddit $p_oClient
-	 * @param string $p_sId
+	 * @param string $id
 	 */
-	public function __construct( Reddit $p_oClient, $p_sId )
+	public function __construct( Reddit $p_oClient, string $id )
 	{
 		$this->client              	= $p_oClient;
-		$this->client->thingContext = $p_sId;
+		$this->client->thingContext = $id;
 	}
 
 	/**
@@ -54,11 +54,11 @@ class Thing implements Context
 	 *
 	 * Semantic alias for setSubredditSticky(true, $num);
 	 *
-	 * @param integer $num
+	 * @param int $num
 	 *
 	 * @return mixed
 	 */
-	public function stickyPost( $num )
+	public function stickyPost( int $num ) : mixed
 	{
 		return $this->setSubredditSticky( true, $num );
 	}
@@ -70,7 +70,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function unstickyPost()
+	public function unstickyPost() : mixed
 	{
 		return $this->setSubredditSticky( false );
 	}
@@ -81,23 +81,23 @@ class Thing implements Context
 	 *
 	 * Direct one to one mapping with the "api/set_subreddit_sticky" Reddit call.
 	 *
-	 * @param boolean $state
-	 * @param integer $num
+	 * @param bool $state
+	 * @param int  $num
 	 *
 	 * @return mixed
 	 */
-	public function setSubredditSticky( $state, $num = null )
+	public function setSubredditSticky( bool $state, int $num = null ) : mixed
 	{
 		$options['api_type'] = 'json';
 		$options['id']       = $this->client->thingContext;
 		$options['state']    = $state;
 
 		if( !is_null( $num ) ) {
-			$optioms['num'] = $num;
+			$options['num'] = $num;
 		}
 
 		$response = $this->client->httpRequest( HttpMethod::POST, "api/set_subreddit_sticky", $options );
-		return $response;
+		return $response->getBody()->getContents();
 	}
 
 	/**
@@ -107,7 +107,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function edit( $text )
+	public function edit( string $text ) : mixed
 	{
 		return $this->editUserText( $text );
 	}
@@ -122,7 +122,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function editUserText( $text )
+	public function editUserText( string $text ) : mixed
 	{
 		$options['api_type'] = 'json';
 		$options['thing_id'] = $this->client->thingContext;
@@ -130,7 +130,7 @@ class Thing implements Context
 
 		$response = $this->client->httpRequest( HttpMethod::POST, "api/editusertext", $options );
 
-		return json_decode( $response )['data'];
+		return json_decode( $response->getBody()->getContents() )['data'];
 	}
 
 	public function setFlair( array $options )

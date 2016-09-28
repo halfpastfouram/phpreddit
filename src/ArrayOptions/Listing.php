@@ -63,27 +63,33 @@ class Listing
 	/**
 	 * @return bool
 	 */
-	public function isPaginating()
+	public function isPaginating() : bool
 	{
 		return ( $this->shouldPaginate === 'increment' || $this->shouldPaginate === 'decrement' );
 	}
 
 	/**
 	 * @param $paginationDirection
+	 *
+	 * @return Listing
 	 */
-	public function setPaginationDirection( $paginationDirection )
+	public function setPaginationDirection( $paginationDirection ) : Listing
 	{
 		if( $paginationDirection === 'increment' || $paginationDirection === 'decrement' ) {
 			$this->shouldPaginate = $paginationDirection;
 		}
+
+		return $this;
 	}
 
 	/**
-	 * @return bool
+	 * @return Listing
 	 */
-	public function disablePagination()
+	public function disablePagination() : Listing
 	{
 		$this->shouldPaginate = false;
+
+		return $this;
 	}
 
 	/**
@@ -95,13 +101,13 @@ class Listing
 	}
 
 	/**
-	 * @param string $p_sAfter
+	 * @param string $after
 	 *
 	 * @return Listing
 	 */
-	public function setAfter( $p_sAfter )
+	public function setAfter( string $after ) : Listing
 	{
-		$this->after = strval( $p_sAfter );
+		$this->after	= $after;
 
 		return $this;
 	}
@@ -115,53 +121,53 @@ class Listing
 	}
 
 	/**
-	 * @param string $p_sBefore
+	 * @param string $before
 	 *
 	 * @return Listing
 	 */
-	public function setBefore( $p_sBefore )
+	public function setBefore( string $before ) : Listing
 	{
-		$this->before = $p_sBefore;
+		$this->before	= $before;
 
 		return $this;
 	}
 
 	/**
-	 * @return int|null
+	 * @return int
 	 */
-	public function getCount()
+	public function getCount() : int
 	{
-		return $this->count;
+		return intval( $this->count );
 	}
 
 	/**
-	 * @param int $p_iCount
+	 * @param int $count
 	 *
 	 * @return Listing
 	 */
-	public function setCount( $p_iCount )
+	public function setCount( $count ) : Listing
 	{
-		$this->count = intval( $p_iCount );
+		$this->count = intval( $count );
 
 		return $this;
 	}
 
 	/**
-	 * @return int|null
+	 * @return int
 	 */
-	public function getLimit()
+	public function getLimit() : int
 	{
-		return $this->limit;
+		return intval( $this->limit );
 	}
 
 	/**
-	 * @param int $p_iLimit
+	 * @param int $limit
 	 *
 	 * @return Listing
 	 */
-	public function setLimit( $p_iLimit )
+	public function setLimit( int $limit ) : Listing
 	{
-		$this->limit = intval( $p_iLimit );
+		$this->limit = $limit;
 
 		return $this;
 	}
@@ -169,7 +175,7 @@ class Listing
 	/**
 	 * @return Listing
 	 */
-	public function enableShow()
+	public function enableShow() : Listing
 	{
 		$this->show = 'all';
 
@@ -179,7 +185,7 @@ class Listing
 	/**
 	 * @return Listing
 	 */
-	public function disableShow()
+	public function disableShow() : Listing
 	{
 		$this->show = null;
 
@@ -189,7 +195,7 @@ class Listing
 	/**
 	 * @return Listing
 	 */
-	public function enableSubredditDetail()
+	public function enableSubredditDetail() : Listing
 	{
 		$this->subredditDetail = true;
 
@@ -199,7 +205,7 @@ class Listing
 	/**
 	 * @return Listing
 	 */
-	public function disableSubredditDetail()
+	public function disableSubredditDetail() : Listing
 	{
 		$this->subredditDetail = false;
 
@@ -211,22 +217,20 @@ class Listing
 	 *
 	 * @return array The listing as an array.
 	 */
-	public function output()
+	public function output() : array
 	{
-		if( isset( $this->after ) ) {
-			$output['p_sAfter'] = $this->getAfter();
-		} else if( isset( $this->before ) ) {
-			$output['p_sBefore'] = $this->getBefore();
-		}
+		$output	= [
+			'limit'		=> $this->getLimit(),
+			'count'		=> $this->getCount(),
+		];
 
-		$output['limit']    = $this->limit;
-		$output['p_iCount'] = $this->count;
+		if( $this->subredditDetail ) $output['sr_detail']	= $this->subredditDetail;
+		if( $this->getBefore() ) $output['before']	= $this->getBefore();
+		if( $this->getAfter() ) $output['after']	= $this->getAfter();
 
 		if( $this->show === 'all' ) {
 			$output['show'] = 'all';
 		}
-
-		$output['sr_detail'] = $this->subredditDetail;
 
 		return $output;
 	}
@@ -234,7 +238,7 @@ class Listing
 	/**
 	 * @return Listing
 	 */
-	public function incrementPagination()
+	public function incrementPagination() : Listing
 	{
 		$this->count += $this->limit;
 
@@ -244,7 +248,7 @@ class Listing
 	/**
 	 * @return Listing
 	 */
-	public function decrementPagination()
+	public function decrementPagination() : Listing
 	{
 		$this->count -= $this->limit;
 
