@@ -5,7 +5,7 @@ Vagrantfile
 public
 .vagrant
 composer.phar
-config.php
+test/config.php
 reddit.token
 phpDocumentor.phar
 phpdoc-cache*
