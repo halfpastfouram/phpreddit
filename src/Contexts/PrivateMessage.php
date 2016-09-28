@@ -56,7 +56,7 @@ class PrivateMessage implements Context
 	 */
 	public function read() : array
 	{
-		$response	= $this->client->httpRequest( HttpMethod::POST, '/api/read_message.json', [
+		$response	= $this->client->httpRequest( HttpMethod::POST, 'api/read_message.json', [
 			'id'	=> $this->client->privateMessageContext,
 		] );
 
@@ -75,7 +75,7 @@ class PrivateMessage implements Context
 	 */
 	public function reply( string $thingName, string $message ) : array
 	{
-		$response = $this->client->httpRequest( HttpMethod::POST, '/api/comment.json', [
+		$response = $this->client->httpRequest( HttpMethod::POST, 'api/comment.json', [
 			'text'     => strval( $message ),
 			'thing_id' => $thingName,
 			'api_type' => 'json',

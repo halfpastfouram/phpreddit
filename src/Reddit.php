@@ -150,7 +150,7 @@ class Reddit
 	 */
 	public function comment( string $thingName, string $reply ) : array
 	{
-		$response = $this->httpRequest( HttpMethod::POST, '/api/comment.json', [
+		$response = $this->httpRequest( HttpMethod::POST, 'api/comment.json', [
 			'text'     => strval( $reply ),
 			'thing_id' => $thingName,
 			'api_type' => 'json',
