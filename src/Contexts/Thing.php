@@ -58,7 +58,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function stickyPost( int $num ) : mixed
+	public function stickyPost( int $num )
 	{
 		return $this->setSubredditSticky( true, $num );
 	}
@@ -70,7 +70,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function unstickyPost() : mixed
+	public function unstickyPost()
 	{
 		return $this->setSubredditSticky( false );
 	}
@@ -86,7 +86,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function setSubredditSticky( bool $state, int $num = null ) : mixed
+	public function setSubredditSticky( bool $state, int $num = null )
 	{
 		$options['api_type'] = 'json';
 		$options['id']       = $this->client->thingContext;
@@ -107,7 +107,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function edit( string $text ) : mixed
+	public function edit( string $text )
 	{
 		return $this->editUserText( $text );
 	}
@@ -122,7 +122,7 @@ class Thing implements Context
 	 *
 	 * @return mixed
 	 */
-	public function editUserText( string $text ) : mixed
+	public function editUserText( string $text )
 	{
 		$options['api_type'] = 'json';
 		$options['thing_id'] = $this->client->thingContext;
