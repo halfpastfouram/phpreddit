@@ -20,7 +20,7 @@ then...
 
 Simply pass in the user you wish to control and your Reddit ID and Reddit Secret:
 
-    use Halfpastfour\Reddit;
+    use Halfpastfour\Reddit\Reddit;
     $reddit = new Reddit('username', 'password', 'id', 'key');
 
 Then set your user agent:
