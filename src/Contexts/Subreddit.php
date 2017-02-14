@@ -57,7 +57,7 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function newListings( Listing $listing ) : mixed
+	public function newListings( Listing $listing )
 	{
 		$response = $this->client->httpRequest( HttpMethod::GET, "r/{$this->client->subredditContext}/new", [
 				'query' => $listing->output(),
@@ -71,7 +71,7 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function wikiPages() : mixed
+	public function wikiPages()
 	{
 		$response = $this->client->httpRequest(
 			HttpMethod::GET,
@@ -88,7 +88,7 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function wikiPage( string $wikiPageName ) : mixed
+	public function wikiPage( string $wikiPageName )
 	{
 		$response = $this->client->httpRequest(
 			HttpMethod::GET,
@@ -116,7 +116,7 @@ class Subreddit implements Context
 	 *
 	 * @return mixed
 	 */
-	public function submit( array $options ) : mixed
+	public function submit( array $options )
 	{
 		$options['api_type'] = 'json';
 		$options['sr']       = $this->client->subredditContext;
