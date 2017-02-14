@@ -133,7 +133,7 @@ class Reddit
 	 *
 	 * @return mixed The user currently logged in.
 	 */
-	public function me() : mixed
+	public function me()
 	{
 		$response = $this->httpRequest( HttpMethod::GET, 'api/v1/me' );
 
